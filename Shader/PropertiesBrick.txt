@@ -1,0 +1,30 @@
+[Header(....................................................................................................)]
+[Header(Remember toggle on normalMap otherwise no bump effect)]
+[Toggle(_BRICK)] _Brick ("Brick Enabled", Float) = 0
+[NoScaleOffset] _BK_MainTex("Color Theme", 2D) = "white" {}
+_BK_CementBrightness("Cement Brightness", Range( 0 , 1)) = 0
+_BK_BrickOverlay("Brick Overlay", Range( 0 , 0.05)) = 0
+_BK_WhiteBrick("White Brick", Range( 0 , 0.1)) = 1
+_BK_WhiteBrickRange("White Brick Range", Range( 0 , 1)) = 0
+_BK_WhiteBrickSmooth("White Brick Smooth", Range( 0 , 1)) = 0
+_BK_DarkBrick("Dark Brick", Range( 0 , 1)) = 0
+[NoScaleOffset] _BK_TextureSample3("Texture Sample 3", 2D) = "bump" {}
+_BK_DarkBrickAmount("Dark Brick Amount", Range( 0.01 , 0.1)) = 0
+_BK_DamageAmount("Damage Amount", Range( 0 , 1)) = 0
+_BK_DamageSmoothness("Damage Smoothness", Range( 0 , 100)) = 0
+_BK_TransitionScale("Transition Scale", Range( 0 , 0.5)) = 0
+[NoScaleOffset] _BK_RGBA_Mask_A("RGBA_Mask_A", 2D) = "white" {}
+_BK_DirtRange("Dirt Range", Range( 0 , 1)) = 0
+_BK_DirtSmooth("Dirt Smooth", Range( 0 , 1)) = 0
+_BK_BrickScale("Brick Scale", Range( 1 , 2)) = 1
+_BK_PaintedBrickScale("Painted Brick Scale", Range( 0 , 1)) = 0
+[NoScaleOffset] _BK_BrickUniqueNM("Brick Unique NM", 2D) = "bump" {}
+_BK_BrickUniqueScale("Brick Unique Scale", Range( 0 , 2)) = 0
+[NoScaleOffset] _BK_RGBAMaskB("RGBA Mask B", 2D) = "white" {}
+[NoScaleOffset] _BK_RGBAMaskC("RGBA Mask C", 2D) = "white" {}
+_BK_BrickBareSmoothness("BrickBare Smoothness", Range( 0 , 20)) = 0
+_BK_BrickPaintSmoothness("BrickPaint Smoothness", Range( 0 , 1)) = 0
+_BK_BrickDirtSmoothness("BrickDirt Smoothness", Range( 0 , 1)) = 0
+_BK_BrickDirtMainSmoothness("BrickDirtMain Smoothness", Range( 0 , 1)) = 0
+_BK_BrickDarkSmoothness("BrickDark Smoothness", Range( 0 , 1)) = 0
+[NoScaleOffset] _BK_DBK_Brick_NM("DBK_Brick_NM", 2D) = "bump" {}

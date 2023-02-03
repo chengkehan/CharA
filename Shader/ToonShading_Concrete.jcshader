@@ -1,0 +1,18 @@
+Shader "Custom/ToonShading_Concrete"
+{ 
+	Properties
+	{
+INCLUDE SHADER PropertiesCommon.txt
+INCLUDE SHADER PropertiesConcrete.txt
+	}
+	SubShader {
+INCLUDE SHADER TagOpaque.txt
+
+		HLSLINCLUDE
+INCLUDE SHADER CommonInclude.txt
+INCLUDE SHADER CBufferConcrete.txt
+		ENDHLSL
+
+INCLUDE SHADER ToonShadingPasses.txt
+	}
+}

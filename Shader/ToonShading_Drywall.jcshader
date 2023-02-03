@@ -1,0 +1,18 @@
+Shader "Custom/ToonShading_Drywall"
+{ 
+	Properties
+	{
+INCLUDE SHADER PropertiesCommon.txt
+INCLUDE SHADER PropertiesDrywall.txt
+	}
+	SubShader {
+INCLUDE SHADER TagAlphaTest.txt
+
+		HLSLINCLUDE
+INCLUDE SHADER CommonInclude.txt
+INCLUDE SHADER CBufferDrywall.txt
+		ENDHLSL
+
+INCLUDE SHADER ToonShadingPasses.txt
+	}
+}

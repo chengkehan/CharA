@@ -1,0 +1,18 @@
+Shader "Custom/ToonShading_Tile"
+{ 
+	Properties
+	{
+INCLUDE SHADER PropertiesCommon.txt
+INCLUDE SHADER PropertiesTile.txt
+	}
+	SubShader {
+INCLUDE SHADER TagOpaque.txt
+
+		HLSLINCLUDE
+INCLUDE SHADER CommonInclude.txt
+INCLUDE SHADER CBufferTile.txt
+		ENDHLSL
+
+INCLUDE SHADER ToonShadingPasses.txt
+	}
+}

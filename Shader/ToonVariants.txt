@@ -1,0 +1,28 @@
+#pragma shader_feature_local_fragment _TOON
+#pragma shader_feature_local_fragment _TOON_RIM
+#pragma shader_feature_local_fragment _TOON_DETAIL
+#pragma shader_feature_local_fragment _TOON_HATCH
+#pragma shader_feature_local_fragment _HATCH_UV_DEFAULT _HATCH_UV_SECOND _HATCH_UV_THIRD
+#pragma multi_compile_local_fragment _ _CUBEMAP_LIGHTING
+#pragma multi_compile_local_fragment _ _CUBEMAP_LIGHTING_DYNAMIC_SHADOW
+#pragma multi_compile_local_fragment _ _GRID_FADE
+#pragma shader_feature_local_fragment _BRICK
+#pragma shader_feature_local_fragment _RUBBLE
+#pragma shader_feature_local_fragment _RUBBLE_TILE
+#pragma shader_feature_local_fragment _CARPET
+#pragma shader_feature_local_fragment _CINDER_BLOCK
+#pragma shader_feature_local_fragment _CINDER_BLOCK_RUBBLE
+#pragma shader_feature_local_fragment _CINDER_BLOCK_RUBBLE_TILE
+#pragma shader_feature_local_fragment _CONCRETE
+#pragma shader_feature_local_fragment _REBAR
+#pragma shader_feature_local_fragment _DOOR
+#pragma shader_feature_local_fragment _DRYWALL
+#pragma shader_feature_local_fragment _GLASS
+#pragma shader_feature_local_fragment _GLASS_INTERIOR
+#pragma shader_feature_local_fragment _INSULATION
+#pragma shader_feature_local_fragment _PLYWOOD
+#pragma shader_feature_local_fragment _TILE
+#pragma shader_feature_local_fragment _TRIM
+#pragma shader_feature_local_fragment _WALLPAPER
+#pragma shader_feature_local_fragment _WOOD_FLOOR
+#pragma shader_feature_local_fragment _CONCRETE_RUBBLE

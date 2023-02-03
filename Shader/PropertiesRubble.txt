@@ -1,0 +1,19 @@
+[Header(....................................................................................................)]
+[Header(Remember toggle on normalMap otherwise no bump effect)]
+[Toggle(_RUBBLE)] _Rubble ("Rubble Enabled", Float) = 0
+[NoScaleOffset]_RB_ColorTheme("Color Theme", 2D) = "white" {}
+_RB_PaintRange("Paint Range", Range( 0 , 1)) = 0
+_RB_PaintSmooth("Paint Smooth", Range( 0 , 0.1)) = 0
+[NoScaleOffset]_RB_BakedNM("Baked NM", 2D) = "bump" {}
+[NoScaleOffset]_RB_DetailsNM("Details NM", 2D) = "bump" {}
+_RB_DetailsNMScale("Details NM Scale", Range( 0 , 1)) = 0
+_RB_DetailsTiling("Details Tiling", Range( 1 , 8)) = 0
+[NoScaleOffset]_RB_MainTex("Mask A", 2D) = "white" {}
+[MaxGay]_RB_DirtSmooth("Dirt Smooth", Range( 0 , 1)) = 0
+_RB_DirtRange("Dirt Range", Range( 0 , 1)) = 0
+_RB_DirtContrast("Dirt Contrast", Range( 0 , 2)) = 0
+_RB_DirtBrightness("Dirt Brightness", Range( 0 , 1)) = 0
+_RB_MainSmoothness("Main Smoothness", Range( 0 , 1)) = 0
+_RB_PaintSmoothness("Paint Smoothness", Range( 0 , 1)) = 0
+[NoScaleOffset]_RB_MaskB("Mask B", 2D) = "white" {}
+_RB_BakedNMScale("Baked NM Scale", Range( 1 , 2)) = 0

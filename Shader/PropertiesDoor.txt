@@ -1,0 +1,27 @@
+[Header(....................................................................................................)]
+[Header(Remember toggle on normalMap otherwise no bump effect)]
+[Toggle(_DOOR)] _Door ("Door Enabled", Float) = 0 
+_DR_WoodGrain("Wood Grain", Range( 0 , 1)) = 0
+[NoScaleOffset]_DR_MainTex("Color Theme", 2D) = "white" {}
+_DR_TransitionAmount("Transition Amount", Range( 0 , 1)) = 0
+_DR_TransitionEdgeAmount("Transition Edge Amount", Range( 0.01 , 1)) = 0
+[NoScaleOffset]_DR_DoorsColor("Doors Color", 2D) = "white" {}
+_DR_MaskOverlay("Mask Overlay", Range( 0.1 , 1)) = 0
+_DR_DamageAmount("Damage Amount", Range( 0 , 1)) = 0
+_DR_DamagePower("Damage Power", Range( 0 , 0.1)) = 0
+_DR_DamageSmooth("Damage Smooth", Range( 0 , 200)) = 0
+_DR_DamageMultiply("Damage Multiply", Range( 0 , 1)) = 0
+[NoScaleOffset]_DR_DoorNM("Door NM", 2D) = "bump" {}
+_DR_DoorsNMScale("Doors NM Scale", Range( 0 , 2)) = 0
+[NoScaleOffset]_DR_DoorDamageNM("Door Damage NM", 2D) = "bump" {}
+_DR_DoorsDamageNMScale("Doors Damage NM Scale", Range( 0 , 2)) = 0
+_DR_DirtBrightness("Dirt Brightness", Range( 0 , 1)) = 0
+_DR_DirtRange("Dirt Range", Range( 0 , 1)) = 0
+_DR_MainSmoothness("Main Smoothness", Range( 0 , 1)) = 0
+_DR_DirtSmooth("Dirt Smooth", Range( 0 , 1)) = 0
+_DR_DirtContrast("Dirt Contrast", Range( 0 , 2)) = 0
+[NoScaleOffset]_DR_RGBAMaskA("RGBA Mask A", 2D) = "white" {}
+[NoScaleOffset]_DR_RGBAMaskB("RGBA Mask B", 2D) = "white" {}
+_DR_SmoothnessOverlay("Smoothness Overlay", Range( 0 , 2)) = 0
+_DR_SmoothnessDirt("Smoothness Dirt", Range( 0 , 1)) = 0
+_DR_SmoothnessDamage("Smoothness Damage", Range( 0 , 1)) = 0

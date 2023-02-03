@@ -1,0 +1,13 @@
+[Header(....................................................................................................)]
+[Header(Remember toggle on normalMap otherwise no bump effect)]
+[Toggle(_INSULATION)] _Insulation ("Insulation Enabled", Float) = 0
+_INS_InsulationDarkness("Insulation Darkness", Range( 0 , 1)) = 0
+[NoScaleOffset]_INS_Normals("Normals", 2D) = "bump" {}
+_INS_NormalsScale("Normals Scale", Range( 0 , 2)) = 0
+[NoScaleOffset]_INS_InsulationMask("Insulation Mask", 2D) = "white" {}
+_INS_DirtOpacity("Dirt Opacity", Range( 0 , 1)) = 0
+_INS_DirtRange("Dirt Range", Range( 0 , 1)) = 0
+_INS_DirtSmooth("Dirt Smooth", Range( 0 , 1)) = 0
+_INS_DirtMultiplier("Dirt Multiplier", Range( 0 , 2)) = 0
+_INS_Mask("Mask", Range( 0 , 1)) = 0
+[NoScaleOffset]_INS_MainTex("Color Theme", 2D) = "white" {}

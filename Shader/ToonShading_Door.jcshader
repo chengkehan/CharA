@@ -1,0 +1,18 @@
+Shader "Custom/ToonShading_Door"
+{ 
+	Properties
+	{
+INCLUDE SHADER PropertiesCommon.txt
+INCLUDE SHADER PropertiesDoor.txt
+	}
+	SubShader {
+INCLUDE SHADER TagAlphaTest.txt
+
+		HLSLINCLUDE
+INCLUDE SHADER CommonInclude.txt
+INCLUDE SHADER CBufferDoor.txt
+		ENDHLSL
+
+INCLUDE SHADER ToonShadingPasses.txt
+	}
+}

@@ -1,0 +1,18 @@
+Shader "Custom/ToonShading_Rebar"
+{ 
+	Properties
+	{
+INCLUDE SHADER PropertiesCommon.txt
+INCLUDE SHADER PropertiesRebar.txt
+	}
+	SubShader {
+INCLUDE SHADER TagAlphaTest.txt
+
+		HLSLINCLUDE
+INCLUDE SHADER CommonInclude.txt
+INCLUDE SHADER CBufferRebar.txt
+		ENDHLSL
+
+INCLUDE SHADER ToonShadingPasses.txt
+	}
+}

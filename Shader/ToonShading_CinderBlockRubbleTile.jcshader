@@ -1,0 +1,18 @@
+Shader "Custom/ToonShading_CinderBlockRubbleTile"
+{ 
+	Properties
+	{
+INCLUDE SHADER PropertiesCommon.txt
+INCLUDE SHADER PropertiesCinderBlockRubbleTile.txt
+	}
+	SubShader {
+INCLUDE SHADER TagAlphaTest.txt
+
+		HLSLINCLUDE
+INCLUDE SHADER CommonInclude.txt
+INCLUDE SHADER CBufferCinderBlockRubbleTile.txt
+		ENDHLSL
+
+INCLUDE SHADER ToonShadingPasses.txt
+	}
+}

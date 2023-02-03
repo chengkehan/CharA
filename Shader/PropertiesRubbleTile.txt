@@ -1,0 +1,22 @@
+[Header(....................................................................................................)]
+[Header(Remember toggle on normalMap otherwise no bump effect)]
+[Toggle(_RUBBLE_TILE)] _RubbleTile ("Rubble Tile Enabled", Float) = 0
+[NoScaleOffset]_RBT_MainTex("Color Theme", 2D) = "white" {}
+_RBT_MainTiling("Main Tiling", Range( 0.1 , 4)) = 1
+_RBT_PaintRange("Paint Range", Range( 0 , 1)) = 0
+_RBT_PaintSmooth("Paint Smooth", Range( 0 , 0.1)) = 0
+[NoScaleOffset]_RBT_DetailsNM("Details NM", 2D) = "bump" {}
+_RBT_DetailsNMScale("Details NM Scale", Range( 0 , 1)) = 0
+_RBT_DetailsTiling("Details Tiling", Range( 1 , 8)) = 1
+[NoScaleOffset]_RBT_BakedNM("Baked NM", 2D) = "bump" {}
+_RBT_BakedNMScale("Baked NM Scale", Range( 1 , 2)) = 1
+[NoScaleOffset]_RBT_MainTex1("Mask A", 2D) = "white" {}
+[NoScaleOffset]_RBT_MaskB("Mask B", 2D) = "white" {}
+[MaxGay]_RBT_DirtSmooth("Dirt Smooth", Range( 0 , 1)) = 0
+_RBT_DirtRange("Dirt Range", Range( 0 , 1)) = 0
+_RBT_DirtContrast("Dirt Contrast", Range( 0 , 2)) = 0
+_RBT_DirtBrightness("Dirt Brightness", Range( 0 , 1)) = 0
+_RBT_MainSmoothness("Main Smoothness", Range( 0 , 1)) = 0
+_RBT_PaintSmoothness("Paint Smoothness", Range( 0 , 1)) = 0
+[MaxGay]_RBT_CutAlphaSmooth("Cut Alpha Smooth", Range( 0 , 2)) = 0
+_RBT_CutAlphaRange("Cut Alpha Range", Range( 0 , 1)) = 0

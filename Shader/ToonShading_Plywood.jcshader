@@ -1,0 +1,18 @@
+Shader "Custom/ToonShading_Plywood"
+{ 
+	Properties
+	{
+INCLUDE SHADER PropertiesCommon.txt
+INCLUDE SHADER PropertiesPlywood.txt
+	}
+	SubShader {
+INCLUDE SHADER TagAlphaTest.txt
+
+		HLSLINCLUDE
+INCLUDE SHADER CommonInclude.txt
+INCLUDE SHADER CBufferPlywood.txt
+		ENDHLSL
+
+INCLUDE SHADER ToonShadingPasses.txt
+	}
+}

@@ -1,0 +1,29 @@
+[Header(....................................................................................................)]
+[Header(Remember toggle on normalMap otherwise no bump effect)]
+[Toggle(_DRYWALL)] _Drywall ("Drywall Enabled", Float) = 0
+_DW_EdgesOverlay("Edges Overlay", Range( 0 , 2)) = 0
+[NoScaleOffset]_DW_ColorTheme("Color Theme", 2D) = "white" {}
+_DW_EdgesMultiply("Edges Multiply", Range( 0 , 1)) = 0
+_DW_DamageAmount("Damage Amount", Range( 0 , 1)) = 0.421177
+_DW_DamageSmoothness("Damage Smoothness", Range( 0 , 10)) = 0
+_DW_DamageMultiplier("Damage Multiplier", Range( 0 , 3)) = 0.1946161
+[NoScaleOffset]_DW_DrywallNM("Drywall NM", 2D) = "bump" {}
+_DW_DrywallNmScale("Drywall Nm Scale", Range( 1 , 2)) = 1
+_DW_DamageNMScale("Damage NM Scale", Range( 0 , 2)) = 0
+[NoScaleOffset]_DW_DrywallDamageNM("Drywall Damage NM", 2D) = "bump" {}
+_DW_DirtOpacity("Dirt Opacity", Range( 0 , 1)) = 0
+_DW_DirtRange("Dirt Range", Range( 0 , 1)) = 0
+_DW_DirtSmooth("Dirt Smooth", Range( 0 , 1)) = 0
+_DW_DirtMultiplier("Dirt Multiplier", Range( 0 , 4)) = 0
+_DW_DirtBrightness("Dirt Brightness", Range( 0 , 2)) = 0
+_DW_TransitionAmount("Transition Amount", Range( 0 , 0.5)) = 0
+_DW_TransitionBrightness("Transition Brightness", Range( 0 , 0.25)) = 0
+_DW_ExtraTransition("Extra Transition", Range( 0 , 1)) = 0
+_DW_ExtraTransitionRange("Extra Transition Range", Range( 0 , 1)) = 0
+_DW_EdgeBrightness("Edge Brightness", Range( 0.01 , 1)) = 0
+[NoScaleOffset]_DW_RGBAMaskA("RGBA Mask A", 2D) = "white" {}
+[NoScaleOffset]_DW_MainTex("MainTex", 2D) = "white" {}
+_DW_SmoothnessMain("Smoothness Main", Range( 0 , 1)) = 0
+_DW_SmoothnessDamage("Smoothness Damage", Range( 0 , 1)) = 0
+_DW_SmoothnessDirt("Smoothness Dirt", Range( 0 , 1)) = 0
+_DW_InsideBrightness("Inside Brightness", Range( 0 , 1)) = 0

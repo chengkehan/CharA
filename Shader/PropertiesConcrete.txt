@@ -1,0 +1,32 @@
+[Header(....................................................................................................)]
+[Header(Remember toggle on normalMap otherwise no bump effect)]
+[Toggle(_CONCRETE)] _Concrete ("Concrete Enabled", Float) = 0
+[NoScaleOffset]_CC_MainTex("Color Theme", 2D) = "white" {}
+[NoScaleOffset]_CC_DamageNM("Damage NM", 2D) = "bump" {}
+[NoScaleOffset]_CC_DamageColor("Damage Color", 2D) = "white" {}
+_CC_DamageAmountSmooth("Damage Amount Smooth", Range( 0 , 17)) = 61.17647
+_CC_DamageAmount("Damage Amount", Range( 0 , 1)) = 0.6
+_CC_DamageBrightness("Damage Brightness", Range( 0 , 4)) = 0
+_CC_DamageMultiplier("Damage Multiplier", Range( 0 , 1)) = 0.1946161
+_CC_ConcreteDamageTiling("Concrete Damage Tiling", Range( 0 , 5)) = 0
+_CC_ConcreteDamageScale("Concrete Damage Scale", Range( 1 , 2)) = 0
+[NoScaleOffset]_CC_ConcreteNM("Concrete NM", 2D) = "bump" {}
+_CC_PaintEdgesMultiply("Paint Edges Multiply", Range( 0 , 1)) = 1
+_CC_ConcreteBareRange("Concrete Bare Range", Range( 0 , 1)) = 0
+_CC_ConcreteBareSmooth("Concrete Bare Smooth", Range( 0 , 1)) = 0
+_CC_EdgesOverlay("Edges Overlay", Range( 0 , 1)) = 0
+_CC_DirtOverlay("Dirt Overlay", Range( 0.02 , 1)) = 0
+[NoScaleOffset]_CC_TransitionNM("Transition NM", 2D) = "bump" {}
+_CC_TransitionBrightness("Transition Brightness", Range( 0.5 , 2)) = 0
+_CC_TransitionScale("Transition Scale", Range( 0 , 2)) = 0
+_CC_TransitionAmount("Transition Amount", Range( 0 , 0.05)) = 0
+[NoScaleOffset]_CC_RGBAMaskA("RGBA Mask A", 2D) = "white" {}
+[NoScaleOffset]_CC_RGBAMaskB("RGBA Mask B", 2D) = "white" {}
+_CC_DirtContrast("Dirt Contrast", Range( 0 , 2)) = 0
+_CC_DirtRange("Dirt Range", Range( 0 , 1)) = 0
+[MaxGay]_CC_DirtSmooth("Dirt Smooth", Range( 0 , 1)) = 0
+_CC_MainSmoothness("Main Smoothness", Range( 0 , 1)) = 0
+_CC_DirtSmoothness("Dirt Smoothness", Range( 0 , 3)) = 0
+_CC_DamageSmoothness("Damage Smoothness", Range( 0 , 1)) = 0
+_CC_BareSmoothness("Bare Smoothness", Range( 0 , 1)) = 0
+_CC_BareBrightness("Bare Brightness", Range( 0 , 2)) = 0

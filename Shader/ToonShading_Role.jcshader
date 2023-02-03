@@ -1,0 +1,17 @@
+Shader "Custom/ToonShading_Role"
+{ 
+	Properties
+	{
+INCLUDE SHADER PropertiesCommon.txt
+	}
+	SubShader {
+INCLUDE SHADER TagOpaque.txt
+
+		HLSLINCLUDE
+INCLUDE SHADER CommonInclude.txt
+INCLUDE SHADER CBufferCommon.txt
+		ENDHLSL
+
+INCLUDE SHADER ToonShadingPasses.txt
+	}
+}

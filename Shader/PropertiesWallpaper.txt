@@ -1,0 +1,35 @@
+[Header(....................................................................................................)]
+[Header(Remember toggle on normalMap otherwise no bump effect)]
+[Toggle(_WALLPAPER)] _Wallpaper ("Wallpaper Enabled", Float) = 0
+_CustomWallpaperNumber("Wallpaper Number", Int) = 0
+_CustomWallpaperRow("Wallpaper Row", Int) = 0
+[NoScaleOffset]_WP_ColorTheme("Color Theme", 2D) = "white" {}
+_WP_PaperBrightness("Paper Brightness", Range( 0 , 2)) = 0
+_WP_DirtOverlay("Dirt Overlay", Range( 0 , 1)) = 0
+_WP_EdgesOverlayMultiply("Edges Overlay Multiply", Range( 0 , 2)) = 0
+_WP_EdgesOverlayPower("Edges Overlay Power", Range( 0.01 , 2)) = 0
+_WP_DirtDamageOverlay("Dirt Damage Overlay", Range( 0.01 , 1)) = 0
+_WP_EdgesAmount("Edges Amount", Range( 0.01 , 1)) = 0
+_WP_EdgesBrigthness("Edges Brigthness", Range( 0 , 1)) = 0
+_WP_TransitionAmount("Transition Amount", Range( 0.001 , 0.15)) = 0
+_WP_DamageAmount("Damage Amount", Range( 0 , 1)) = 0.421177
+_WP_DamageSmooth("Damage Smooth", Range( 0 , 100)) = 0
+_WP_DamageMultiplier("Damage Multiplier", Range( 0 , 1)) = 0.1946161
+[NoScaleOffset]_WP_WallpaperNM("Wallpaper NM", 2D) = "bump" {}
+_WP_WallpaperNMScale("Wallpaper NM Scale", Range( 0 , 2)) = 0
+_WP_EdgesNormals("Edges Normals", Range( 0 , 1)) = 0
+_WP_DamageNormalsExtra("Damage Normals Extra", Range( 0 , 1)) = 0.8819242
+_WP_WallpaperDamageNMScale("Wallpaper Damage NM Scale", Range( 0 , 2)) = 0
+[NoScaleOffset]_WP_WallpaperDamageNM("Wallpaper Damage NM", 2D) = "bump" {}
+_WP_DirtRange("Dirt Range", Range( 0 , 1)) = 0
+_WP_DirtSmooth("Dirt Smooth", Range( 0 , 1)) = 0
+_WP_DirtMultiplier("Dirt Multiplier", Range( 0 , 2)) = 0
+_WP_DirtOpacity("Dirt Opacity", Range( 0 , 1)) = 0
+[NoScaleOffset]_WP_RGBA_Mask_A("RGBA_Mask_A", 2D) = "white" {}
+[NoScaleOffset]_WP_RGBA_Mask_B("RGBA_Mask_B", 2D) = "white" {}
+_WP_SmoothnessMain("Smoothness Main", Range( 0 , 1)) = 0
+_WP_SmoothnessDamage("Smoothness Damage", Range( 0 , 1)) = 0
+_WP_SmoothnessDirt("Smoothness Dirt", Range( 0 , 1)) = 0
+[NoScaleOffset]_WP_MainTex("Opacity Mask", 2D) = "white" {}
+[NoScaleOffset]_WP_PatternTexture("Pattern Texture", 2D) = "white" {}
+_WP_PatternStrenght("Pattern Strenght", Range( 0 , 1)) = 0

@@ -1,0 +1,8 @@
+[Header(....................................................................................................)]
+[Header(Remember toggle on normalMap otherwise no bump effect)]
+[Toggle(_GLASS)] _Glass ("Glass Enabled", Float) = 0
+_GL_DirtOpacity("Dirt Opacity", Range( 0 , 1)) = 0
+[NoScaleOffset]_GL_ColorTheme("Color Theme", 2D) = "white" {}
+[NoScaleOffset]_GL_Glass_Normals("Glass_Normals", 2D) = "bump" {}
+_GL_GlassBrigthness("Glass Brigthness", Range( 0 , 1)) = 0
+[NoScaleOffset]_GL_MainTex("Glass Mask", 2D) = "white" {}

@@ -1,0 +1,18 @@
+Shader "Custom/ToonShading_CinderBlock"
+{ 
+	Properties
+	{
+INCLUDE SHADER PropertiesCommon.txt
+INCLUDE SHADER PropertiesCinderBlock.txt
+	}
+	SubShader {
+INCLUDE SHADER TagOpaque.txt
+
+		HLSLINCLUDE
+INCLUDE SHADER CommonInclude.txt
+INCLUDE SHADER CBufferCinderBlock.txt
+		ENDHLSL
+
+INCLUDE SHADER ToonShadingPasses.txt
+	}
+}

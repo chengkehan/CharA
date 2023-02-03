@@ -1,0 +1,18 @@
+Shader "Custom/ToonShading_GlassInterior"
+{ 
+	Properties
+	{
+INCLUDE SHADER PropertiesCommon.txt
+INCLUDE SHADER PropertiesGlassInterior.txt
+	}
+	SubShader {
+INCLUDE SHADER TagOpaque.txt
+
+		HLSLINCLUDE
+INCLUDE SHADER CommonInclude.txt
+INCLUDE SHADER CBufferGlassInterior.txt
+		ENDHLSL
+
+INCLUDE SHADER ToonShadingPasses.txt
+	}
+}

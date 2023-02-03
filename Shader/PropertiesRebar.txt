@@ -1,0 +1,7 @@
+[Header(....................................................................................................)]
+[Header(Remember toggle on normalMap otherwise no bump effect)]
+[Toggle(_REBAR)] _Rebar ("Rebar Enabled", Float) = 0
+[NoScaleOffset]_RBR_MainTex("MainTex", 2D) = "white" {}
+[NoScaleOffset]_RBR_Smoothness("Smoothness", 2D) = "white" {}
+[NoScaleOffset]_RBR_Normals("Normals", 2D) = "bump" {}
+_RBR_NormalsScale("Normals Scale", Range( 0 , 2)) = 4.080567

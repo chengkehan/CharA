@@ -1,0 +1,26 @@
+[Header(....................................................................................................)]
+[Header(Remember toggle on normalMap otherwise no bump effect)]
+[Toggle(_TRIM)] _Trim ("Trim Enabled", Float) = 0
+[NoScaleOffset]_TRIM_MainTex("MainTex", 2D) = "white" {}
+_TRIM_TransitionAmount("Transition Amount", Range( 0 , 1)) = 0
+_TRIM_TransitionEdgeAmount("Transition Edge Amount", Range( 0.01 , 1)) = 0
+[NoScaleOffset]_TRIM_TrimColor("Trim Color", 2D) = "white" {}
+_TRIM_MaskOverlay("Mask Overlay", Range( 0 , 1)) = 0
+_TRIM_DamageAmount("Damage Amount", Range( 0 , 1)) = 0
+_TRIM_DamagePower("Damage Power", Range( 0 , 1)) = 0
+_TRIM_DamageSmooth("Damage Smooth", Range( 0 , 200)) = 0
+_TRIM_DamageMultiply("Damage Multiply", Range( 0 , 1)) = 0
+[NoScaleOffset]_TRIM_TrimNM("Trim NM", 2D) = "bump" {}
+_TRIM_TrimNMScale("Trim NM Scale", Range( 0 , 2)) = 0
+[NoScaleOffset]_TRIM_TrimDamageNM("Trim Damage NM", 2D) = "bump" {}
+_TRIM_TrimDamageNMScale("Trim Damage NM Scale", Range( 0 , 2)) = 0
+_TRIM_DirtBrightness("Dirt Brightness", Range( 0 , 1)) = 0
+_TRIM_DirtRange("Dirt Range", Range( 0 , 1)) = 0
+_TRIM_MainSmoothness("Main Smoothness", Range( 0 , 1)) = 0
+_TRIM_DirtSmooth("Dirt Smooth", Range( 0 , 1)) = 0
+_TRIM_DirtContrast("Dirt Contrast", Range( 0 , 1)) = 0
+[NoScaleOffset]_TRIM_RGBAMaskA("RGBA Mask A", 2D) = "white" {}
+_TRIM_SmoothnessOverlay("Smoothness Overlay", Range( 0 , 2)) = 0
+_TRIM_SmoothnessDirt("Smoothness Dirt", Range( 0 , 1)) = 0
+_TRIM_SmoothnessDamage("Smoothness Damage", Range( 0 , 1)) = 0
+[NoScaleOffset]_TRIM_RGBAMaskB("RGBA Mask B", 2D) = "white" {}

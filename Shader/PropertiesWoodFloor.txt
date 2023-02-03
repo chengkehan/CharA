@@ -1,0 +1,28 @@
+[Header(....................................................................................................)]
+[Header(Remember toggle on normalMap otherwise no bump effect)]
+[Toggle(_WOOD_FLOOR)] _WoodFloor ("WoodFloor Enabled", Float) = 0
+_WF_DirtOverlay("Dirt Overlay", Range( 0.05 , 1)) = 0
+[NoScaleOffset]_WF_MainTex("Color Theme", 2D) = "white" {}
+_WF_DirtDamageOverlay("Dirt Damage Overlay", Range( 0.01 , 1)) = 0
+_WF_EdgesOverlay("Edges Overlay", Range( 0 , 3)) = 0
+_WF_EdgesDamageOverlay("Edges Damage Overlay", Range( 0 , 2)) = 0
+_WF_TransitionAmount("Transition Amount", Range( 0.01 , 0.5)) = 0
+_WF_DamageAmount("Damage Amount", Range( 0 , 1)) = 0.421177
+_WF_DamageSmooth("Damage Smooth", Range( 0 , 100)) = 0
+_WF_DamageMultiplier("Damage Multiplier", Range( 0 , 1)) = 0.1946161
+[NoScaleOffset]_WF_NormalDamage("Normal Damage", 2D) = "bump" {}
+_WF_NormalDamageScale("Normal Damage Scale", Range( 0 , 2)) = 0
+[NoScaleOffset]_WF_NormalGood("Normal Good", 2D) = "bump" {}
+_WF_NormalGoodScale("Normal Good Scale", Range( 0 , 2)) = 0
+_WF_DirtOpacity("Dirt Opacity", Range( 0 , 1)) = 0
+_WF_DirtRange("Dirt Range", Range( 0 , 1)) = 0
+_WF_DirtSmooth("Dirt Smooth", Range( 0 , 1)) = 0
+_WF_DirtMultiplier("Dirt Multiplier", Range( 0 , 3)) = 0
+[NoScaleOffset]_WF_RGBAMaskA("RGBA Mask A", 2D) = "white" {}
+[NoScaleOffset]_WF_RGBAMaskB("RGBA Mask B", 2D) = "white" {}
+[NoScaleOffset]_WF_RGBAMaskC("RGBA Mask C", 2D) = "white" {}
+_WF_SmoothnessMain("Smoothness Main", Range( 0 , 1)) = 0
+_WF_SmoothnessDamage("Smoothness Damage", Range( 0 , 1)) = 0
+_WF_SmoothnessDirt("Smoothness Dirt", Range( 0 , 1)) = 0
+_WF_SmoothnessMainDirt("Smoothness Main Dirt", Range( 0 , 2)) = 1
+_WF_EdgeBrighntess("Edge Brighntess", Range( 0 , 2)) = 0

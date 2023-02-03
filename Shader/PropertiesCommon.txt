@@ -1,0 +1,103 @@
+[KeywordEnum(OFF, BASE, TEX)] _Alpha_Test ("Alpha Test Mode", Float) = 0
+_Cutoff ("Alpha Cutoff Value", Range(0, 1)) = 0.5
+[NoScaleOffset] _AlphaTestMaskTex("Alpha Test Mask Texture", 2D) = "white" {}
+
+[Header(....................................................................................................)]
+
+[Space(20)]
+[Toggle(_SPECULAR_SETUP)] _MetallicSpecToggle ("Workflow, Specular (if on), Metallic (if off)", Float) = 0
+[Toggle(_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A)] _SmoothnessSource ("Smoothness Source, Albedo Alpha (if on) vs Metallic (if off)", Float) = 0
+
+[Header(....................................................................................................)]
+
+[Space(20)]
+[MainTexture] _BaseMap("Base Map (RGB) Smoothness / Alpha (A)", 2D) = "white" {}
+[MainColor]   _BaseColor("Base Color", Color) = (1, 1, 1, 1)
+
+[Header(....................................................................................................)]
+
+[Space(20)]
+_Metallic("Metallic", Range(0.0, 1.0)) = 0
+_Smoothness("Smoothness", Range(0.0, 1.0)) = 0.5
+_SpecColor("Specular Color", Color) = (0.5, 0.5, 0.5, 0.5)
+[Toggle(_METALLICSPECGLOSSMAP)] _MetallicSpecGlossMapToggle ("Use Metallic/Specular Gloss Map", Float) = 0
+[NoScaleOffset] _MetallicSpecGlossMap("Specular or Metallic Map", 2D) = "black" {}
+
+[Header(....................................................................................................)]
+
+[Space(20)]
+[Toggle(_NORMALMAP)] _NormalMapToggle ("Use Normal Map", Float) = 0
+[NoScaleOffset] _BumpMap("Normal Map", 2D) = "bump" {}
+_BumpScale("Bump Scale", Range(0, 3)) = 1
+
+[Header(....................................................................................................)]
+
+[Space(20)]
+[Toggle(_OCCLUSIONMAP)] _OcclusionToggle ("Use Occlusion Map", Float) = 0
+[NoScaleOffset] _OcclusionMap("Occlusion Map", 2D) = "bump" {}
+_OcclusionStrength("Occlusion Strength", Range(-50, 50)) = 1.0
+
+[Header(....................................................................................................)]
+
+_AdditionalLightIntensity("Additional Light Intensity", Range(0, 2)) = 1
+_AdditionalLightRangeScale("Additional Light Range Scale", Range(0, 20)) = 1
+_StylizedColored("Stylized Colored", Range(0, 1)) = 1
+_StylizedColoredInShadow("Stylized Colored In Shadow", Range(0, 1)) = 0
+[Toggle]_Outline("Outline", Float) = 1
+_Sketch("Sketch", Range(0, 1)) = 1
+_Contrast("Contrast", Range(0, 1)) = 0.5
+
+[Header(....................................................................................................)]
+
+[Space(20)]
+[Toggle(_TOON)] _Toon ("Toon Enabled", Float) = 0
+_ToonIntensity("Toon Intensity", Range(0, 3)) = 1.0
+_ToonSmoothness("Toon Smoothness", Range(0, 0.5)) = 0
+_ToonTint("Toon Tint", Color) = (0.5, 0.5, 0.5, 1)
+_ToonOffset("Toon Offset", Range(0, 1)) = 0.5
+_ToonOcclusionOffset("Toon Occlusion Offset", Range(0, 1)) = 0.5
+_ToonOcclusionSmoothness("Toon Occlusion Smoothnes", Range(0, 0.5)) = 0
+_ToonInShadowTint("In Shadow Tint", Color) = (0, 0, 0, 0.333)
+_ToonInShadowOcclusionTintOffset("In Shadow Occlusion Tint Offset", Color) = (0.35, 0.35, 0.35, 1)
+_ToonOutShadowTint("Out Shadow Tint", Color) = (0, 0, 0, 0.333)
+_ToonSSSTint("SSS Tint", Color) = (0, 0, 0, 0.333)
+[Header(_                                                                                           Rim)]
+[Toggle(_TOON_RIM)] _ToonRim ("Rim Enabled", Float) = 0
+_ToonRimPower("Rim Power", Range(0, 100)) = 1
+_ToonRimIntensity("Rim Intensity", Range(0, 10)) = 1
+_ToonRimColor("Rim Color", Color) = (1, 1, 1, 1)
+
+[Header(_                                                                                           Detail)]
+[Toggle(_TOON_DETAIL)] _ToonDetail ("Toon Detail", Float) = 0
+[NoScaleOffset] _ToonDetailMap("Detail Map", 2D) = "gray" {}
+_ToonDetailLighting("Detail Lighting", Range(0, 10)) = 0
+_ToonDetailLightingOffset("Detail Lighting Offset", Range(0, 1)) = 0.5
+_ToonDetailShadowInput("Detail Shadow Input", Range(0, 253)) = 0
+_ToonDetailHighlightInput("Detail Highlight Input", Range(2, 255)) = 255
+_ToonDetailMidtoneInput("Detail Midtone Input", Range(0.01, 9.99)) = 1
+_ToonDetailShadowOutput("Detail Shadow Output", Range(0, 255)) = 0
+_ToonDetailHighlightOutput("Detail Highlight Output", Range(0, 255)) = 255
+ 
+[Header(_                                                                                           Hatch)]
+[Toggle(_TOON_HATCH)] _HatchEnabled ("Hatch Enabled", Float) = 0
+[KeywordEnum(DEFAULT, SECOND, THIRD)] _Hatch_UV ("Hatch UV", Float) = 0
+[NoScaleOffset] _HatchTex("Hatch", 2D) = "white" {}
+_HatchScale("Hatch Scale", Range(0, 8)) = 4
+_AdditionalLightInHatch("Additional Light in Hatch Offset", Range(0, 15)) = 5
+_AdditionalLightInHatch2("Additional Light in Hatch Lighting", Range(0, 15)) = 5
+_HatchLighting("Hatch Lighting", Range(0, 1)) = 0.125
+_HatchRotation("Hatch Rotation", Range(0, 6.28)) = 0
+
+
+[Header(....................................................................................................)]
+
+[Space(20)]
+[Toggle(_EMISSION)] _Emission ("Emission", Float) = 0
+[HDR] _EmissionColor("Emission Color", Color) = (0,0,0)
+[NoScaleOffset]_EmissionMap("Emission Map", 2D) = "black" {}
+
+[Header(....................................................................................................)]
+
+[Space(20)]
+[Toggle(_SPECULARHIGHLIGHTS_OFF)] _SpecularHighlights("Turn Specular Highlights Off", Float) = 0
+[Toggle(_ENVIRONMENTREFLECTIONS_OFF)] _EnvironmentalReflections("Turn Environmental Reflections Off", Float) = 0

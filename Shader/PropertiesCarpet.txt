@@ -1,0 +1,13 @@
+[Header(....................................................................................................)]
+[Toggle(_CARPET)] _Carpet ("Carpet Enabled", Float) = 0
+_CP_Brightness("Brightness", Range( 0 , 1)) = 0
+[NoScaleOffset]_CP_MainTex("Color Theme", 2D) = "white" {}
+_CP_Darkness("Darkness", Range( 0 , 1)) = 0
+_CP_Edges("Edges", Range( 0.05 , 1)) = 0
+_CP_Threshold("Threshold", Range( 0 , 1)) = 0
+[NoScaleOffset]_CP_RGBAMaskB("RGBA Mask B", 2D) = "white" {}
+[NoScaleOffset]_CP_RGBAMaskA("RGBA Mask A", 2D) = "white" {}
+_CP_DirtOpacity("Dirt Opacity", Range( 0 , 1)) = 0
+_CP_DirtSmooth("Dirt Smooth", Range( 0 , 2)) = 0
+_CP_DirtMultiplier("Dirt Multiplier", Range( 0 , 2)) = 0
+_CP_DirtRange("Dirt Range", Range( 0 , 1)) = 0

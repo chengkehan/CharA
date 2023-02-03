@@ -1,0 +1,26 @@
+[Header(....................................................................................................)]
+[Header(Remember toggle on normalMap otherwise no bump effect)]
+[Toggle(_CONCRETE_RUBBLE)] _ConcreteRubble ("Concrete Rubble Enabled", Float) = 0
+[NoScaleOffset]_CCB_MainTex1("Color Theme", 2D) = "white" {}
+[NoScaleOffset]_CCB_ColorMap("Color Map", 2D) = "white" {}
+_CCB_ConcreteBrightness("Concrete Brightness", Range( 0 , 0.1)) = 0
+_CCB_PaintRange("Paint Range", Range( 0 , 1)) = 0
+_CCB_PaintSmooth("Paint Smooth", Range( 0 , 0.1)) = 0
+[NoScaleOffset]_CCB_MainNM("Main NM", 2D) = "bump" {}
+[NoScaleOffset]_CCB_DamageNM("Damage NM", 2D) = "bump" {}
+_CCB_DamageNMTiling("Damage NM Tiling", Range( 1 , 8)) = 1
+_CCB_DamageScale("Damage Scale", Range( 0 , 1)) = 0
+[NoScaleOffset]_CCB_DetailNM("Detail NM", 2D) = "bump" {}
+_CCB_DetailNMTiling("Detail NM Tiling", Range( 1 , 8)) = 0
+_CCB_DetailScale("Detail Scale", Range( 1 , 4)) = 0
+_CCB_DirtContrast("Dirt Contrast", Range( 0 , 2)) = 0
+_CCB_DirtRange("Dirt Range", Range( 0 , 1)) = 0
+[MaxGay]_CCB_DirtSmooth("Dirt Smooth", Range( 0 , 1)) = 0
+_CCB_EdgesAdd("Edges Add", Range( 0 , 0.25)) = 0
+[NoScaleOffset]_CCB_MaskB("Mask B", 2D) = "white" {}
+[NoScaleOffset]_CCB_MainTex("Mask A", 2D) = "white" {}
+_CCB_DirtInsideMultiplier("Dirt Inside Multiplier", Range( 0 , 1)) = 0
+_CCB_AODirt("AO Dirt", Range( 0 , 1)) = 0
+_CCB_MainSmoothness("Main Smoothness", Range( 0 , 1)) = 0
+_CCB_PaintSmoothness("Paint Smoothness", Range( 0 , 1)) = 0
+_CCB_DirtSmoothness("Dirt Smoothness", Range( 0 , 3)) = 0

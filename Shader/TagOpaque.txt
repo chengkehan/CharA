@@ -1,0 +1,5 @@
+Tags {
+	"RenderPipeline"="UniversalPipeline"
+	"RenderType"="Opaque"
+	"Queue"="Geometry"
+}

@@ -1,0 +1,9 @@
+[Header(....................................................................................................)]
+[Header(Remember toggle on normalMap otherwise no bump effect)]
+[Toggle(_GLASS_INTERIOR)] _GlassInterior ("Glass Interior Enabled", Float) = 0
+[NoScaleOffset]_GLI_MainTex("Glass Mask", 2D) = "black" {}
+[NoScaleOffset]_GLI_ColorTheme("Color Theme", 2D) = "white" {}
+_GLI_SmoothnessValue("Smoothness Value", Range( 0 , 1)) = 1
+[NoScaleOffset]_GLI_GlassNM("Glass NM", 2D) = "bump" {}
+_GLI_WallBrightness("Wall Brightness", Range( 0 , 0.2)) = 0.03536104
+[NoScaleOffset]_GLI_WallTex("WallTex", 2D) = "white" {}

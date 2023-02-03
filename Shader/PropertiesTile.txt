@@ -1,0 +1,29 @@
+[Header(....................................................................................................)]
+[Header(Remember toggle on normalMap otherwise no bump effect)]
+[Toggle(_TILE)] _Tile ("Tile Enabled", Float) = 0
+_CustomWallpaperNumber("Wallpaper Number", Int) = 0
+_CustomWallpaperRow("Wallpaper Row", Int) = 0
+_TILE_DamageAmount("Damage Amount", Range( 0 , 2)) = 0
+[NoScaleOffset]_TILE_MainTex("Color Theme", 2D) = "white" {}
+_TILE_DirtDamageOverlay("Dirt Damage Overlay", Range( 0.01 , 1)) = 0
+_TILE_DirtOverlay("Dirt Overlay", Range( 0.05 , 1)) = 0
+_TILE_EdgesOverlayPower("Edges Overlay Power", Range( 0.01 , 2)) = 0
+_TILE_EdgesDamagePower("Edges Damage Power", Range( 0.01 , 2)) = 0
+_TILE_EdgesDamageMultiply("Edges Damage Multiply", Range( 0 , 2)) = 0
+_TILE_EdgesOverlayMultiply("Edges Overlay Multiply", Range( 0 , 2)) = 0
+[NoScaleOffset]_TILE_NormalDamage("Normal Damage", 2D) = "bump" {}
+_TILE_NormalDamageScale("Normal Damage Scale", Range( 0 , 2)) = 0
+[NoScaleOffset]_TILE_NormalGood("Normal Good", 2D) = "bump" {}
+_TILE_NormalScale("Normal Scale", Range( 0 , 2)) = 0
+_TILE_DirtOpacity("Dirt Opacity", Range( 0 , 1)) = 0
+_TILE_DirtSmooth("Dirt Smooth", Range( 0 , 1)) = 0
+_TILE_DirtRange("Dirt Range", Range( 0 , 1)) = 0
+_TILE_DirtMultiplier("Dirt Multiplier", Range( 0 , 3)) = 0
+_TILE_DirtPower("Dirt Power", Range( 0 , 1)) = 0
+[NoScaleOffset]_TILE_RGBAMaskA("RGBA Mask A", 2D) = "white" {}
+[NoScaleOffset]_TILE_RGBAMaskB("RGBA Mask B", 2D) = "white" {}
+[NoScaleOffset]_TILE_RGBAMaskC("RGBA Mask C", 2D) = "white" {}
+_TILE_SmoothnessMain("Smoothness Main", Range( 0 , 1)) = 0
+_TILE_SmoothnessOverlayDirt("Smoothness Overlay Dirt", Range( 0 , 2)) = 1
+_TILE_SmoothnessDirt("Smoothness Dirt", Range( 0 , 2)) = 0
+[NoScaleOffset]_TILE_Pattern("Pattern", 2D) = "white" {}

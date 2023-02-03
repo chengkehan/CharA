@@ -1,0 +1,22 @@
+[Header(....................................................................................................)]
+[Header(Remember toggle on normalMap otherwise no bump effect)]
+[Toggle(_CINDER_BLOCK_RUBBLE_TILE)] _CinderBlockRubbleTile ("Cinder Block Rubble Tile Enabled", Float) = 0
+[NoScaleOffset]_CBRT_MainTex("Color Theme", 2D) = "white" {}
+_CBRT_PaintRange("Paint Range", Range( 0 , 1)) = 0
+_CBRT_PaintSmooth("Paint Smooth", Range( 0 , 0.1)) = 0
+[NoScaleOffset]_CBRT_DetailsNM("Details NM", 2D) = "bump" {}
+_CBRT_DetailsNMScale("Details NM Scale", Range( 0 , 1)) = 0
+_CBRT_DetailsTiling("Details Tiling", Range( 1 , 8)) = 0
+[NoScaleOffset]_CBRT_MainTex1("Mask A", 2D) = "white" {}
+[NoScaleOffset]_CBRT_MaskB("Mask B", 2D) = "white" {}
+[MaxGay]_CBRT_DirtSmooth("Dirt Smooth", Range( 0 , 1)) = 0
+_CBRT_DirtRange("Dirt Range", Range( 0 , 1)) = 0
+_CBRT_DirtContrast("Dirt Contrast", Range( 0 , 2)) = 0
+_CBRT_DirtBrightness("Dirt Brightness", Range( 0 , 1)) = 0
+_CBRT_MainSmoothness("Main Smoothness", Range( 0 , 1)) = 0
+_CBRT_ColorsNumber("ColorsNumber", Vector) = (0,-0.08,0,0)
+_CBRT_PaintSmoothness("Paint Smoothness", Range( 0 , 1)) = 0
+[NoScaleOffset]_CBRT_BrickTileNM("Brick Tile NM", 2D) = "bump" {}
+_CBRT_BrickNMScale("Brick NM Scale", Range( 1 , 2)) = 1
+[MaxGay]_CBRT_CutAlphaSmooth("Cut Alpha Smooth", Range( 0 , 2)) = 0
+_CBRT_CutAlphaRange("Cut Alpha Range", Range( 0 , 1)) = 0

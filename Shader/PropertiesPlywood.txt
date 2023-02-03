@@ -1,0 +1,28 @@
+[Header(....................................................................................................)]
+[Header(Remember toggle on normalMap otherwise no bump effect)]
+[Toggle(_PLYWOOD)] _Plywood ("Plywood Enabled", Float) = 0
+[NoScaleOffset]_PLYW_ColorTheme("Color Theme", 2D) = "white" {}
+_PLYW_DirtOverlay("Dirt Overlay", Range( 0 , 1)) = 0
+_PLYW_EdgesOverlayMultiply("Edges Overlay Multiply", Range( 0 , 2)) = 0
+_PLYW_EdgesOverlayPower("Edges Overlay Power", Range( 0 , 2)) = 0
+_PLYW_SplintersOverlay("Splinters Overlay", Range( 0 , 1)) = 0
+_PLYW_BrightAreas("Bright Areas", Range( 0 , 1)) = 0
+_PLYW_EdgesBrightness("Edges Brightness", Range( 0 , 2)) = 0
+[NoScaleOffset]_PLYW_PlywoodDamageNM("Plywood Damage NM", 2D) = "bump" {}
+_PLYW_PlywoodDamgeNMScale("Plywood Damge NM Scale", Range( 0 , 2)) = 0
+[NoScaleOffset]_PLYW_PlywoodNM("Plywood NM", 2D) = "bump" {}
+_PLYW_PlywoodNMScale("Plywood NM Scale", Range( 0 , 2)) = 0
+[NoScaleOffset]_PLYW_MainTex("RGBA Mask A", 2D) = "white" {}
+_PLYW_DamageAmount("Damage Amount", Range( 0 , 1)) = 0.421177
+[DamageMaxGay]_PLYW_DamageSmooth("Damage Smooth", Range( 0 , 100)) = 0
+_PLYW_DamageMultiplier("Damage Multiplier", Range( 0 , 1)) = 0.1946161
+_PLYW_DirtOpacity("Dirt Opacity", Range( 0 , 1)) = 0
+_PLYW_DirtRange("Dirt Range", Range( 0 , 1)) = 0
+_PLYW_DirtSmooth("Dirt Smooth", Range( 0 , 1)) = 0
+_PLYW_DirtMultiplier("Dirt Multiplier", Range( 0 , 2)) = 0
+[NoScaleOffset]_PLYW_RGBAMaskB("RGBA Mask B", 2D) = "white" {}
+_PLYW_SmoothnessDirt("Smoothness Dirt", Range( 0 , 1)) = 0
+_PLYW_SmoothnessWood("Smoothness Wood", Range( 0 , 1)) = 0
+_PLYW_SmoothnessDamage("Smoothness Damage", Range( 0 , 1)) = 0
+_PLYW_InsideBrightness("InsideBrightness", Range( 0 , 1)) = 0
+

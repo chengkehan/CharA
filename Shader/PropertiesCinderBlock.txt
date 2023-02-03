@@ -1,0 +1,33 @@
+[Header(....................................................................................................)]
+[Header(Remember toggle on normalMap otherwise no bump effect)]
+[Toggle(_CINDER_BLOCK)] _CinderBlock ("Cinder Block Enabled", Float) = 0
+[NoScaleOffset] _CB_MainTex("Color Theme", 2D) = "white" {}
+_CB_EdgesOverlay("Edges Overlay", Range( 0 , 2)) = 0
+_CB_EdgesMultiply("Edges Multiply", Range( 0 , 1)) = 0
+_CB_DamageAmount("Damage Amount", Range( 0 , 1)) = 0.421177
+_CB_DamageSmoothness("Damage Smoothness", Range( 0 , 20)) = 0
+_CB_DamageMultiplier("Damage Multiplier", Range( 0 , 3)) = 0.1946161
+[NoScaleOffset] _CB_PaintNM("Paint NM", 2D) = "bump" {}
+_CB_PaintNMScale("Paint NM Scale", Range( 1 , 2)) = 1
+_CB_PaintSharpness("Paint Sharpness", Range( 0 , 1)) = 0
+_CB_PaintBareSmooth("Paint Bare Smooth", Range( 0 , 1)) = 0
+_CB_PaintBareRange("Paint Bare Range", Range( 0 , 1)) = 0
+_CB_PaintEdgesMultiply("Paint Edges Multiply", Range( 0 , 1)) = 1
+[NoScaleOffset] _CB_TransitionNM("Transition NM", 2D) = "bump" {}
+_CB_TransitionNMScale("Transition NM Scale", Range( 1 , 2)) = 0
+[NoScaleOffset] _CB_PaintDamageNM("Paint Damage NM", 2D) = "bump" {}
+_CB_PaintDamageNMScale("Paint Damage NM Scale", Range( 1 , 2)) = 1
+_CB_DirtOpacity("Dirt Opacity", Range( 0 , 1)) = 0
+_CB_DirtRange("Dirt Range", Range( 0 , 1)) = 0
+_CB_DirtSmooth("Dirt Smooth", Range( 0 , 1)) = 0
+_CB_DirtMultiplier("Dirt Multiplier", Range( 0 , 4)) = 0
+[NoScaleOffset] _CB_RGBAMaskA("RGBA Mask A", 2D) = "white" {}
+[NoScaleOffset] _CB_RGBAMaskB("RGBA Mask B", 2D) = "white" {}
+[NoScaleOffset] _CB_RGBAMaskC("RGBA Mask C", 2D) = "white" {}
+_CB_TransitionBrighthness("Transition Brighthness", Range( 1 , 2)) = 0
+_CB_SmoothnessMain("Smoothness Main", Range( 0 , 1)) = 0
+_CB_SmoothnessDamage("Smoothness Damage", Range( 0 , 1)) = 0
+_CB_SmoothnessDirt("Smoothness Dirt", Range( 0 , 1)) = 0
+_CB_PaintSmoothness("Paint Smoothness", Range( 0 , 1)) = 0
+_CB_ChippedPaintScale("Chipped Paint Scale", Range( 0 , 1)) = 0
+_CB_ChippedPaintBrightness("Chipped Paint Brightness", Range( 0 , 1)) = 0
