@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
-using GameScript.Cutscene;
 
 namespace GameScript
 {
-    public class PaperClickedND : NotificationData
+    [Serializable]
+    public class CardboardBoxPD : SerializableMonoBehaviourPD
     {
-        public Paper paper = null;
+        
     }
 }

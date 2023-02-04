@@ -70,7 +70,7 @@ namespace GameScript
             EventSystem.GetInstance().AddListener(EventID.NewOperation, NewOperationHandler);
             EventSystem.GetInstance().AddListener(EventID.NoWayToPoint, NoWayToPointHandler);
             EventSystem.GetInstance().AddListener(EventID.StopShakeHead, StopShakeHeadHandler);
-            EventSystem.GetInstance().AddListener(EventID.PaperClicked, PaperClickedHandler);
+            EventSystem.GetInstance().AddListener(EventID.PickupableObjectClicked, PickupableObjectClickedHandler);
         }
 
         private void RemoveListeners()
@@ -83,7 +83,7 @@ namespace GameScript
             EventSystem.GetInstance().RemoveListener(EventID.NewOperation, NewOperationHandler);
             EventSystem.GetInstance().RemoveListener(EventID.NoWayToPoint, NoWayToPointHandler);
             EventSystem.GetInstance().RemoveListener(EventID.StopShakeHead, StopShakeHeadHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.PaperClicked, PaperClickedHandler);
+            EventSystem.GetInstance().RemoveListener(EventID.PickupableObjectClicked, PickupableObjectClickedHandler);
         }
 
         private void NewOperationHandler(NotificationData _data)
@@ -92,7 +92,7 @@ namespace GameScript
             if (data != null && data.roleID == actor.o.GetId())
             {
                 NewOperationHandler_BreakWall(data);
-                NewOperationHandler_ReadPaper(data);
+                NewOperationHandler_PickupableObject(data);
             }
         }
 
@@ -103,50 +103,57 @@ namespace GameScript
             {
                 MoveToWaypointsEndHanlder_BreakWall(data);
                 MoveToWaypointsEndHanlder_SceneItemHUDClicked(data);
-                MoveToWaypointsEndHandler_ReadPaper(data);
+                MoveToWaypointsEndHandler_PickupableObject(data);
             }
         }
 
         #endregion
 
-        #region Read Paper
+        #region PickupableObject
 
-        private Paper _pendingPaper = null;
+        private PickupableObjectClickedClickedND _pickupableObjectND = null;
 
-        private Coroutine _openPaperDelay = null;
+        private Coroutine _openPickupableObjectDelay = null;
 
-        private IEnumerator OpenPaperDelayCoroutine(Paper paper, float delaySeconds)
+        private IEnumerator OpenPickupableObjectDelayCoroutine(PickupableObjectClickedClickedND data, float delaySeconds)
         {
             // Waiting for turning complete
             yield return new WaitForSeconds(delaySeconds);
 
-            UIManager.GetInstance().OpenUI(UIManager.UIName.Paper, null);
-        }
-
-        private void StopOpenPaperDelay()
-        {
-            if (_openPaperDelay != null)
+            if (data.paper != null)
             {
-                StopCoroutine(_openPaperDelay);
-                _openPaperDelay = null;
+                UIManager.GetInstance().OpenUI(UIManager.UIName.Paper, null);
+            }
+            if (data.cardboardBox != null)
+            {
+                UIManager.GetInstance().OpenUI(UIManager.UIName.CardboardBox, null);
             }
         }
 
-        private void NewOperationHandler_ReadPaper(NewOperationND data)
+        private void StopOpenPickupableObjectDelay()
         {
-            StopOpenPaperDelay();
+            if (_openPickupableObjectDelay != null)
+            {
+                StopCoroutine(_openPickupableObjectDelay);
+                _openPickupableObjectDelay = null;
+            }
         }
 
-        private void PaperClickedHandler(NotificationData _data)
+        private void NewOperationHandler_PickupableObject(NewOperationND data)
         {
-            var data = _data as PaperClickedND;
+            StopOpenPickupableObjectDelay();
+        }
+
+        private void PickupableObjectClickedHandler(NotificationData _data)
+        {
+            var data = _data as PickupableObjectClickedClickedND;
             if (data != null)
             {
-                var paper = data.paper;
-                var waypoint = GetWaypointPath().GetNearestMovingWaypointInBounds(paper.GetPosition(), paper.waypointsBounds.bounds, Matrix4x4.identity);
+                GetPickupableObjectData(data, out var position, out var bounds);
+                var waypoint = GetWaypointPath().GetNearestMovingWaypointInBounds(position, bounds, Matrix4x4.identity);
                 if (waypoint != null)
                 {
-                    _pendingPaper = paper;
+                    _pickupableObjectND = data;
 
                     var operation = GetOperation().GenerateMovingOperation(waypoint);
                     GetOperation().SetOperation(operation);
@@ -154,32 +161,53 @@ namespace GameScript
             }
         }
 
-        private void MoveToWaypointsEndHandler_ReadPaper(MoveToWaypointsEndND data)
+        private void MoveToWaypointsEndHandler_PickupableObject(MoveToWaypointsEndND data)
         {
-            if (_pendingPaper != null)
+            if (_pickupableObjectND != null)
             {
-                var waypoint = GetWaypointPath().GetNearestMovingWaypointInBounds(_pendingPaper.GetPosition(), _pendingPaper.waypointsBounds.bounds, Matrix4x4.identity);
+                GetPickupableObjectData(_pickupableObjectND, out var position, out var bounds);
+                var waypoint = GetWaypointPath().GetNearestMovingWaypointInBounds(position, bounds, Matrix4x4.identity);
                 if (waypoint == data.endWaypoint)
                 {
                     GetMotionAnimator().StopShakeHead(false);
 
                     float delaySeconds = 0;
-                    if (GetMotionAnimator().AtRightHandSide(_pendingPaper.GetPosition()))
+                    if (GetMotionAnimator().AtRightHandSide(position))
                     {
                         delaySeconds = 1;
                         GetMotionAnimator().SetState(MotionAnimator.State.Turning, MotionAnimator.State.DirectionRight);
                     }
-                    if (GetMotionAnimator().AtLeftHandSide(_pendingPaper.GetPosition()))
+                    if (GetMotionAnimator().AtLeftHandSide(position))
                     {
                         delaySeconds = 1;
                         GetMotionAnimator().SetState(MotionAnimator.State.Turning, MotionAnimator.State.DirectionLeft);
                     }
 
-                    StopOpenPaperDelay();
-                    _openPaperDelay = StartCoroutine(OpenPaperDelayCoroutine(_pendingPaper, delaySeconds));
+                    StopOpenPickupableObjectDelay();
+                    _openPickupableObjectDelay = StartCoroutine(OpenPickupableObjectDelayCoroutine(_pickupableObjectND, delaySeconds));
                 }
             }
-            _pendingPaper = null;
+            _pickupableObjectND = null;
+        }
+
+        private void GetPickupableObjectData(PickupableObjectClickedClickedND data, out Vector3 position, out Bounds bounds)
+        {
+            position = Vector3.zero;
+            bounds = new Bounds(Vector3.zero, Vector3.one);
+
+            if (data != null)
+            {
+                if (data.paper != null)
+                {
+                    position = data.paper.GetPosition();
+                    bounds = data.paper.waypointsBounds.bounds;
+                }
+                if (data.cardboardBox != null)
+                {
+                    position = data.cardboardBox.GetPosition();
+                    bounds = data.cardboardBox.waypointsBounds.bounds;
+                }
+            }
         }
 
         #endregion

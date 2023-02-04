@@ -124,9 +124,19 @@ namespace GameScript
                         if (Interactive3DDetector.Select<Paper>(out var paper))
                         {
                             operationIsReady = false;
-                            var notificationData = new PaperClickedND();
+                            var notificationData = new PickupableObjectClickedClickedND();
                             notificationData.paper = paper;
-                            EventSystem.GetInstance().Notify(EventID.PaperClicked, notificationData);
+                            EventSystem.GetInstance().Notify(EventID.PickupableObjectClicked, notificationData);
+                            return null;
+                        }
+                    }
+                    {
+                        if (Interactive3DDetector.Select<CardboardBox>(out var cardboardBox))
+                        {
+                            operationIsReady = false;
+                            var notificationData = new PickupableObjectClickedClickedND();
+                            notificationData.cardboardBox = cardboardBox;
+                            EventSystem.GetInstance().Notify(EventID.PickupableObjectClicked, notificationData);
                             return null;
                         }
                     }

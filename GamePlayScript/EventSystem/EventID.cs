@@ -23,7 +23,7 @@ namespace GameScript
         DestroyItem,
         NoWayToPoint,
         StopShakeHead,
-        PaperClicked,
+        PickupableObjectClicked,
         SceneLoaded
     }
 }
