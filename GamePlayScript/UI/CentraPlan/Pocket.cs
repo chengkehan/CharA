@@ -164,18 +164,18 @@ namespace GameScript.UI.CentraPlan.Hero
 
                 if (pocketItemPD.IsEmpty())
                 {
-                    ShowTooltip(tipText, TooltipType.Text);
+                    ShowTooltip(tipText);
                 }
                 else
                 {
                     var itemConfig = DataCenter.GetInstance().GetItemConfig(pocketItemPD.itemID);
                     if (itemConfig.eatable)
                     {
-                        ShowTooltip(tipText, TooltipType.Text_Discard_Eat, () => { DiscardItem(); }, () => { EatItem(); });
+                        ShowTooltip(tipText, () => { DiscardItem(); }, () => { EatItem(); });
                     }
                     else
                     {
-                        ShowTooltip(tipText, TooltipType.Text_Discard, () => { DiscardItem(); });
+                        ShowTooltip(tipText, () => { DiscardItem(); });
                     }
                 }
             }

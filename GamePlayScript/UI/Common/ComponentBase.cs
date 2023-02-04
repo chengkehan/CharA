@@ -23,6 +23,19 @@ namespace GameScript.UI.Common
 
         #endregion
 
+        public void SetVisible(bool visible)
+        {
+            if (gameObject != null && gameObject.activeSelf != visible)
+            {
+                gameObject.SetActive(visible);
+            }
+        }
+
+        public bool GetVisible()
+        {
+            return gameObject == null ? false : gameObject.activeSelf;
+        }
+
         public void SetAnchoredPoint(Vector2 pos)
         {
             if (GetRectTransform() != null)
@@ -124,12 +137,18 @@ namespace GameScript.UI.Common
 
         private void AddListeners_UGUI_EventSystem()
         {
-            EventSystem.GetInstance().AddListener(EventID.UGUI_EventSystemChanged, UGUI_EventSystemChangedHandler);
+            if (tooltipEnabled)
+            {
+                EventSystem.GetInstance().AddListener(EventID.UGUI_EventSystemChanged, UGUI_EventSystemChangedHandler);
+            }
         }
 
         private void RemoveListeners_UGUI_EventSystem()
         {
-            EventSystem.GetInstance().RemoveListener(EventID.UGUI_EventSystemChanged, UGUI_EventSystemChangedHandler);
+            if (tooltipEnabled)
+            {
+                EventSystem.GetInstance().RemoveListener(EventID.UGUI_EventSystemChanged, UGUI_EventSystemChangedHandler);
+            }
         }
 
         private void UGUI_EventSystemChangedHandler(NotificationData _data)
@@ -171,16 +190,15 @@ namespace GameScript.UI.Common
 
         #region Tooltip
 
-        protected enum TooltipType
-        {
-            Text,
-            Text_Discard,
-            Text_Discard_Eat,
-            Text_Discard_Eat_Transfer
-        }
-
         [SerializeField]
         private bool _tooltipEnabled = false;
+        private bool tooltipEnabled
+        {
+            get
+            {
+                return _tooltipEnabled;
+            }
+        }
 
         [ConditionDisable("_tooltipEnabled", true)]
         [SerializeField]
@@ -206,7 +224,7 @@ namespace GameScript.UI.Common
 
         private bool _tooltipIsLoading = false;
 
-        protected void ShowTooltip(string txt, TooltipType tooltipType, Action discardHandler = null, Action eatHandler = null, Action transferHandler = null)
+        protected void ShowTooltip(string txt, Action discardHandler = null, Action eatHandler = null, Action transferHandler = null)
         {
             if (_tooltipEnabled == false)
             {
@@ -224,8 +242,8 @@ namespace GameScript.UI.Common
                     {
                         _tooltipIsLoading = false;
                         _tooltip = obj.GetComponent<Tooltip>();
-                        ShowTooltipByType(_tooltip, tooltipType, txt, discardHandler, eatHandler, transferHandler);
-                        _tooltip.gameObject.SetActive(_tooltipVisible);
+                        _tooltip.tooltip_text_discard_eat_transfer.Set(txt, eatHandler, discardHandler, transferHandler);
+                        _tooltip.SetVisible(_tooltipVisible);
 
                         Vector3 wPos = GetRectTransform().localToWorldMatrix.MultiplyPoint(new Vector3(_tooltipX, _tooltipY, 0));
 
@@ -244,8 +262,8 @@ namespace GameScript.UI.Common
             }
             else
             {
-                ShowTooltipByType(_tooltip, tooltipType, txt, discardHandler, eatHandler, transferHandler);
-                _tooltip.gameObject.SetActive(_tooltipVisible);
+                _tooltip.tooltip_text_discard_eat_transfer.Set(txt, eatHandler, discardHandler, transferHandler);
+                _tooltip.SetVisible(_tooltipVisible);
                 TryPushToTopWhenTooltip();
             }
         }
@@ -260,7 +278,7 @@ namespace GameScript.UI.Common
             _tooltipVisible = false;
             if (_tooltip != null)
             {
-                _tooltip.gameObject.SetActive(_tooltipVisible);
+                _tooltip.SetVisible(_tooltipVisible);
             }
         }
 
@@ -270,36 +288,6 @@ namespace GameScript.UI.Common
             {
                 AssetsManager.GetInstance().UnloadGameObject(_tooltip.gameObject);
                 _tooltip = null;
-            }
-        }
-
-        private void ShowTooltipByType(Tooltip tooltip, TooltipType tooltipType, string txt, Action discardHandler, Action eatHandler, Action transferHandler)
-        {
-            if (tooltipType == TooltipType.Text)
-            {
-                tooltip.tooltip_text.SetText(txt);
-            }
-            else if (tooltipType == TooltipType.Text_Discard)
-            {
-                tooltip.tooltip_text_discard.discardHandler = discardHandler;
-                tooltip.tooltip_text_discard.SetText(txt);
-            }
-            else if (tooltipType == TooltipType.Text_Discard_Eat)
-            {
-                tooltip.tooltip_text_discard_eat.eatHandler = eatHandler;
-                tooltip.tooltip_text_discard_eat.discardHandler = discardHandler;
-                tooltip.tooltip_text_discard_eat.SetText(txt);
-            }
-            else if (tooltipType == TooltipType.Text_Discard_Eat_Transfer)
-            {
-                tooltip.tooltip_text_discard_eat_transfer.transferHandler = transferHandler;
-                tooltip.tooltip_text_discard_eat_transfer.eatHandler = eatHandler;
-                tooltip.tooltip_text_discard_eat_transfer.discardHandler = discardHandler;
-                tooltip.tooltip_text_discard_eat_transfer.SetText(txt);
-            }
-            else
-            {
-                Utils.LogObservably("Unexpected tooltip type " + tooltipType);
             }
         }
 

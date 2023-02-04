@@ -128,11 +128,11 @@ namespace GameScript.UI.CentraPlan.Hero
 
                 if (heroActorPD.inHandItem.IsEmpty())
                 {
-                    ShowTooltip(tooltip, TooltipType.Text);
+                    ShowTooltip(tooltip);
                 }
                 else
                 {
-                    ShowTooltip(tooltip, TooltipType.Text_Discard, () => { DiscardItem(); });
+                    ShowTooltip(tooltip, () => { DiscardItem(); });
                 }
             }
 

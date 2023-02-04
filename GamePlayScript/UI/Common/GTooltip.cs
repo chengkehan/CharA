@@ -15,7 +15,7 @@ namespace GameScript.UI.Common
         {
             if (string.IsNullOrWhiteSpace(tooltipLanguageKey) == false)
             {
-                ShowTooltip(GetLanguage(tooltipLanguageKey), TooltipType.Text);
+                ShowTooltip(GetLanguage(tooltipLanguageKey));
             }
         }
 
