@@ -216,6 +216,11 @@ namespace GameScript
 
         private ItemConfig _nullItemConfig = new ItemConfig();
 
+        public bool ContainsItemConfig(string id)
+        {
+            return itemConfigs.ContainsKey(id);
+        }
+
         public ItemConfig GetItemConfig(string id)
         {
             if (itemConfigs.TryGetValue(id, out var itemConfig))

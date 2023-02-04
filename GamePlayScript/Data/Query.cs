@@ -8,6 +8,55 @@ namespace GameScript
 {
     public class Query
     {
+        public bool ItemAlreadyExistedInWorld(string itemGUID)
+        {
+            bool alreadyExistedInTheWorld = false;
+
+            // Checking all actors
+            {
+                var allActorPD = DataCenter.GetInstance().playerData.GetAllSerializableMonoBehaviourPD<ActorPD>();
+                for (int actorPDI = 0; actorPDI < allActorPD.Count; actorPDI++)
+                {
+                    var actorPD = allActorPD[actorPDI];
+
+                    // Checking pocket
+                    for (int pocketI = 0; pocketI < actorPD.NumberPocketItems(); pocketI++)
+                    {
+                        var pocketItem = actorPD.GetPocketItem(pocketI);
+                        if (pocketItem.IsEmpty() == false && pocketItem.guid == itemGUID)
+                        {
+                            alreadyExistedInTheWorld = true;
+                        }
+                    }
+
+                    // Checking hand
+                    if (actorPD.inHandItem.IsEmpty() == false && actorPD.inHandItem.guid == itemGUID)
+                    {
+                        alreadyExistedInTheWorld = true;
+                    }
+                }
+            }
+
+            // Checking Scene
+            {
+                var allScenePD = DataCenter.GetInstance().playerData.GetAllSerializableMonoBehaviourPD<ScenePD>();
+                for (int scenePDI = 0; scenePDI < allScenePD.Count; scenePDI++)
+                {
+                    var scenePD = allScenePD[scenePDI];
+                    for (int sceneItemPDI = 0; sceneItemPDI < scenePD.NumberSceneItemPD(); sceneItemPDI++)
+                    {
+                        var sceneItemPD = scenePD.GetSceneItemPD(sceneItemPDI);
+                        if (sceneItemPD.guid == itemGUID)
+                        {
+                            alreadyExistedInTheWorld = true;
+                        }
+                    }
+                }
+            }
+
+            return alreadyExistedInTheWorld;
+        }
+
         public bool IsHeroRoleID(string roleID)
         {
             return roleID == AssetsManager.HERO_ROLE_ID;

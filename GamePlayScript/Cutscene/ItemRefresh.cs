@@ -44,51 +44,7 @@ namespace GameScript.Cutscene
         {
             if (pd.refreshTimes < maxRefreshTimes)
             {
-                bool alreadyExistedInTheWorld = false;
-
-                // Checking all actors
-                {
-                    var allActorPD = DataCenter.GetInstance().playerData.GetAllSerializableMonoBehaviourPD<ActorPD>();
-                    for (int actorPDI = 0; actorPDI < allActorPD.Count; actorPDI++)
-                    {
-                        var actorPD = allActorPD[actorPDI];
-
-                        // Checking pocket
-                        for (int pocketI = 0; pocketI < actorPD.NumberPocketItems(); pocketI++)
-                        {
-                            var pocketItem = actorPD.GetPocketItem(pocketI);
-                            if (pocketItem.IsEmpty() == false && pocketItem.guid == guid)
-                            {
-                                alreadyExistedInTheWorld = true;
-                            }
-                        }
-
-                        // Checking hand
-                        if (actorPD.inHandItem.IsEmpty() == false && actorPD.inHandItem.guid == guid)
-                        {
-                            alreadyExistedInTheWorld = true;
-                        }
-                    }
-                }
-
-                // Checking Scene
-                {
-                    var allScenePD = DataCenter.GetInstance().playerData.GetAllSerializableMonoBehaviourPD<ScenePD>();
-                    for (int scenePDI = 0; scenePDI < allScenePD.Count; scenePDI++)
-                    {
-                        var scenePD = allScenePD[scenePDI];
-                        for (int sceneItemPDI = 0; sceneItemPDI < scenePD.NumberSceneItemPD(); sceneItemPDI++)
-                        {
-                            var sceneItemPD = scenePD.GetSceneItemPD(sceneItemPDI);
-                            if (sceneItemPD.guid == guid)
-                            {
-                                alreadyExistedInTheWorld = true;
-                            }
-                        }
-                    }
-                }
-
-                if (alreadyExistedInTheWorld == false)
+                if (DataCenter.query.ItemAlreadyExistedInWorld(guid) == false)
                 {
                     var itemConfig = DataCenter.GetInstance().GetItemConfig(itemID);
                     Scene.GetInstance().AddSceneItem(
