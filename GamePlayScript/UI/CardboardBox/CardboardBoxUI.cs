@@ -40,6 +40,16 @@ namespace GameScript.UI.CardboardBoxUI
             }
         }
 
+        [SerializeField]
+        private Transform _spawnPoint = null;
+        private Transform spawnPoint
+        {
+            get
+            {
+                return _spawnPoint;
+            }
+        }
+
         private MeshRenderer[] allMeshRenderers = null;
 
         private bool isMouseButtonDown = false;

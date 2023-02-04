@@ -120,7 +120,7 @@ namespace GameScript
             // Waiting for turning complete
             yield return new WaitForSeconds(delaySeconds);
 
-            UIManager.GetInstance().OpenUI(UIManager.UIName.CardboardBox, null);
+            UIManager.GetInstance().OpenUI(UIManager.UIName.Paper, null);
         }
 
         private void StopOpenPaperDelay()

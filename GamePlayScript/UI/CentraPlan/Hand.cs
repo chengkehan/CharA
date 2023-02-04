@@ -132,7 +132,7 @@ namespace GameScript.UI.CentraPlan.Hero
                 }
                 else
                 {
-                    ShowTooltip(tooltip, () => { DiscardItem(); });
+                    ShowTooltip(tooltip, DiscardItem);
                 }
             }
 

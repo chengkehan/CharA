@@ -77,6 +77,11 @@ namespace GameScript.UI.CentraPlan.Hero
             }
         }
 
+        private void TransferItem()
+        {
+
+        }
+
         private void EatItem()
         {
             Utils.Log("eat");
@@ -171,11 +176,26 @@ namespace GameScript.UI.CentraPlan.Hero
                     var itemConfig = DataCenter.GetInstance().GetItemConfig(pocketItemPD.itemID);
                     if (itemConfig.eatable)
                     {
-                        ShowTooltip(tipText, () => { DiscardItem(); }, () => { EatItem(); });
+                        if (UIManager.GetInstance().ContainsUI(UIManager.UIName.CardboardBox))
+                        {
+                            ShowTooltip(tipText, DiscardItem, EatItem, TransferItem);
+                        }
+                        else
+                        {
+                            ShowTooltip(tipText, DiscardItem, EatItem);
+                        }
+                        
                     }
                     else
                     {
-                        ShowTooltip(tipText, () => { DiscardItem(); });
+                        if (UIManager.GetInstance().ContainsUI(UIManager.UIName.CardboardBox))
+                        {
+                            ShowTooltip(tipText, DiscardItem, null, TransferItem); 
+                        }
+                        else
+                        {
+                            ShowTooltip(tipText, DiscardItem);
+                        }
                     }
                 }
             }
