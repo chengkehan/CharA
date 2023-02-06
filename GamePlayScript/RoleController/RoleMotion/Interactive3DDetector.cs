@@ -160,7 +160,7 @@ namespace GameScript
         {
             if (_layerMaskOfInteractive3D == 0)
             {
-                _layerMaskOfInteractive3D = LayerMask.GetMask(new string[] { "Interactive3D" });
+                _layerMaskOfInteractive3D = LayerMask.GetMask(new string[] { Define.Layers.Interactive3D.ToString() });
             }
             return _layerMaskOfInteractive3D;
         }

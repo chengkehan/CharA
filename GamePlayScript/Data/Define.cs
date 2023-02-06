@@ -21,6 +21,12 @@ namespace GameScript
             Two = 2
         }
 
+        public enum Layers
+        {
+            Interactive3D = 6,
+            UI3D = 7
+        }
+
         public readonly float SceneItemYOffset = 1;
 
         public readonly float SceneItemVisibleRange = 3;

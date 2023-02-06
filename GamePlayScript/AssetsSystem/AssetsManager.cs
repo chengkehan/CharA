@@ -127,17 +127,17 @@ namespace GameScript
 
         private Dictionary<string/*guid*/, SceneItemDelegate> _allSceneItem = new Dictionary<string, SceneItemDelegate>();
 
-        public void LoadSceneItem(string guid, string name, Action<GameObject> completeCB)
+        public void LoadSceneItem(string itemGUID, string itemID, Action<GameObject> completeCB)
         {
-            Utils.Assert(ContainsSceneItem(guid) == false);
+            Utils.Assert(ContainsSceneItem(itemGUID) == false);
 
             var sceneItemDelegate = new SceneItemDelegate();
-            sceneItemDelegate.guid = guid;
-            _allSceneItem.Add(guid, sceneItemDelegate);
+            sceneItemDelegate.guid = itemGUID;
+            _allSceneItem.Add(itemGUID, sceneItemDelegate);
 
-            LoadGameObject(ITEM_MODEL_PREFIX + name, (obj)=>
+            LoadGameObject(ITEM_MODEL_PREFIX + itemID, (obj)=>
             {
-                if (ContainsSceneItem(guid))
+                if (ContainsSceneItem(itemGUID))
                 {
                     sceneItemDelegate.go = obj;
                     completeCB?.Invoke(obj);

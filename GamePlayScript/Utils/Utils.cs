@@ -10,6 +10,21 @@ namespace GameScript
 {
     public class Utils
     {
+        public static void SetLayerRecursively(GameObject go, int layer)
+        {
+            if (go != null)
+            {
+                go.layer = layer;
+                if (go.transform != null)
+                {
+                    for (int childI = 0; childI < go.transform.childCount; childI++)
+                    {
+                        SetLayerRecursively(go.transform.GetChild(childI).gameObject, layer);
+                    }
+                }
+            }
+        }
+
         public static T StringToEnum<T>(string str)
             where T : System.Enum
         {

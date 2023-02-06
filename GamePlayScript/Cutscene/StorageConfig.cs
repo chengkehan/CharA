@@ -61,23 +61,30 @@ namespace GameScript.Cutscene
                                     var itemConfig = DataCenter.GetInstance().GetItemConfig(item.itemID);
                                     if (DataCenter.query.EnumMaskMatching(itemConfig.space, (int)legalItemSpace))
                                     {
-                                        storagePD.AddItem(item);
+                                        if (storagePD.NumberItems() < capacity)
+                                        {
+                                            storagePD.AddItem(item);
+                                        }
+                                        else
+                                        {
+                                            Utils.LogObservably("Storage initialization: capacity is full.");
+                                        }
                                     }
                                     else
                                     {
-                                        Utils.LogObservably("CardboardBox initialization: ItemSpace mismatching, " + itemConfig.space + ", need " + legalItemSpace);
+                                        Utils.LogObservably("Storage initialization: ItemSpace mismatching, " + itemConfig.space + ", need " + legalItemSpace);
                                     }
                                 }
                             }
                         }
                         else
                         {
-                            Utils.LogObservably("CardboardBox initialization: Illegal itemGUID, " + item.itemGUID);
+                            Utils.LogObservably("Storage initialization: Illegal itemGUID, " + item.itemGUID);
                         }
                     }
                     else
                     {
-                        Utils.LogObservably("CardboardBox initialization: Illegal itemID, " + item.itemID);
+                        Utils.LogObservably("Storage initialization: Illegal itemID, " + item.itemID);
                     }
                 }
             }

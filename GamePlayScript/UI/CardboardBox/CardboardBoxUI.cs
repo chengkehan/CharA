@@ -61,8 +61,34 @@ namespace GameScript.UI.CardboardBoxUI
 
         public void Initialize(CardboardBox cardboardBox)
         {
-            this.cardboardBox = cardboardBox;
-            Utils.Log(cardboardBox, cardboardBox);
+            if (cardboardBox != null)
+            {
+                this.cardboardBox = cardboardBox;
+
+                for (int i = 0; i < cardboardBox.pd.NumberItems(); i++)
+                {
+                    var itemPD = cardboardBox.pd.GetItem(i);
+
+                    AssetsManager.GetInstance().LoadSceneItem(itemPD.guid, itemPD.itemID, (go) =>
+                    {
+                        go.transform.SetParent(spawnPoint, false);
+                        go.transform.localPosition = Vector3.zero;
+                        Utils.SetLayerRecursively(go, (int)Define.Layers.UI3D);
+                    });
+                }
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (cardboardBox != null)
+            {
+                for (int i = 0; i < cardboardBox.pd.NumberItems(); i++)
+                {
+                    var itemPD = cardboardBox.pd.GetItem(i);
+                    AssetsManager.GetInstance().UnloadSceneItem(itemPD.guid);
+                }
+            }
         }
 
         private void Start()
