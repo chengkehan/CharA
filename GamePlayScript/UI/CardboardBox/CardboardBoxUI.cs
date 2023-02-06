@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using GameScript.UI.Common;
 using TMPro;
 using GameScript.UI.CentraPlan;
+using GameScript.Cutscene;
 
 namespace GameScript.UI.CardboardBoxUI
 {
@@ -55,6 +56,14 @@ namespace GameScript.UI.CardboardBoxUI
         private bool isMouseButtonDown = false;
         private Vector3 mousePosition = Vector3.zero;
         private Quaternion box3DRotationMouseDown = Quaternion.identity;
+
+        private CardboardBox cardboardBox = null;
+
+        public void Initialize(CardboardBox cardboardBox)
+        {
+            this.cardboardBox = cardboardBox;
+            Utils.Log(cardboardBox, cardboardBox);
+        }
 
         private void Start()
         {

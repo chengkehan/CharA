@@ -8,6 +8,17 @@ namespace GameScript
 {
     public class Query
     {
+        public bool EnumMaskMatching<T>(T a, T b)
+            where T : Enum
+        {
+            return (Convert.ToInt32(a) & Convert.ToInt32(b)) != 0;
+        }
+
+        public bool EnumMaskMatching(int a, int b)
+        {
+            return (a & b) != 0;
+        }
+
         public bool ItemAlreadyExistedInWorld(string itemGUID)
         {
             bool alreadyExistedInTheWorld = false;
@@ -146,14 +157,9 @@ namespace GameScript
             return itemSpace == Define.ItemSpace.One;
         }
 
-        //public bool ItemCanBeInBackpack(Define.ItemSpace itemSpace)
-        //{
-        //    return ItemCanBeInPocket(itemSpace) || itemSpace == Define.ItemSpace.Four;
-        //}
-
         public bool ItemCanBeInHandOnly(Define.ItemSpace itemSpace)
         {
-            return itemSpace == Define.ItemSpace.Zero;
+            return itemSpace == Define.ItemSpace.Two;
         }
 
         // for example, role has key to door, so that role can open this door.

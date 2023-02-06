@@ -17,9 +17,8 @@ namespace GameScript
         // How many space does item take up in pocket or backpack. 
         public enum ItemSpace
         {
-            Zero = 0,
             One = 1,
-            Four = 4
+            Two = 2
         }
 
         public readonly float SceneItemYOffset = 1;

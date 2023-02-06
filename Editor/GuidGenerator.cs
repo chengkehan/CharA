@@ -13,7 +13,10 @@ namespace GameScriptEditor
         [MenuItem("GameTools/GUID Generator")]
         private static void Execute()
         {
-            Utils.Log(Guid.NewGuid().ToString());
+            string guid = Guid.NewGuid().ToString();
+            Utils.Log(guid);
+            UnityEngine.GUIUtility.systemCopyBuffer = guid;
+
         }
     }
 }

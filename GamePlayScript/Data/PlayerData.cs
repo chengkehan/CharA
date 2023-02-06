@@ -41,6 +41,9 @@ namespace GameScript
         [SerializeField]
         private SerializableDictionary<string, DayNightPD> allDayNightPD = new SerializableDictionary<string, DayNightPD>();
 
+        [SerializeField]
+        private SerializableDictionary<string, CardboardBoxPD> allCardboardBoxPD = new SerializableDictionary<string, CardboardBoxPD>();
+
         private class PDObjects
         {
             public Type pdType = null;
@@ -64,6 +67,7 @@ namespace GameScript
             allPDObjects.Add(new PDObjects() { pdType = typeof(DynamicLinkPD), monoType = typeof(DynamicLink), collection = allDynamicLinkPD });
             allPDObjects.Add(new PDObjects() { pdType = typeof(PaperPD), monoType = typeof(Paper), collection = allPaperPD });
             allPDObjects.Add(new PDObjects() { pdType = typeof(DayNightPD), monoType = typeof(DayNight), collection = allDayNightPD });
+            allPDObjects.Add(new PDObjects() { pdType = typeof(CardboardBoxPD), monoType = typeof(CardboardBox), collection = allCardboardBoxPD });
         }
 
         public void OnSave()
@@ -77,6 +81,7 @@ namespace GameScript
             SaveSerializableMonoBehaviours<DynamicLinkPD, DynamicLink>(allDynamicLinkPD);
             SaveSerializableMonoBehaviours<PaperPD, Paper>(allPaperPD);
             SaveSerializableMonoBehaviours<DayNightPD, DayNight>(allDayNightPD);
+            SaveSerializableMonoBehaviours<CardboardBoxPD, CardboardBox>(allCardboardBoxPD);
         }
 
         public T GetSerializableMonoBehaviourPD<T>(string guid)

@@ -2,6 +2,7 @@ using System.Collections;
 using GameScript.Cutscene;
 using UnityEngine;
 using GameScript.UI.Talking;
+using GameScript.UI.CardboardBoxUI;
 using System;
 
 namespace GameScript
@@ -126,7 +127,11 @@ namespace GameScript
             }
             if (data.cardboardBox != null)
             {
-                UIManager.GetInstance().OpenUI(UIManager.UIName.CardboardBox, null);
+                UIManager.GetInstance().OpenUI(UIManager.UIName.CardboardBox, ()=>
+                {
+                    var cardboardBoxUI = UIManager.GetInstance().GetUI<CardboardBoxUI>(UIManager.UIName.CardboardBox);
+                    cardboardBoxUI.Initialize(data.cardboardBox);
+                });
             }
         }
 
