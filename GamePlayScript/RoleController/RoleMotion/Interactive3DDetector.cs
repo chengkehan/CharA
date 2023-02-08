@@ -63,7 +63,7 @@ namespace GameScript
         public static bool Detect(Ray ray)
         {
             hitInfoSelected = -1;
-            int numHits = Physics.RaycastNonAlloc(ray, GetHitInfoBuffer(), 999, GetLayerMaskOfInteractive3D());
+            int numHits = Physics.RaycastNonAlloc(ray, GetHitInfoBuffer(), 999, (int)Define.LayersMask.Interactive3D);
             if (numHits > 0)
             {
                 hitInfoBufferSize = numHits;
@@ -151,21 +151,6 @@ namespace GameScript
                 return true;
             }
         }
-
-        #region LayerMask
-
-        private static int _layerMaskOfInteractive3D = 0;
-
-        private static int GetLayerMaskOfInteractive3D()
-        {
-            if (_layerMaskOfInteractive3D == 0)
-            {
-                _layerMaskOfInteractive3D = LayerMask.GetMask(new string[] { Define.Layers.Interactive3D.ToString() });
-            }
-            return _layerMaskOfInteractive3D;
-        }
-
-        #endregion
 
         #region HitInfoBuffer
 
