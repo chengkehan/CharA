@@ -28,21 +28,39 @@ namespace GameScript
             }
         }
 
-        public static void DetectOutlineObject()
+        public static void DetectOutlineObject(int layerMask = (int)Define.LayersMask.Interactive3D, Camera camera = null, bool selectNearest = false)
         {
             if (CameraManager.GetInstance() != null && CameraManager.GetInstance().GetMainCamera() != null)
             {
-                Ray ray = CameraManager.GetInstance().GetMainCamera().ScreenPointToRay(Input.mousePosition);
-                if (Detect(ray))
+                Camera cam = camera == null ? CameraManager.GetInstance().GetMainCamera() : camera;
+                if (cam != null)
                 {
-                    if (Select<OutlineObject>(out var outline))
+                    Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                    if (Detect(ray, layerMask))
                     {
-                        if (outline != _recentOutlineObject)
+                        bool isSelected = false;
+                        OutlineObject outline = null;
+                        if (selectNearest)
+                        {
+                            isSelected = SelectNearest(out outline);
+                        }
+                        else
+                        {
+                            isSelected = Select(out outline);
+                        }
+                        if (isSelected && outline != null)
+                        {
+                            if (outline.enabled && outline != _recentOutlineObject)
+                            {
+                                RecentOutlineObjectHide();
+
+                                _recentOutlineObject = outline;
+                                RecentOutlineObjectShow();
+                            }
+                        }
+                        else
                         {
                             RecentOutlineObjectHide();
-
-                            _recentOutlineObject = outline;
-                            RecentOutlineObjectShow();
                         }
                     }
                     else
@@ -50,20 +68,16 @@ namespace GameScript
                         RecentOutlineObjectHide();
                     }
                 }
-                else
-                {
-                    RecentOutlineObjectHide();
-                }
             }
         }
 
         #endregion
 
         // Detecting all hitpoints in 3D with a ray.
-        public static bool Detect(Ray ray)
+        public static bool Detect(Ray ray, int layerMask = (int)Define.LayersMask.Interactive3D)
         {
             hitInfoSelected = -1;
-            int numHits = Physics.RaycastNonAlloc(ray, GetHitInfoBuffer(), 999, (int)Define.LayersMask.Interactive3D);
+            int numHits = Physics.RaycastNonAlloc(ray, GetHitInfoBuffer(), 999, layerMask);
             if (numHits > 0)
             {
                 hitInfoBufferSize = numHits;
@@ -76,24 +90,46 @@ namespace GameScript
             }
         }
 
+        public static bool SelectNearest<T>(out T o) where T : Component
+        {
+            o = null;
+            if (hitInfoBufferSize > 0)
+            {
+                if (SelectCheckHitInfo(out o, GetHitInfoBuffer()[0], 0))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public static bool Select<T>(out T o) where T : Component
         {
             o = null;
             for (int i = 0; i < hitInfoBufferSize; i++)
             {
-                var hitInfo = GetHitInfoBuffer()[i];
-                if (hitInfo.transform != null && hitInfo.transform.GetComponent<T>() != null)
+                if (SelectCheckHitInfo(out o, GetHitInfoBuffer()[i], i)) 
                 {
-                    o = hitInfo.transform.GetComponent<T>();
-                    hitInfoSelected = i;
                     return true;
                 }
-                if (hitInfo.transform != null && hitInfo.transform.parent != null && hitInfo.transform.parent.GetComponent<T>() != null)
-                {
-                    o = hitInfo.transform.parent.GetComponent<T>();
-                    hitInfoSelected = i;
-                    return true;
-                }
+            }
+            return false;
+        }
+
+        private static bool SelectCheckHitInfo<T>(out T o, RaycastHit hitInfo, int hitInfoIndex) where T : Component
+        {
+            o = null;
+            if (hitInfo.transform != null && hitInfo.transform.GetComponent<T>() != null)
+            {
+                o = hitInfo.transform.GetComponent<T>();
+                hitInfoSelected = hitInfoIndex;
+                return true;
+            }
+            if (hitInfo.transform != null && hitInfo.transform.parent != null && hitInfo.transform.parent.GetComponent<T>() != null)
+            {
+                o = hitInfo.transform.parent.GetComponent<T>();
+                hitInfoSelected = hitInfoIndex;
+                return true;
             }
             return false;
         }

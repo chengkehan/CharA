@@ -72,6 +72,16 @@ namespace GameScript.UI.CardboardBoxUI
             }
         }
 
+        [SerializeField]
+        private Camera _ui3dCamera = null;
+        private Camera ui3dCamera
+        {
+            get
+            {
+                return _ui3dCamera;
+            }
+        }
+
         private MeshRenderer[] allMeshRenderers = null;
 
         private bool isMouseButtonDown = false;
@@ -195,6 +205,7 @@ namespace GameScript.UI.CardboardBoxUI
             UpdateMaterials();
             UpdateRotation();
             UpdateHeroPanel();
+            Interactive3DDetector.DetectOutlineObject((int)Define.LayersMask.UI3D, ui3dCamera, true);
         }
 
         private void UpdateHeroPanel()
