@@ -22,6 +22,7 @@ namespace GameScript.Cutscene
             EventSystem.GetInstance().AddListener(EventID.PickUpSceneItem, PickUpSceneItemHandler);
             EventSystem.GetInstance().AddListener(EventID.DropItemToScene, DropItemToSceneHandler);
             EventSystem.GetInstance().AddListener(EventID.DestroyItem, DestroyItemHandler);
+            EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToScene, TransferCardboardBoxItemToSceneHandler);
         }
 
         private void RemoveListeners()
@@ -29,6 +30,29 @@ namespace GameScript.Cutscene
             EventSystem.GetInstance().RemoveListener(EventID.PickUpSceneItem, PickUpSceneItemHandler);
             EventSystem.GetInstance().RemoveListener(EventID.DropItemToScene, DropItemToSceneHandler);
             EventSystem.GetInstance().RemoveListener(EventID.DestroyItem, DestroyItemHandler);
+            EventSystem.GetInstance().RemoveListener(EventID.TransferCardboardBoxItemToScene, TransferCardboardBoxItemToSceneHandler);
+        }
+
+        private void TransferCardboardBoxItemToSceneHandler(NotificationData _data)
+        {
+            var data = _data as TransferCardboardBoxItemToSceneND;
+            if (data != null)
+            {
+                // waiting for item gameobject removed from ui, then add to scene
+                StartCoroutine(TransferCardboardBoxItemToSceneHandlerDelay(data));
+            }
+        }
+        private IEnumerator TransferCardboardBoxItemToSceneHandlerDelay(TransferCardboardBoxItemToSceneND data)
+        {
+            yield return new WaitForSeconds(0.5f);
+
+            var cardboardBoxPD = DataCenter.GetInstance().playerData.GetSerializableMonoBehaviourPD<CardboardBoxPD>(data.cardboardBoxGUID);
+            if (cardboardBoxPD.ContainsItem(data.itemGUID))
+            {
+                var itemPD = cardboardBoxPD.GetItemByGUID(data.itemGUID);
+                cardboardBoxPD.RemoveItem(data.itemGUID);
+                Scene.GetInstance().AddSceneItem(itemPD, data.dropPosition);
+            }
         }
 
         private void DestroyItemHandler(NotificationData _data)

@@ -13,6 +13,19 @@ namespace GameScript
         [SerializeField]
         private List<ItemPD> allItems = new List<ItemPD>();
 
+        public bool RemoveItem(string itemGUID)
+        {
+            for (int itemI = 0; itemI < allItems.Count; itemI++)
+            {
+                if (allItems[itemI].guid == itemGUID)
+                {
+                    allItems.RemoveAt(itemI);
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public int NumberItems()
         {
             return allItems.Count;

@@ -24,6 +24,7 @@ namespace GameScript
         NoWayToPoint,
         StopShakeHead,
         PickupableObjectClicked,
-        SceneLoaded
+        SceneLoaded,
+        TransferCardboardBoxItemToScene
     }
 }

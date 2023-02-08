@@ -91,7 +91,6 @@ namespace GameScript.UI.CardboardBoxUI
                 for (int i = 0; i < cardboardBox.pd.NumberItems(); i++)
                 {
                     var itemPD = cardboardBox.pd.GetItem(i);
-                    var itemIndex = i;
 
                     AssetsManager.GetInstance().LoadSceneItem(itemPD.guid, itemPD.itemID, (go) =>
                     {
@@ -103,7 +102,7 @@ namespace GameScript.UI.CardboardBoxUI
                         {
                             allItems = new List<OneItem>();
                         }
-                        allItems.Add(new OneItem() { itemGO=go, itemIndex=itemIndex });
+                        allItems.Add(new OneItem() { itemGO=go, itemGUID=itemPD.guid });
                     });
                 }
 
@@ -115,15 +114,19 @@ namespace GameScript.UI.CardboardBoxUI
 
         private void DropBoardOnTriggerEnterHandler(Collider collider)
         {
-            if (cardboardBox != null && allItems != null)
+            if (cardboardBox != null && allItems != null && ActorsManager.GetInstance() != null)
             {
+                var allItems = new List<OneItem>(this.allItems);
                 foreach (var oneItem in allItems)
                 {
                     if (oneItem != null && oneItem.itemGO != null && oneItem.itemGO.GetComponentInChildren<Collider>() == collider)
                     {
-                        Utils.Log(cardboardBox.pd.GetItem(oneItem.itemIndex).itemID);
-                        Utils.Log(cardboardBox.pd.GetItem(oneItem.itemIndex).guid);
-                        break;
+                        var heroActor = ActorsManager.GetInstance().GetHeroActor();
+                        var notificationData = new TransferCardboardBoxItemToSceneND();
+                        notificationData.cardboardBoxGUID = cardboardBox.guid;
+                        notificationData.itemGUID = oneItem.itemGUID;
+                        notificationData.dropPosition = DataCenter.query.AdjustSceneItemWorldPosition(heroActor.roleAnimation.GetMotionAnimator().GetPosition());
+                        EventSystem.GetInstance().Notify(EventID.TransferCardboardBoxItemToScene, notificationData);
                     }
                 }
             }
@@ -135,16 +138,42 @@ namespace GameScript.UI.CardboardBoxUI
             splashBoard.gameObject.SetActive(false);
         }
 
-        private void OnDestroy()
+        private void TransferCardboardBoxItemToSceneHandler(NotificationData _data)
         {
-            if (cardboardBox != null)
+            var data = _data as TransferCardboardBoxItemToSceneND;
+            if (data != null)
             {
-                for (int i = 0; i < cardboardBox.pd.NumberItems(); i++)
+                if (cardboardBox != null && cardboardBox.guid == data.cardboardBoxGUID && cardboardBox.pd.ContainsItem(data.itemGUID))
                 {
-                    var itemPD = cardboardBox.pd.GetItem(i);
-                    AssetsManager.GetInstance().UnloadSceneItem(itemPD.guid);
+                    AssetsManager.GetInstance().UnloadSceneItem(data.itemGUID);
+                    for (int itemI = 0; itemI < allItems.Count; itemI++)
+                    {
+                        if (allItems[itemI].itemGUID == data.itemGUID)
+                        {
+                            allItems.RemoveAt(itemI);
+                            break;
+                        }
+                    }
                 }
             }
+        }
+
+        private void OnDestroy()
+        {
+            if (allItems != null)
+            {
+                for (int itemI = 0; itemI < allItems.Count; itemI++)
+                {
+                    if (allItems[itemI] != null)
+                    {
+                        AssetsManager.GetInstance().UnloadSceneItem(allItems[itemI].itemGUID);
+                    }
+                }
+                allItems.Clear();
+                allItems = null;
+            }
+
+            EventSystem.GetInstance().RemoveListener(EventID.TransferCardboardBoxItemToScene, TransferCardboardBoxItemToSceneHandler);
         }
 
         private void Start()
@@ -152,6 +181,8 @@ namespace GameScript.UI.CardboardBoxUI
             closeButton.onClick.AddListener(CloseHandler);
 
             UpdateMaterials();
+
+            EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToScene, TransferCardboardBoxItemToSceneHandler);
         }
 
         private void CloseHandler()
@@ -217,7 +248,7 @@ namespace GameScript.UI.CardboardBoxUI
         {
             public GameObject itemGO = null;
 
-            public int itemIndex = 0;
+            public string itemGUID = null;
         }
     }
 }
