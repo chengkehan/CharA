@@ -65,6 +65,23 @@ namespace GameScript
                 }
             }
 
+            // Check CardboardBox
+            {
+                var allCardboardBoxPD = DataCenter.GetInstance().playerData.GetAllSerializableMonoBehaviourPD<CardboardBoxPD>();
+                for (int cardboardBoxPDI = 0; cardboardBoxPDI < allCardboardBoxPD.Count; cardboardBoxPDI++)
+                {
+                    var cardboardBoxPD = allCardboardBoxPD[cardboardBoxPDI];
+                    for (int itemI = 0; itemI < cardboardBoxPD.NumberItems(); itemI++)
+                    {
+                        var itemPD = cardboardBoxPD.GetItem(itemI);
+                        if (itemPD.guid == itemGUID)
+                        {
+                            alreadyExistedInTheWorld = true;
+                        }
+                    }
+                }
+            }
+
             return alreadyExistedInTheWorld;
         }
 
