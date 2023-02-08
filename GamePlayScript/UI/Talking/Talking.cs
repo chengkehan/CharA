@@ -71,8 +71,10 @@ namespace GameScript.UI.Talking
         //    AddChoice(2, "我不知道该怎么选择。", null);
         //}
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             scrollRect.SetScrollValueChangedCB(ScrollValueChangedCB);
             scroller.SetScrollValueChangedCB(ScrollValueChangedCB2);
         }

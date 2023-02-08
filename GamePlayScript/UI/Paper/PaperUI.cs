@@ -74,13 +74,9 @@ namespace GameScript.UI.PaperUI
             backsideText.gameObject.SetActive(false);
         }
 
-        private void Awake()
-        {
-            Show(true);
-        }
-
         private void Start()
         {
+            Show(true);
             closeButton.onClick.AddListener(CloseHandler);
         }
 

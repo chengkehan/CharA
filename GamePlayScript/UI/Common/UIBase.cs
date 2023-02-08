@@ -6,6 +6,17 @@ namespace GameScript.UI.Common
 {
     public class UIBase : MonoBehaviour
     {
+        protected virtual void Awake()
+        {
+            StartCoroutine(RecentOutlineObjectHideDelay());
+        }
+
+        private IEnumerator RecentOutlineObjectHideDelay()
+        {
+            yield return null;
+            Interactive3DDetector.RecentOutlineObjectHide();
+        }
+
         #region Language
 
         [SerializeField]

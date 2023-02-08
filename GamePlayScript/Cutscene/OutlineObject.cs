@@ -9,9 +9,30 @@ namespace GameScript.Cutscene
         [SerializeField]
         private GameObject[] _outlineGos = null;
 
+        private bool isMouseDown = false;
+
         private void Awake()
         {
             HideOutline();
+        }
+
+        private void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (Interactive3DDetector.recentOutlineObject == this)
+                {
+                    isMouseDown = true;
+                }
+            }
+            if (isMouseDown && Input.GetMouseButtonUp(0))
+            {
+                if (Interactive3DDetector.recentOutlineObject == this)
+                {
+                    Utils.Log("clicked", gameObject);
+                }
+                isMouseDown = false;
+            }
         }
 
         public void ShowOutline()
@@ -21,6 +42,7 @@ namespace GameScript.Cutscene
 
         public void HideOutline()
         {
+            isMouseDown = false;
             OutlineGosVisible(false);
         }
 

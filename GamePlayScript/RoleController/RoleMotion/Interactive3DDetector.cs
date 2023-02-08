@@ -10,21 +10,32 @@ namespace GameScript
         #region Outline object
 
         private static OutlineObject _recentOutlineObject = null;
-
-        private static void RecentOutlineObjectShow()
+        public static OutlineObject recentOutlineObject
         {
-            if (_recentOutlineObject != null)
+            private set
             {
-                _recentOutlineObject.ShowOutline();
+                _recentOutlineObject = value;
+            }
+            get
+            {
+                return _recentOutlineObject;
             }
         }
 
-        private static void RecentOutlineObjectHide()
+        private static void RecentOutlineObjectShow()
         {
-            if (_recentOutlineObject != null)
+            if (recentOutlineObject != null)
             {
-                _recentOutlineObject.HideOutline();
-                _recentOutlineObject = null;
+                recentOutlineObject.ShowOutline();
+            }
+        }
+
+        public static void RecentOutlineObjectHide()
+        {
+            if (recentOutlineObject != null)
+            {
+                recentOutlineObject.HideOutline();
+                recentOutlineObject = null;
             }
         }
 
@@ -50,11 +61,11 @@ namespace GameScript
                         }
                         if (isSelected && outline != null)
                         {
-                            if (outline.enabled && outline != _recentOutlineObject)
+                            if (outline.enabled && outline != recentOutlineObject)
                             {
                                 RecentOutlineObjectHide();
 
-                                _recentOutlineObject = outline;
+                                recentOutlineObject = outline;
                                 RecentOutlineObjectShow();
                             }
                         }
