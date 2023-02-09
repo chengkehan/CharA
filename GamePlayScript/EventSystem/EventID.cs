@@ -25,6 +25,7 @@ namespace GameScript
         StopShakeHead,
         PickupableObjectClicked,
         SceneLoaded,
-        TransferCardboardBoxItemToScene
+        TransferCardboardBoxItemToScene,
+        TransferCardboardBoxItemToActor
     }
 }

@@ -1,11 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace GameScript.Cutscene
 {
     public class OutlineObject : MonoBehaviour
     {
+        public static bool OnClick(GameObject targetGo, Action clickedCB)
+        {
+            if (targetGo != null && clickedCB != null && targetGo.GetComponent<OutlineObject>() != null)
+            {
+                targetGo.GetComponent<OutlineObject>().clickedCB = clickedCB;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private Action clickedCB = null;
+
         [SerializeField]
         private GameObject[] _outlineGos = null;
 
@@ -29,7 +45,7 @@ namespace GameScript.Cutscene
             {
                 if (Interactive3DDetector.recentOutlineObject == this)
                 {
-                    Utils.Log("clicked", gameObject);
+                    clickedCB?.Invoke();
                 }
                 isMouseDown = false;
             }

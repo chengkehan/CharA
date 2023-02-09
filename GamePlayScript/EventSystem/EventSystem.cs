@@ -17,25 +17,32 @@ namespace GameScript
             return s_instance;
         }
 
+        public enum ListenerPriority
+        {
+            High = 0,
+            Normal = 100,
+            Low = 200
+        }
+
         public delegate void Listener(NotificationData _data);
 
-        private Dictionary<EventID, List<Listener>> registry = null;
+        private Dictionary<EventID, List<ListenerItem>> registry = null;
 
         private EventSystem()
         {
-            registry = new Dictionary<EventID, List<Listener>>();
+            registry = new Dictionary<EventID, List<ListenerItem>>();
         }
 
-        public void AddListener(EventID id, Listener listener)
+        public void AddListener(EventID id, Listener listener, ListenerPriority priority = ListenerPriority.Normal)
         {
             if (listener != null)
             {
-                if (registry.TryGetValue(id, out List<Listener> listeners) == false)
+                if (registry.TryGetValue(id, out List<ListenerItem> listeners) == false)
                 {
-                    listeners = new List<Listener>();
+                    listeners = new List<ListenerItem>();
                     registry.Add(id, listeners);
                 }
-                listeners.Add(listener);
+                listeners.Add(new ListenerItem() { listener=listener, priority= priority });
             }
         }
 
@@ -43,22 +50,34 @@ namespace GameScript
         {
             if (listener != null)
             {
-                if (registry.TryGetValue(id, out List<Listener> listeners))
+                if (registry.TryGetValue(id, out List<ListenerItem> listeners))
                 {
-                    listeners.Remove(listener);
+                    foreach (var listenerItem in listeners)
+                    {
+                        if (listenerItem != null && listenerItem.listener == listener)
+                        {
+                            listeners.Remove(listenerItem);
+                            break;
+                        }
+                    }
                 }
             }
         }
 
         public void Notify(EventID id, NotificationData data = null)
         {
-            if (registry.TryGetValue(id, out List<Listener> listeners))
+            if (registry.TryGetValue(id, out List<ListenerItem> listeners))
             {
                 var tempListeners = FetchTempListeners();
                 tempListeners.listeners.AddRange(listeners);
+                tempListeners.listeners.Sort(SortTempListeners);
                 foreach (var listener in tempListeners.listeners)
                 {
-                    listener?.Invoke(data);
+                    listener?.listener?.Invoke(data);
+                    if (data != null && data.interrupted)
+                    {
+                        break;
+                    }
                 }
                 RecycleTempListeners(tempListeners);
             }
@@ -68,12 +87,21 @@ namespace GameScript
 
         private class TempListeners
         {
-            public List<Listener> listeners = new List<Listener>();
+            public List<ListenerItem> listeners = new List<ListenerItem>();
 
             public bool isWorking = false;
         }
 
         private List<TempListeners> _allTempListeners = new List<TempListeners>();
+
+        private int SortTempListeners(ListenerItem a, ListenerItem b)
+        {
+            int pa = (int)a.priority;
+            int pb = (int)b.priority;
+            return
+                pa > pb ? 1 :
+                pa < pb ? -1 : 0;
+        }
 
         private TempListeners FetchTempListeners()
         {
@@ -110,5 +138,11 @@ namespace GameScript
 
         #endregion
 
+        private class ListenerItem
+        {
+            public Listener listener = null;
+
+            public ListenerPriority priority = ListenerPriority.Normal;
+        }
     }
 }

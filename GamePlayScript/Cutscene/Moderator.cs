@@ -23,6 +23,7 @@ namespace GameScript.Cutscene
             EventSystem.GetInstance().AddListener(EventID.DropItemToScene, DropItemToSceneHandler);
             EventSystem.GetInstance().AddListener(EventID.DestroyItem, DestroyItemHandler);
             EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToScene, TransferCardboardBoxItemToSceneHandler);
+            EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler, EventSystem.ListenerPriority.High);
         }
 
         private void RemoveListeners()
@@ -31,6 +32,16 @@ namespace GameScript.Cutscene
             EventSystem.GetInstance().RemoveListener(EventID.DropItemToScene, DropItemToSceneHandler);
             EventSystem.GetInstance().RemoveListener(EventID.DestroyItem, DestroyItemHandler);
             EventSystem.GetInstance().RemoveListener(EventID.TransferCardboardBoxItemToScene, TransferCardboardBoxItemToSceneHandler);
+            EventSystem.GetInstance().RemoveListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler);
+        }
+
+        private void TransferCardboardBoxItemToActorHandler(NotificationData _data)
+        {
+            var data = _data as TransferCardboardBoxItemToActorND;
+            if (data != null)
+            {
+
+            }
         }
 
         private void TransferCardboardBoxItemToSceneHandler(NotificationData _data)
@@ -39,12 +50,13 @@ namespace GameScript.Cutscene
             if (data != null)
             {
                 // waiting for item gameobject removed from ui, then add to scene
+                // we can't keep two item instances with same guid existed in the world at the same time.
                 StartCoroutine(TransferCardboardBoxItemToSceneHandlerDelay(data));
             }
         }
         private IEnumerator TransferCardboardBoxItemToSceneHandlerDelay(TransferCardboardBoxItemToSceneND data)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
 
             var cardboardBoxPD = DataCenter.GetInstance().playerData.GetSerializableMonoBehaviourPD<CardboardBoxPD>(data.cardboardBoxGUID);
             if (cardboardBoxPD.ContainsItem(data.itemGUID))
@@ -118,7 +130,7 @@ namespace GameScript.Cutscene
                     }
                     else
                     {
-                        Utils.Log("wtf");
+                        Utils.LogObservably("wtf");
                     }
                 }
             }
@@ -178,7 +190,7 @@ namespace GameScript.Cutscene
                     }
                     else
                     {
-                        Utils.Log("whf");
+                        Utils.LogObservably("whf");
                     }
                 }
             }

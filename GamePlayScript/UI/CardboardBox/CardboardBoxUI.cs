@@ -113,6 +113,11 @@ namespace GameScript.UI.CardboardBoxUI
                             allItems = new List<OneItem>();
                         }
                         allItems.Add(new OneItem() { itemGO=go, itemGUID=itemPD.guid });
+
+                        OutlineObject.OnClick(go, ()=>
+                        {
+                            Utils.Log("item clicked");
+                        });
                     });
                 }
 
