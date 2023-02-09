@@ -9,7 +9,9 @@ namespace GameScript
         public enum Transition
         {
             Undefined = 0,
-            StandUp = 1
+            StandUp = 1,
+            StandingToCrouched = 2,
+            CrouchedToStanding = 3
         }
 
         protected override int InitializeActionNameId()

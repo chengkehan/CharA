@@ -34,6 +34,7 @@ namespace GameScript
         private int _state = (int)State.Idle;
         private SkillSM.Transition pendingSkill = SkillSM.Transition.Undefined;
         private SoloSM.Transition pendingSolo = SoloSM.Transition.Undefined;
+        private SoloSM.Transition recentSolo = SoloSM.Transition.Undefined;
 
         private Animator[] animators = null;
 
@@ -1599,6 +1600,7 @@ namespace GameScript
             {
                 Utils.Assert(pendingSolo != SoloSM.Transition.Undefined);
                 SetActionValueAutomatically(State.Solo, pendingSolo);
+                recentSolo = pendingSolo;
                 pendingSolo = SoloSM.Transition.Undefined;
             }
             else
@@ -1805,8 +1807,11 @@ namespace GameScript
 
         private void SoloCompleteCB()
         {
-            SetState(State.Undefined);
-            Update();
+            if (recentSolo != SoloSM.Transition.StandingToCrouched)
+            {
+                SetState(State.Undefined);
+                Update();
+            }
         }
 
         private void DummyCompleteCB()

@@ -8,7 +8,7 @@ namespace GameScript
     {
         public override bool ExecuteOperation()
         {
-            UIManager.GetInstance().OpenUI(UIManager.UIName.CentraPlan, null);
+            UIManager.GetInstance().OpenUI(UIManager.UIName.CentraPlan);
             return true;
         }
 

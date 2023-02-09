@@ -122,7 +122,7 @@ namespace GameScript
 
         private List<UIInstance> allUIInstances = new List<UIInstance>();
 
-        public bool OpenUI(UIName uiName, Action completeCB)
+        public bool OpenUI(UIName uiName, Action completeCB = null, Action closedCB = null)
         {
             if (ContainsUI(uiName))
             {
@@ -132,6 +132,7 @@ namespace GameScript
             {
                 UIInstance uiInstance = new UIInstance();
                 uiInstance.name = uiName;
+                uiInstance.closedCB = closedCB;
                 allUIInstances.Add(uiInstance);
                 AssetsManager.GetInstance().LoadAsset<UnityEngine.Object>(AssetsManager.UI_ASSET_PREFIX + uiName.ToString(), (obj)=>
                 {
@@ -161,6 +162,7 @@ namespace GameScript
             {
                 UIInstance uiInstance = GetUI(uiName);
                 allUIInstances.Remove(uiInstance);
+                uiInstance.closedCB?.Invoke();
                 Utils.Destroy(uiInstance.gameObject);
                 AssetsManager.GetInstance().UnloadAsset(uiInstance.prefab);
                 RefreshAllUIDepth();
@@ -306,6 +308,8 @@ namespace GameScript
             public GameObject gameObject = null;
 
             public Canvas canvas = null;
+
+            public Action closedCB = null;
 
             public bool IsAssetReady()
             {

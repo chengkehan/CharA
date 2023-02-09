@@ -123,14 +123,20 @@ namespace GameScript
 
             if (data.paper != null)
             {
-                UIManager.GetInstance().OpenUI(UIManager.UIName.Paper, null);
+                UIManager.GetInstance().OpenUI(UIManager.UIName.Paper);
             }
             if (data.cardboardBox != null)
             {
-                UIManager.GetInstance().OpenUI(UIManager.UIName.CardboardBox, ()=>
+                GetMotionAnimator().SetSoloState(SoloSM.Transition.StandingToCrouched);
+                UIManager.GetInstance().OpenUI(UIManager.UIName.CardboardBox,
+                ()=>
                 {
                     var cardboardBoxUI = UIManager.GetInstance().GetUI<CardboardBoxUI>(UIManager.UIName.CardboardBox);
                     cardboardBoxUI.Initialize(data.cardboardBox);
+                },
+                () =>
+                {
+                    GetMotionAnimator().SetSoloState(SoloSM.Transition.CrouchedToStanding);
                 });
             }
         }
