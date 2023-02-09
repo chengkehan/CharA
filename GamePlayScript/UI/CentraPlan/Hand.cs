@@ -30,7 +30,7 @@ namespace GameScript.UI.CentraPlan.Hero
             }
         }
 
-        private void ShowIcon(Sprite sprite)
+        protected void ShowIcon(Sprite sprite)
         {
             icon.gameObject.SetActive(true);
             icon.enabled = true;
@@ -65,7 +65,7 @@ namespace GameScript.UI.CentraPlan.Hero
         {
             base.Start();
 
-            RefreshItemIcon();
+            RefreshItem();
 
             EventSystem.GetInstance().AddListener(EventID.PickUpSceneItem, PickUpSceneItemHandler);
             EventSystem.GetInstance().AddListener(EventID.DropItemToScene, DropItemToSceneHandler);
@@ -86,7 +86,7 @@ namespace GameScript.UI.CentraPlan.Hero
             {
                 if (DataCenter.query.IsHeroActorGUID(data.actorGUID))
                 {
-                    RefreshItemIcon();
+                    RefreshItem();
                 }
             }
         }
@@ -98,17 +98,21 @@ namespace GameScript.UI.CentraPlan.Hero
             {
                 if (DataCenter.query.IsHeroActorGUID(data.actorGUID))
                 {
-                    RefreshItemIcon();
+                    RefreshItem();
                 }
             }
         }
 
-        private void RefreshItemIcon()
+        private void RefreshItem()
         {
             HideTooltip();
             HideIcon();
             HideHighlight();
+            RefreshIcon();
+        }
 
+        protected virtual void RefreshIcon()
+        {
             var heroActorPD = ActorsManager.GetInstance().GetHeroActor().pd;
             if (heroActorPD.inHandItem.IsEmpty() == false)
             {
@@ -119,7 +123,7 @@ namespace GameScript.UI.CentraPlan.Hero
             }
         }
 
-        private void DiscardItem()
+        protected virtual void DiscardItem()
         {
             var heroActorPD = ActorsManager.GetInstance().GetHeroActor().pd;
             if (heroActorPD.inHandItem.IsEmpty() == false)
@@ -141,42 +145,49 @@ namespace GameScript.UI.CentraPlan.Hero
             }
         }
 
-        private void ShowHighlight()
+        protected virtual void ShowTooltip()
         {
-            hightlightGo.SetActive(true);
+            string tooltip = GetLanguage("item_in_hand_slot");
 
-            // ShowTooltip
+            var heroActorPD = ActorsManager.GetInstance().GetHeroActor().pd;
+            if (heroActorPD.inHandItem.IsEmpty())
             {
-                string tooltip = GetLanguage("item_in_hand_slot");
-
-                var heroActorPD = ActorsManager.GetInstance().GetHeroActor().pd;
-                if (heroActorPD.inHandItem.IsEmpty())
-                {
-                    tooltip += "\n" + GetLanguage("empty");
-                }
-                else
-                {
-                    var itemConfig = DataCenter.GetInstance().GetItemConfig(heroActorPD.inHandItem.itemID);
-                    tooltip += "\n" + itemConfig.name;
-                    tooltip += "\n" + "<margin left=10%><size=95%>" + itemConfig.description + "</size></margin>";
-                    tooltip += "\n" + "<size=95%>" + GetLanguage("durability") + ": " + heroActorPD.inHandItem.durability.ToString("f1") + "</size>";
-                }
-
-                if (heroActorPD.inHandItem.IsEmpty())
-                {
-                    ShowTooltip(tooltip);
-                }
-                else
-                {
-                    ShowTooltip(tooltip, DiscardItem);
-                }
+                tooltip += "\n" + GetLanguage("empty");
+            }
+            else
+            {
+                var itemConfig = DataCenter.GetInstance().GetItemConfig(heroActorPD.inHandItem.itemID);
+                tooltip += "\n" + itemConfig.name;
+                tooltip += "\n" + "<margin left=10%><size=95%>" + itemConfig.description + "</size></margin>";
+                tooltip += "\n" + "<size=95%>" + GetLanguage("durability") + ": " + heroActorPD.inHandItem.durability.ToString("f1") + "</size>";
             }
 
+            if (heroActorPD.inHandItem.IsEmpty())
+            {
+                ShowTooltip(tooltip);
+            }
+            else
+            {
+                ShowTooltip(tooltip, DiscardItem);
+            }
+        }
+
+        private void ShowHighlight()
+        {
+            if (hightlightGo != null)
+            {
+                hightlightGo.SetActive(true);
+            }
+
+            ShowTooltip();
         }
 
         private void HideHighlight()
         {
-            hightlightGo.SetActive(false);
+            if (hightlightGo != null)
+            {
+                hightlightGo.SetActive(false);
+            }
             HideTooltip();
         }
     }

@@ -8,18 +8,8 @@ using CUI = GameScript.UI.Common;
 
 namespace GameScript.UI.CentraPlan.Hero
 {
-    public class Pocket : CUI.ComponentBase, IPointerEnterHandler, IPointerExitHandler
+    public class Pocket : Hand
     {
-        [SerializeField]
-        private GameObject _highlightGo = null;
-        private GameObject hightlightGo
-        {
-            get
-            {
-                return _highlightGo;
-            }
-        }
-
         [SerializeField]
         private Define.PocketType _pocketType = Define.PocketType.Clothes_Left_Side;
         private Define.PocketType pocketType
@@ -30,92 +20,16 @@ namespace GameScript.UI.CentraPlan.Hero
             }
         }
 
-        [SerializeField]
-        private Image _icon = null;
-        private Image icon
+        protected override void RefreshIcon()
         {
-            get
+            var heroActorPD = ActorsManager.GetInstance().GetHeroActor().pd;
+            var pocketItemPD = heroActorPD.GetPocketItem((int)pocketType);
+            if (pocketItemPD.IsEmpty() == false)
             {
-                return _icon;
-            }
-        }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            ShowHighlight();
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            HideHighlight();
-        }
-
-        protected override void Awake()
-        {
-            base.Awake();
-
-            HideIcon();
-        }
-
-        protected override void Start()
-        {
-            base.Start();
-
-            RefreshItemIcon();
-
-            EventSystem.GetInstance().AddListener(EventID.PickUpSceneItem, PickupSceneItemHandler);
-            EventSystem.GetInstance().AddListener(EventID.DropItemToScene, DropItemToSceneHandler);
-        }
-
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
-
-            EventSystem.GetInstance().RemoveListener(EventID.PickUpSceneItem, PickupSceneItemHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.DropItemToScene, DropItemToSceneHandler);
-        }
-
-        private void DropItemToSceneHandler(NotificationData _data)
-        {
-            var data = _data as DropItemToSceneND;
-            if (data != null)
-            {
-                if (DataCenter.query.IsHeroActorGUID(data.actorGUID))
+                AssetsManager.GetInstance().LoadItemIcon(pocketItemPD.itemID, (obj) =>
                 {
-                    RefreshItemIcon();
-                }
-            }
-        }
-
-        private void PickupSceneItemHandler(NotificationData _data)
-        {
-            var data = _data as PickUpSceneItemND;
-            if (data != null)
-            {
-                if (DataCenter.query.IsHeroActorGUID(data.actorGUID))
-                {
-                    RefreshItemIcon();
-                }
-            }
-        }
-
-        private void RefreshItemIcon()
-        {
-            HideTooltip();
-            HideIcon();
-            HideHighlight();
-
-            // Load pocket icon
-            {
-                var heroActorPD = ActorsManager.GetInstance().GetHeroActor().pd;
-                var pocketItemPD = heroActorPD.GetPocketItem((int)pocketType);
-                if (pocketItemPD.IsEmpty() == false)
-                {
-                    AssetsManager.GetInstance().LoadItemIcon(pocketItemPD.itemID, (obj) =>
-                    {
-                        ShowIcon(obj);
-                    });
-                }
+                    ShowIcon(obj);
+                });
             }
         }
 
@@ -129,7 +43,7 @@ namespace GameScript.UI.CentraPlan.Hero
             Utils.Log("eat");
         }
 
-        private void DiscardItem()
+        protected override void DiscardItem()
         {
             var heroActorPD = ActorsManager.GetInstance().GetHeroActor().pd;
             var pocketItemPD = heroActorPD.GetPocketItem((int)pocketType);
@@ -142,112 +56,69 @@ namespace GameScript.UI.CentraPlan.Hero
             }
         }
 
-        protected override void OnUGUIEventSystemChanged(bool enabled)
+        protected override void ShowTooltip()
         {
-            base.OnUGUIEventSystemChanged(enabled);
-
-            if (enabled == false)
+            var tipText = string.Empty;
+            if (pocketType == Define.PocketType.Clothes_Left_Side)
             {
-                HideHighlight();
+                tipText = GetLanguage("cloths_left_pocket");
             }
-        }
-
-        private void ShowIcon(Sprite sprite)
-        {
-            icon.gameObject.SetActive(true);
-            icon.enabled = true;
-            icon.sprite = sprite;
-        }
-
-        private void HideIcon()
-        {
-            icon.gameObject.SetActive(false);
-            icon.enabled = false;
-            icon.sprite = null;
-        }
-
-        private void ShowHighlight()
-        {
-            if (hightlightGo != null)
+            if (pocketType == Define.PocketType.Clothes_Right_Side)
             {
-                hightlightGo.SetActive(true);
+                tipText = GetLanguage("cloths_right_pocket");
+            }
+            if (pocketType == Define.PocketType.Trousers_Left_Side)
+            {
+                tipText = GetLanguage("trousers_left_pocket");
+            }
+            if (pocketType == Define.PocketType.Trousers_Right_Side)
+            {
+                tipText = GetLanguage("trousers_right_pocket");
             }
 
-
-            // Show Tooltip
+            var pocketItemPD = ActorsManager.GetInstance().GetHeroActor().pd.GetPocketItem((int)pocketType);
+            if (pocketItemPD.IsEmpty())
             {
-                var tipText = string.Empty;
-                if (pocketType == Define.PocketType.Clothes_Left_Side)
-                {
-                    tipText = GetLanguage("cloths_left_pocket");
-                }
-                if (pocketType == Define.PocketType.Clothes_Right_Side)
-                {
-                    tipText = GetLanguage("cloths_right_pocket");
-                }
-                if (pocketType == Define.PocketType.Trousers_Left_Side)
-                {
-                    tipText = GetLanguage("trousers_left_pocket");
-                }
-                if (pocketType == Define.PocketType.Trousers_Right_Side)
-                {
-                    tipText = GetLanguage("trousers_right_pocket");
-                }
+                tipText += "\n" + GetLanguage("empty");
+            }
+            else
+            {
+                var itemConfig = DataCenter.GetInstance().GetItemConfig(pocketItemPD.itemID);
+                tipText += "\n" + itemConfig.name;
+                tipText += "\n" + "<margin left=10%><size=95%>" + itemConfig.description + "</size></margin>";
+            }
 
-                var pocketItemPD = ActorsManager.GetInstance().GetHeroActor().pd.GetPocketItem((int)pocketType);
-                if (pocketItemPD.IsEmpty())
+            if (pocketItemPD.IsEmpty())
+            {
+                ShowTooltip(tipText);
+            }
+            else
+            {
+                var itemConfig = DataCenter.GetInstance().GetItemConfig(pocketItemPD.itemID);
+                if (itemConfig.eatable)
                 {
-                    tipText += "\n" + GetLanguage("empty");
-                }
-                else
-                {
-                    var itemConfig = DataCenter.GetInstance().GetItemConfig(pocketItemPD.itemID);
-                    tipText += "\n" + itemConfig.name;
-                    tipText += "\n" + "<margin left=10%><size=95%>" + itemConfig.description + "</size></margin>";
-                }
-
-                if (pocketItemPD.IsEmpty())
-                {
-                    ShowTooltip(tipText);
-                }
-                else
-                {
-                    var itemConfig = DataCenter.GetInstance().GetItemConfig(pocketItemPD.itemID);
-                    if (itemConfig.eatable)
+                    if (UIManager.GetInstance().ContainsUI(UIManager.UIName.CardboardBox))
                     {
-                        if (UIManager.GetInstance().ContainsUI(UIManager.UIName.CardboardBox))
-                        {
-                            ShowTooltip(tipText, DiscardItem, EatItem, TransferItem);
-                        }
-                        else
-                        {
-                            ShowTooltip(tipText, DiscardItem, EatItem);
-                        }
-                        
+                        ShowTooltip(tipText, DiscardItem, EatItem, TransferItem);
                     }
                     else
                     {
-                        if (UIManager.GetInstance().ContainsUI(UIManager.UIName.CardboardBox))
-                        {
-                            ShowTooltip(tipText, DiscardItem, null, TransferItem); 
-                        }
-                        else
-                        {
-                            ShowTooltip(tipText, DiscardItem);
-                        }
+                        ShowTooltip(tipText, DiscardItem, EatItem);
+                    }
+
+                }
+                else
+                {
+                    if (UIManager.GetInstance().ContainsUI(UIManager.UIName.CardboardBox))
+                    {
+                        ShowTooltip(tipText, DiscardItem, null, TransferItem);
+                    }
+                    else
+                    {
+                        ShowTooltip(tipText, DiscardItem);
                     }
                 }
             }
-        }
-
-        private void HideHighlight()
-        {
-            if (hightlightGo != null)
-            {
-                hightlightGo.SetActive(false);
-            }
-
-            HideTooltip();
         }
     }
 }
