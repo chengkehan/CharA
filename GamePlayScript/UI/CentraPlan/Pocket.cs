@@ -61,6 +61,48 @@ namespace GameScript.UI.CentraPlan.Hero
         {
             base.Start();
 
+            RefreshItemIcon();
+
+            EventSystem.GetInstance().AddListener(EventID.PickUpSceneItem, PickupSceneItemHandler);
+            EventSystem.GetInstance().AddListener(EventID.DropItemToScene, DropItemToSceneHandler);
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            EventSystem.GetInstance().RemoveListener(EventID.PickUpSceneItem, PickupSceneItemHandler);
+            EventSystem.GetInstance().RemoveListener(EventID.DropItemToScene, DropItemToSceneHandler);
+        }
+
+        private void DropItemToSceneHandler(NotificationData _data)
+        {
+            var data = _data as DropItemToSceneND;
+            if (data != null)
+            {
+                if (DataCenter.query.IsHeroActorGUID(data.actorGUID))
+                {
+                    RefreshItemIcon();
+                }
+            }
+        }
+
+        private void PickupSceneItemHandler(NotificationData _data)
+        {
+            var data = _data as PickUpSceneItemND;
+            if (data != null)
+            {
+                if (DataCenter.query.IsHeroActorGUID(data.actorGUID))
+                {
+                    RefreshItemIcon();
+                }
+            }
+        }
+
+        private void RefreshItemIcon()
+        {
+            HideTooltip();
+            HideIcon();
             HideHighlight();
 
             // Load pocket icon
@@ -97,9 +139,6 @@ namespace GameScript.UI.CentraPlan.Hero
                 notification.actorGUID = heroActorPD.guid.o;
                 notification.itemGUID = pocketItemPD.guid;
                 EventSystem.GetInstance().Notify(EventID.DropItemToScene, notification);
-
-                HideTooltip();
-                HideIcon();
             }
         }
 

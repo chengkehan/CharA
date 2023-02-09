@@ -294,7 +294,7 @@ namespace GameScript
                 if (Vector3.Distance(sceneItemPD.worldPosition, data.endWaypoint.GetPosition()) < DataCenter.define.SceneItemPickupRange)
                 {
                     var notification = new PickUpSceneItemND();
-                    notification.roleID = actor.o.GetId();
+                    notification.actorGUID = actor.o.guid;
                     notification.itemGUID = _sceneItemHUDClicked_ItemGUID;
                     EventSystem.GetInstance().Notify(EventID.PickUpSceneItem, notification);
                 }

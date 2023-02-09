@@ -116,7 +116,11 @@ namespace GameScript.UI.CardboardBoxUI
 
                         OutlineObject.OnClick(go, ()=>
                         {
-                            Utils.Log("item clicked");
+                            var notificationData = new TransferCardboardBoxItemToActorND();
+                            notificationData.cardboardBoxGUID = cardboardBox.guid;
+                            notificationData.itemGUID = itemPD.guid;
+                            notificationData.actorGUID = ActorsManager.GetInstance().GetHeroActor().guid;
+                            EventSystem.GetInstance().Notify(EventID.TransferCardboardBoxItemToActor, notificationData);
                         });
                     });
                 }

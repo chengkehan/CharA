@@ -19,8 +19,8 @@ namespace GameScript.Cutscene
 
         private void AddListeners()
         {
-            EventSystem.GetInstance().AddListener(EventID.PickUpSceneItem, PickUpSceneItemHandler);
-            EventSystem.GetInstance().AddListener(EventID.DropItemToScene, DropItemToSceneHandler);
+            EventSystem.GetInstance().AddListener(EventID.PickUpSceneItem, PickUpSceneItemHandler, EventSystem.ListenerPriority.High);
+            EventSystem.GetInstance().AddListener(EventID.DropItemToScene, DropItemToSceneHandler, EventSystem.ListenerPriority.High);
             EventSystem.GetInstance().AddListener(EventID.DestroyItem, DestroyItemHandler);
             EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToScene, TransferCardboardBoxItemToSceneHandler);
             EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler, EventSystem.ListenerPriority.High);
@@ -40,7 +40,15 @@ namespace GameScript.Cutscene
             var data = _data as TransferCardboardBoxItemToActorND;
             if (data != null)
             {
+                var actorPD = DataCenter.GetInstance().playerData.GetSerializableMonoBehaviourPD<ActorPD>(data.actorGUID);
+                if (DataCenter.query.ActorPocketIsFull(actorPD))
+                {
+                    data.interrupted = true;
+                }
+                else
+                {
 
+                }
             }
         }
 
@@ -130,9 +138,14 @@ namespace GameScript.Cutscene
                     }
                     else
                     {
+                        data.interrupted = true;
                         Utils.LogObservably("wtf");
                     }
                 }
+            }
+            else
+            {
+                data.interrupted = true;
             }
         }
 
@@ -143,7 +156,7 @@ namespace GameScript.Cutscene
             {
                 var sceneItemPD = Scene.GetInstance().pd.GetSceneItemPD(data.itemGUID);
                 var itemConfig = DataCenter.GetInstance().GetItemConfig(sceneItemPD.itemID);
-                var actor = ActorsManager.GetInstance().GetActor(data.roleID);
+                var actor = ActorsManager.GetInstance().GetActorByGUID(data.actorGUID);
 
                 if (DataCenter.query.ItemCanBeInHandOnly((Define.ItemSpace)itemConfig.space))
                 {
@@ -173,6 +186,7 @@ namespace GameScript.Cutscene
                     {
                         if (DataCenter.query.ActorPocketIsFull(actor.pd))
                         {
+                            data.interrupted = true;
                             actor.TalkingBubble("pocket_full_when_pickup");
                         }
                         else
@@ -190,9 +204,14 @@ namespace GameScript.Cutscene
                     }
                     else
                     {
+                        data.interrupted = true;
                         Utils.LogObservably("whf");
                     }
                 }
+            }
+            else
+            {
+                data.interrupted = true;
             }
         }
     }

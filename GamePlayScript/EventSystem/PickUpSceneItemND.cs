@@ -7,7 +7,7 @@ namespace GameScript
     public class PickUpSceneItemND : NotificationData
     {
         // Who picks up this item
-        public string roleID = null;
+        public string actorGUID = null;
 
         // guid of item's instance
         public string itemGUID = null;

@@ -85,6 +85,11 @@ namespace GameScript
             return alreadyExistedInTheWorld;
         }
 
+        public bool IsHeroActorGUID(string actorGUID)
+        {
+            return ActorsManager.GetInstance() != null && ActorsManager.GetInstance().GetHeroActor() != null && ActorsManager.GetInstance().GetHeroActor().guid == actorGUID;
+        }
+
         public bool IsHeroRoleID(string roleID)
         {
             return roleID == AssetsManager.HERO_ROLE_ID;

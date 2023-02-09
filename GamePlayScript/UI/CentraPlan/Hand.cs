@@ -65,18 +65,57 @@ namespace GameScript.UI.CentraPlan.Hero
         {
             base.Start();
 
+            RefreshItemIcon();
+
+            EventSystem.GetInstance().AddListener(EventID.PickUpSceneItem, PickUpSceneItemHandler);
+            EventSystem.GetInstance().AddListener(EventID.DropItemToScene, DropItemToSceneHandler);
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            EventSystem.GetInstance().RemoveListener(EventID.PickUpSceneItem, PickUpSceneItemHandler);
+            EventSystem.GetInstance().RemoveListener(EventID.DropItemToScene, DropItemToSceneHandler);
+        }
+
+        private void DropItemToSceneHandler(NotificationData _data)
+        {
+            var data = _data as DropItemToSceneND;
+            if (data != null)
+            {
+                if (DataCenter.query.IsHeroActorGUID(data.actorGUID))
+                {
+                    RefreshItemIcon();
+                }
+            }
+        }
+
+        private void PickUpSceneItemHandler(NotificationData _data)
+        {
+            var data = _data as PickUpSceneItemND;
+            if (data != null)
+            {
+                if (DataCenter.query.IsHeroActorGUID(data.actorGUID))
+                {
+                    RefreshItemIcon();
+                }
+            }
+        }
+
+        private void RefreshItemIcon()
+        {
+            HideTooltip();
+            HideIcon();
             HideHighlight();
 
-            // Load item icon in hand
+            var heroActorPD = ActorsManager.GetInstance().GetHeroActor().pd;
+            if (heroActorPD.inHandItem.IsEmpty() == false)
             {
-                var heroActorPD = ActorsManager.GetInstance().GetHeroActor().pd;
-                if (heroActorPD.inHandItem.IsEmpty() == false)
+                AssetsManager.GetInstance().LoadItemIcon(heroActorPD.inHandItem.itemID, (obj) =>
                 {
-                    AssetsManager.GetInstance().LoadItemIcon(heroActorPD.inHandItem.itemID, (obj)=>
-                    {
-                        ShowIcon(obj);
-                    });
-                }
+                    ShowIcon(obj);
+                });
             }
         }
 
@@ -89,9 +128,6 @@ namespace GameScript.UI.CentraPlan.Hero
                 notification.actorGUID = heroActorPD.guid.o;
                 notification.itemGUID = heroActorPD.inHandItem.guid;
                 EventSystem.GetInstance().Notify(EventID.DropItemToScene, notification);
-
-                HideTooltip();
-                HideIcon();
             }
         }
 
