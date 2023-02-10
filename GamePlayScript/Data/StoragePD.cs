@@ -60,6 +60,19 @@ namespace GameScript
             return GetItemByGUID(itemGUID) != null;
         }
 
+        public bool AddItem(ItemPD itemPD)
+        {
+            if (ContainsItem(itemPD.guid))
+            {
+                return false;
+            }
+            else
+            {
+                allItems.Add(itemPD.Clone());
+                return true;
+            }
+        }
+
         public bool AddItem(StorageConfig.ItemConfig item)
         {
             if (ContainsItem(item.itemGUID))

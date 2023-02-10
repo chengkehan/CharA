@@ -26,6 +26,7 @@ namespace GameScript
         PickupableObjectClicked,
         SceneLoaded,
         TransferCardboardBoxItemToScene,
-        TransferCardboardBoxItemToActor
+        TransferCardboardBoxItemToActor,
+        TransferPocketItemToCardboardBox
     }
 }

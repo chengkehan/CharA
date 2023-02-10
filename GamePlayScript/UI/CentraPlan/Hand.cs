@@ -69,6 +69,7 @@ namespace GameScript.UI.CentraPlan.Hero
 
             EventSystem.GetInstance().AddListener(EventID.PickUpSceneItem, PickUpSceneItemHandler);
             EventSystem.GetInstance().AddListener(EventID.DropItemToScene, DropItemToSceneHandler);
+            EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler);
         }
 
         protected override void OnDestroy()
@@ -77,6 +78,19 @@ namespace GameScript.UI.CentraPlan.Hero
 
             EventSystem.GetInstance().RemoveListener(EventID.PickUpSceneItem, PickUpSceneItemHandler);
             EventSystem.GetInstance().RemoveListener(EventID.DropItemToScene, DropItemToSceneHandler);
+            EventSystem.GetInstance().RemoveListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler);
+        }
+
+        private void TransferCardboardBoxItemToActorHandler(NotificationData _data)
+        {
+            var data = _data as TransferCardboardBoxItemToActorND;
+            if (data != null)
+            {
+                if (DataCenter.query.IsHeroActorGUID(data.actorGUID))
+                {
+                    RefreshItem();
+                }
+            }
         }
 
         private void DropItemToSceneHandler(NotificationData _data)
@@ -103,7 +117,7 @@ namespace GameScript.UI.CentraPlan.Hero
             }
         }
 
-        private void RefreshItem()
+        protected void RefreshItem()
         {
             HideTooltip();
             HideIcon();

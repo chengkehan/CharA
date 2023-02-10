@@ -88,7 +88,18 @@ namespace GameScript.UI.CardboardBoxUI
         private Vector3 mousePosition = Vector3.zero;
         private Quaternion box3DRotationMouseDown = Quaternion.identity;
 
-        private CardboardBox cardboardBox = null;
+        private CardboardBox _cardboardBox = null;
+        public CardboardBox cardboardBox
+        {
+            get
+            {
+                return _cardboardBox;
+            }
+            private set
+            {
+                _cardboardBox = value;
+            }
+        }
 
         private List<OneItem> allItems = null;
 
@@ -101,34 +112,38 @@ namespace GameScript.UI.CardboardBoxUI
                 for (int i = 0; i < cardboardBox.pd.NumberItems(); i++)
                 {
                     var itemPD = cardboardBox.pd.GetItem(i);
-
-                    AssetsManager.GetInstance().LoadSceneItem(itemPD.guid, itemPD.itemID, (go) =>
-                    {
-                        go.transform.SetParent(spawnPoint, false);
-                        go.transform.localPosition = Vector3.zero;
-                        Utils.SetLayerRecursively(go, (int)Define.Layers.UI3D);
-
-                        if (allItems == null)
-                        {
-                            allItems = new List<OneItem>();
-                        }
-                        allItems.Add(new OneItem() { itemGO=go, itemGUID=itemPD.guid });
-
-                        OutlineObject.OnClick(go, ()=>
-                        {
-                            var notificationData = new TransferCardboardBoxItemToActorND();
-                            notificationData.cardboardBoxGUID = cardboardBox.guid;
-                            notificationData.itemGUID = itemPD.guid;
-                            notificationData.actorGUID = ActorsManager.GetInstance().GetHeroActor().guid;
-                            EventSystem.GetInstance().Notify(EventID.TransferCardboardBoxItemToActor, notificationData);
-                        });
-                    });
+                    AddOneItem(itemPD);
                 }
 
                 StartCoroutine(RemoveSplashBoardDelayCoroutine());
 
                 dropBoard.onTriggerEnter = DropBoardOnTriggerEnterHandler;
             }
+        }
+
+        private void AddOneItem(ItemPD itemPD)
+        {
+            AssetsManager.GetInstance().LoadSceneItem(itemPD.guid, itemPD.itemID, (go) =>
+            {
+                go.transform.SetParent(spawnPoint, false);
+                go.transform.localPosition = Vector3.zero;
+                Utils.SetLayerRecursively(go, (int)Define.Layers.UI3D);
+
+                if (allItems == null)
+                {
+                    allItems = new List<OneItem>();
+                }
+                allItems.Add(new OneItem() { itemGO = go, itemGUID = itemPD.guid });
+
+                OutlineObject.OnClick(go, () =>
+                {
+                    var notificationData = new TransferCardboardBoxItemToActorND();
+                    notificationData.cardboardBoxGUID = cardboardBox.guid;
+                    notificationData.itemGUID = itemPD.guid;
+                    notificationData.actorGUID = ActorsManager.GetInstance().GetHeroActor().guid;
+                    EventSystem.GetInstance().Notify(EventID.TransferCardboardBoxItemToActor, notificationData);
+                });
+            });
         }
 
         private void DropBoardOnTriggerEnterHandler(Collider collider)
@@ -157,12 +172,62 @@ namespace GameScript.UI.CardboardBoxUI
             splashBoard.gameObject.SetActive(false);
         }
 
+        private void TransferPocketItemToCardboardBoxHandler(NotificationData _data)
+        {
+            var data = _data as TransferPocketItemToCardboardBoxND;
+            if (data != null)
+            {
+                if (allItems != null && cardboardBox != null && cardboardBox.guid == data.cardboardBoxGUID)
+                {
+                    var cardboardBoxPD = DataCenter.GetInstance().playerData.GetSerializableMonoBehaviourPD<CardboardBoxPD>(data.cardboardBoxGUID);
+                    for (int itemI = 0; itemI < cardboardBoxPD.NumberItems(); itemI++)
+                    {
+                        var itemPD = cardboardBoxPD.GetItem(itemI);
+                        bool isExisted = false;
+                        foreach (var oneItem in allItems)
+                        {
+                            if (oneItem != null && oneItem.itemGUID == itemPD.guid)
+                            {
+                                isExisted = true;
+                                break;
+                            }
+                        }
+                        if (isExisted == false)
+                        {
+                            AddOneItem(itemPD);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void TransferCardboardBoxItemToActorHandler(NotificationData _data)
+        {
+            var data = _data as TransferCardboardBoxItemToActorND;
+            if (data != null)
+            {
+                if (allItems != null && cardboardBox != null && cardboardBox.guid == data.cardboardBoxGUID)
+                {
+                    for (int itemI = 0; itemI < allItems.Count; itemI++)
+                    {
+                        var oneItem = allItems[itemI];
+                        if (oneItem != null && oneItem.itemGUID == data.itemGUID)
+                        {
+                            allItems.RemoveAt(itemI);
+                            AssetsManager.GetInstance().UnloadSceneItem(data.itemGUID);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         private void TransferCardboardBoxItemToSceneHandler(NotificationData _data)
         {
             var data = _data as TransferCardboardBoxItemToSceneND;
             if (data != null)
             {
-                if (cardboardBox != null && cardboardBox.guid == data.cardboardBoxGUID && cardboardBox.pd.ContainsItem(data.itemGUID))
+                if (allItems != null && cardboardBox != null && cardboardBox.guid == data.cardboardBoxGUID && cardboardBox.pd.ContainsItem(data.itemGUID))
                 {
                     AssetsManager.GetInstance().UnloadSceneItem(data.itemGUID);
                     for (int itemI = 0; itemI < allItems.Count; itemI++)
@@ -193,6 +258,8 @@ namespace GameScript.UI.CardboardBoxUI
             }
 
             EventSystem.GetInstance().RemoveListener(EventID.TransferCardboardBoxItemToScene, TransferCardboardBoxItemToSceneHandler);
+            EventSystem.GetInstance().RemoveListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler);
+            EventSystem.GetInstance().RemoveListener(EventID.TransferPocketItemToCardboardBox, TransferPocketItemToCardboardBoxHandler);
         }
 
         private void Start()
@@ -202,6 +269,8 @@ namespace GameScript.UI.CardboardBoxUI
             UpdateMaterials();
 
             EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToScene, TransferCardboardBoxItemToSceneHandler);
+            EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler);
+            EventSystem.GetInstance().AddListener(EventID.TransferPocketItemToCardboardBox, TransferPocketItemToCardboardBoxHandler); 
         }
 
         private void CloseHandler()
