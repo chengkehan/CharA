@@ -32,6 +32,50 @@ namespace GameScript.UI.CardboardBoxUI
             }
         }
 
+        private Vector3 boxCover1EulerAngles = Vector3.zero;
+        [SerializeField]
+        private Transform _boxCover1 = null;
+        private Transform boxCover1
+        {
+            get
+            {
+                return _boxCover1;
+            }
+        }
+
+        private Vector3 boxCover2EulerAngles = Vector3.zero;
+        [SerializeField]
+        private Transform _boxCover2 = null;
+        private Transform boxCover2
+        {
+            get
+            {
+                return _boxCover2;
+            }
+        }
+
+        private Vector3 boxCover3EulerAngles = Vector3.zero;
+        [SerializeField]
+        private Transform _boxCover3 = null;
+        private Transform boxCover3
+        {
+            get
+            {
+                return _boxCover3;
+            }
+        }
+
+        private Vector3 boxCover4EulerAngles = Vector3.zero;
+        [SerializeField]
+        private Transform _boxCover4 = null;
+        private Transform boxCover4
+        {
+            get
+            {
+                return _boxCover4;
+            }
+        }
+
         [SerializeField]
         private HeroPanel _heroPanel = null;
         private HeroPanel heroPanel
