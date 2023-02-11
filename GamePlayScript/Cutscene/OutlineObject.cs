@@ -7,17 +7,40 @@ namespace GameScript.Cutscene
 {
     public class OutlineObject : MonoBehaviour
     {
+        public static bool TurnOnOff(GameObject targetGo, bool enabled)
+        {
+            if (targetGo != null)
+            {
+                if (targetGo.GetComponent<OutlineObject>() != null)
+                {
+                    targetGo.GetComponent<OutlineObject>().enabled = enabled;
+                    return true;
+                }
+                if (targetGo.GetComponentInChildren<OutlineObject>(true) != null)
+                {
+                    targetGo.GetComponentInChildren<OutlineObject>(true).enabled = enabled;
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public static bool OnClick(GameObject targetGo, Action clickedCB)
         {
-            if (targetGo != null && clickedCB != null && targetGo.GetComponent<OutlineObject>() != null)
+            if (targetGo != null && clickedCB != null)
             {
-                targetGo.GetComponent<OutlineObject>().clickedCB = clickedCB;
-                return true;
+                if (targetGo.GetComponent<OutlineObject>() != null)
+                {
+                    targetGo.GetComponent<OutlineObject>().clickedCB = clickedCB;
+                    return true;
+                }
+                if (targetGo.GetComponentInChildren<OutlineObject>() != null)
+                {
+                    targetGo.GetComponentInChildren<OutlineObject>().clickedCB = clickedCB;
+                    return true;
+                }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         private Action clickedCB = null;

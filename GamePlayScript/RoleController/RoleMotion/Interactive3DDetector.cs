@@ -61,12 +61,19 @@ namespace GameScript
                         }
                         if (isSelected && outline != null)
                         {
-                            if (outline.enabled && outline != recentOutlineObject)
+                            if (outline.enabled)
+                            {
+                                if (outline != recentOutlineObject)
+                                {
+                                    RecentOutlineObjectHide();
+
+                                    recentOutlineObject = outline;
+                                    RecentOutlineObjectShow();
+                                }
+                            }
+                            else
                             {
                                 RecentOutlineObjectHide();
-
-                                recentOutlineObject = outline;
-                                RecentOutlineObjectShow();
                             }
                         }
                         else

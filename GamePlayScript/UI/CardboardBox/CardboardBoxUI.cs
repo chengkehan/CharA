@@ -32,7 +32,9 @@ namespace GameScript.UI.CardboardBoxUI
             }
         }
 
-        private Vector3 boxCover1EulerAngles = Vector3.zero;
+        private int boxCover1AnchorIndex = 0;
+        [SerializeField]
+        private Transform[] boxCover1Anchors = null;
         [SerializeField]
         private Transform _boxCover1 = null;
         private Transform boxCover1
@@ -43,7 +45,9 @@ namespace GameScript.UI.CardboardBoxUI
             }
         }
 
-        private Vector3 boxCover2EulerAngles = Vector3.zero;
+        private int boxCover2AnchorIndex = 0;
+        [SerializeField]
+        private Transform[] boxCover2Anchors = null;
         [SerializeField]
         private Transform _boxCover2 = null;
         private Transform boxCover2
@@ -54,7 +58,9 @@ namespace GameScript.UI.CardboardBoxUI
             }
         }
 
-        private Vector3 boxCover3EulerAngles = Vector3.zero;
+        private int boxCover3AnchorIndex = 0;
+        [SerializeField]
+        private Transform[] boxCover3Anchors = null;
         [SerializeField]
         private Transform _boxCover3 = null;
         private Transform boxCover3
@@ -65,7 +71,9 @@ namespace GameScript.UI.CardboardBoxUI
             }
         }
 
-        private Vector3 boxCover4EulerAngles = Vector3.zero;
+        private int boxCover4AnchorIndex = 0;
+        [SerializeField]
+        private Transform[] boxCover4Anchors = null;
         [SerializeField]
         private Transform _boxCover4 = null;
         private Transform boxCover4
@@ -146,6 +154,8 @@ namespace GameScript.UI.CardboardBoxUI
         }
 
         private List<OneItem> allItems = null;
+
+        private List<Transform> closedCovers = new List<Transform>();
 
         public void Initialize(CardboardBox cardboardBox)
         {
@@ -306,6 +316,96 @@ namespace GameScript.UI.CardboardBoxUI
             EventSystem.GetInstance().RemoveListener(EventID.TransferPocketItemToCardboardBox, TransferPocketItemToCardboardBoxHandler);
         }
 
+        protected override void Awake()
+        {
+            base.Awake();
+
+            OutlineObject.OnClick(boxCover1.gameObject, () =>
+            {
+                Utils.Log("Click cover1");
+                if (closedCovers.Contains(boxCover1))
+                {
+                    closedCovers.Remove(boxCover1);
+                    boxCover1AnchorIndex = 0;
+                }
+                else
+                {
+                    if (closedCovers.Count > 0 && closedCovers[closedCovers.Count - 1] == boxCover3)
+                    {
+                        boxCover1AnchorIndex = boxCover3AnchorIndex;
+                    }
+                    else
+                    {
+                        boxCover1AnchorIndex = boxCover1Anchors.Length - 1 - closedCovers.Count;
+                    }
+                    closedCovers.Add(boxCover1);
+                }
+            });
+            OutlineObject.OnClick(boxCover2.gameObject, () =>
+            {
+                Utils.Log("Click cover2");
+                if (closedCovers.Contains(boxCover2))
+                {
+                    closedCovers.Remove(boxCover2);
+                    boxCover2AnchorIndex = 0;
+                }
+                else
+                {
+                    if (closedCovers.Count > 0 && closedCovers[closedCovers.Count - 1] == boxCover4)
+                    {
+                        boxCover2AnchorIndex = boxCover4AnchorIndex;
+                    }
+                    else
+                    {
+                        boxCover2AnchorIndex = boxCover2Anchors.Length - 1 - closedCovers.Count;
+                    }
+                    closedCovers.Add(boxCover2);
+                }
+            });
+            OutlineObject.OnClick(boxCover3.gameObject, () =>
+            {
+                Utils.Log("Click cover3");
+                if (closedCovers.Contains(boxCover3))
+                {
+                    closedCovers.Remove(boxCover3);
+                    boxCover3AnchorIndex = 0;
+                }
+                else
+                {
+                    if (closedCovers.Count > 0 && closedCovers[closedCovers.Count - 1] == boxCover1)
+                    {
+                        boxCover3AnchorIndex = boxCover1AnchorIndex;
+                    }
+                    else
+                    {
+                        boxCover3AnchorIndex = boxCover3Anchors.Length - 1 - closedCovers.Count;
+                    }
+                    closedCovers.Add(boxCover3);
+                }
+            });
+            OutlineObject.OnClick(boxCover4.gameObject, () =>
+            {
+                Utils.Log("Click cover4");
+                if (closedCovers.Contains(boxCover4))
+                {
+                    closedCovers.Remove(boxCover4);
+                    boxCover4AnchorIndex = 0;
+                }
+                else
+                {
+                    if (closedCovers.Count > 0 && closedCovers[closedCovers.Count - 1] == boxCover2)
+                    {
+                        boxCover4AnchorIndex = boxCover2AnchorIndex;
+                    }
+                    else
+                    {
+                        boxCover4AnchorIndex = boxCover4Anchors.Length - 1 - closedCovers.Count;
+                    }
+                    closedCovers.Add(boxCover4);
+                }
+            });
+        }
+
         private void Start()
         {
             closeButton.onClick.AddListener(CloseHandler);
@@ -327,7 +427,23 @@ namespace GameScript.UI.CardboardBoxUI
             UpdateMaterials();
             UpdateRotation();
             UpdateHeroPanel();
+            UpdateCovers();
             Interactive3DDetector.DetectOutlineObject((int)Define.LayersMask.UI3D, ui3dCamera, true);
+        }
+
+        private void UpdateCovers()
+        {
+            float speed = 0.25f;
+
+            boxCover1.rotation = Quaternion.Slerp(boxCover1.rotation, boxCover1Anchors[boxCover1AnchorIndex].rotation, speed);
+            boxCover2.rotation = Quaternion.Slerp(boxCover2.rotation, boxCover2Anchors[boxCover2AnchorIndex].rotation, speed);
+            boxCover3.rotation = Quaternion.Slerp(boxCover3.rotation, boxCover3Anchors[boxCover3AnchorIndex].rotation, speed);
+            boxCover4.rotation = Quaternion.Slerp(boxCover4.rotation, boxCover4Anchors[boxCover4AnchorIndex].rotation, speed);
+
+            OutlineObject.TurnOnOff(boxCover1.gameObject, closedCovers.Contains(boxCover1) == false || closedCovers.IndexOf(boxCover1) == closedCovers.Count - 1 || (closedCovers.IndexOf(boxCover1) == closedCovers.Count - 2 && closedCovers[closedCovers.Count - 1] == boxCover3));
+            OutlineObject.TurnOnOff(boxCover2.gameObject, closedCovers.Contains(boxCover2) == false || closedCovers.IndexOf(boxCover2) == closedCovers.Count - 1 || (closedCovers.IndexOf(boxCover2) == closedCovers.Count - 2 && closedCovers[closedCovers.Count - 1] == boxCover4));
+            OutlineObject.TurnOnOff(boxCover3.gameObject, closedCovers.Contains(boxCover3) == false || closedCovers.IndexOf(boxCover3) == closedCovers.Count - 1 || (closedCovers.IndexOf(boxCover3) == closedCovers.Count - 2 && closedCovers[closedCovers.Count - 1] == boxCover1));
+            OutlineObject.TurnOnOff(boxCover4.gameObject, closedCovers.Contains(boxCover4) == false || closedCovers.IndexOf(boxCover4) == closedCovers.Count - 1 || (closedCovers.IndexOf(boxCover4) == closedCovers.Count - 2 && closedCovers[closedCovers.Count - 1] == boxCover2));
         }
 
         private void UpdateHeroPanel()
