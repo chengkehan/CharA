@@ -39,7 +39,7 @@ namespace GameScript
             }
         }
 
-        public static void DetectOutlineObject(int layerMask = (int)Define.LayersMask.Interactive3D, Camera camera = null, bool selectNearest = false)
+        public static void DetectOutlineObject(int layerMask = (int)Define.LayersMask.Interactive3D, Camera camera = null, bool depthOcclusion = false)
         {
             if (CameraManager.GetInstance() != null && CameraManager.GetInstance().GetMainCamera() != null)
             {
@@ -51,13 +51,34 @@ namespace GameScript
                     {
                         bool isSelected = false;
                         OutlineObject outline = null;
-                        if (selectNearest)
+                        if (depthOcclusion == false)
                         {
-                            isSelected = SelectNearest(out outline);
+                            isSelected = Select(out outline);
                         }
                         else
                         {
-                            isSelected = Select(out outline);
+                            for (int i = 0; i < hitInfoBufferSize; i++)
+                            {
+                                if (Select(out outline, i))
+                                {
+                                    if (outline == null)
+                                    {       
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        if (outline.enabled)
+                                        {
+                                            isSelected = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
                         }
                         if (isSelected && outline != null)
                         {
@@ -108,12 +129,12 @@ namespace GameScript
             }
         }
 
-        public static bool SelectNearest<T>(out T o) where T : Component
+        private static bool Select<T>(out T o, int index) where T : MonoBehaviour
         {
             o = null;
-            if (hitInfoBufferSize > 0)
+            if (index >= 0 && index < hitInfoBufferSize)
             {
-                if (SelectCheckHitInfo(out o, GetHitInfoBuffer()[0], 0))
+                if (SelectCheckHitInfo(out o, GetHitInfoBuffer()[index], index))
                 {
                     return true;
                 }
@@ -121,7 +142,7 @@ namespace GameScript
             return false;
         }
 
-        public static bool Select<T>(out T o) where T : Component
+        public static bool Select<T>(out T o) where T : MonoBehaviour
         {
             o = null;
             for (int i = 0; i < hitInfoBufferSize; i++)
@@ -134,20 +155,28 @@ namespace GameScript
             return false;
         }
 
-        private static bool SelectCheckHitInfo<T>(out T o, RaycastHit hitInfo, int hitInfoIndex) where T : Component
+        private static bool SelectCheckHitInfo<T>(out T o, RaycastHit hitInfo, int hitInfoIndex) where T : MonoBehaviour
         {
             o = null;
-            if (hitInfo.transform != null && hitInfo.transform.GetComponent<T>() != null)
+            if (hitInfo.transform != null)
             {
-                o = hitInfo.transform.GetComponent<T>();
-                hitInfoSelected = hitInfoIndex;
-                return true;
+                var mono = hitInfo.transform.GetComponent<T>();
+                if (mono != null)
+                {
+                    o = mono;
+                    hitInfoSelected = hitInfoIndex;
+                    return true;
+                }
             }
-            if (hitInfo.transform != null && hitInfo.transform.parent != null && hitInfo.transform.parent.GetComponent<T>() != null)
+            if (hitInfo.transform != null && hitInfo.transform.parent != null)
             {
-                o = hitInfo.transform.parent.GetComponent<T>();
-                hitInfoSelected = hitInfoIndex;
-                return true;
+                var mono = hitInfo.transform.parent.GetComponent<T>();
+                if (mono != null)
+                {
+                    o = mono;
+                    hitInfoSelected = hitInfoIndex;
+                    return true;
+                }
             }
             return false;
         }

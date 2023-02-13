@@ -32,6 +32,19 @@ namespace GameScript.UI.CardboardBoxUI
             }
         }
 
+        private Vector3[] boxMeshVertices = null;
+        private Color[] boxMeshColors = null;
+        private Mesh boxMesh = null;
+        [SerializeField]
+        private SkinnedMeshRenderer _boxRenderer = null;
+        private SkinnedMeshRenderer boxRenderer
+        {
+            get
+            {
+                return _boxRenderer;
+            }
+        }
+
         private int boxCover1AnchorIndex = 0;
         [SerializeField]
         private Transform[] boxCover1Anchors = null;
@@ -314,6 +327,12 @@ namespace GameScript.UI.CardboardBoxUI
             EventSystem.GetInstance().RemoveListener(EventID.TransferCardboardBoxItemToScene, TransferCardboardBoxItemToSceneHandler);
             EventSystem.GetInstance().RemoveListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler);
             EventSystem.GetInstance().RemoveListener(EventID.TransferPocketItemToCardboardBox, TransferPocketItemToCardboardBoxHandler);
+
+            if (boxMesh != null)
+            {
+                Destroy(boxMesh);
+                boxMesh = null;
+            }
         }
 
         protected override void Awake()
@@ -332,14 +351,15 @@ namespace GameScript.UI.CardboardBoxUI
                 {
                     if (closedCovers.Count > 0 && closedCovers[closedCovers.Count - 1] == boxCover3)
                     {
-                        boxCover1AnchorIndex = boxCover3AnchorIndex;
+                        boxCover1AnchorIndex = 2;
                     }
                     else
                     {
-                        boxCover1AnchorIndex = boxCover1Anchors.Length - 1 - closedCovers.Count;
+                        boxCover1AnchorIndex = 2;
                     }
                     closedCovers.Add(boxCover1);
                 }
+                RefreshCovers();
             });
             OutlineObject.OnClick(boxCover2.gameObject, () =>
             {
@@ -353,14 +373,15 @@ namespace GameScript.UI.CardboardBoxUI
                 {
                     if (closedCovers.Count > 0 && closedCovers[closedCovers.Count - 1] == boxCover4)
                     {
-                        boxCover2AnchorIndex = boxCover4AnchorIndex;
+                        boxCover2AnchorIndex = 2;
                     }
                     else
                     {
-                        boxCover2AnchorIndex = boxCover2Anchors.Length - 1 - closedCovers.Count;
+                        boxCover2AnchorIndex = 2;
                     }
                     closedCovers.Add(boxCover2);
                 }
+                RefreshCovers();
             });
             OutlineObject.OnClick(boxCover3.gameObject, () =>
             {
@@ -374,14 +395,15 @@ namespace GameScript.UI.CardboardBoxUI
                 {
                     if (closedCovers.Count > 0 && closedCovers[closedCovers.Count - 1] == boxCover1)
                     {
-                        boxCover3AnchorIndex = boxCover1AnchorIndex;
+                        boxCover3AnchorIndex = 2;
                     }
                     else
                     {
-                        boxCover3AnchorIndex = boxCover3Anchors.Length - 1 - closedCovers.Count;
+                        boxCover3AnchorIndex = 2;
                     }
                     closedCovers.Add(boxCover3);
                 }
+                RefreshCovers();
             });
             OutlineObject.OnClick(boxCover4.gameObject, () =>
             {
@@ -395,15 +417,22 @@ namespace GameScript.UI.CardboardBoxUI
                 {
                     if (closedCovers.Count > 0 && closedCovers[closedCovers.Count - 1] == boxCover2)
                     {
-                        boxCover4AnchorIndex = boxCover2AnchorIndex;
+                        boxCover4AnchorIndex = 2;
                     }
                     else
                     {
-                        boxCover4AnchorIndex = boxCover4Anchors.Length - 1 - closedCovers.Count;
+                        boxCover4AnchorIndex = 2;
                     }
                     closedCovers.Add(boxCover4);
                 }
+                RefreshCovers();
             });
+
+            boxMesh = Instantiate(boxRenderer.sharedMesh);
+            boxMesh.name = "CardboardDynamicMesh";
+            boxMeshVertices = boxMesh.vertices;
+            boxMeshColors = boxMesh.colors;
+            boxRenderer.sharedMesh = boxMesh;
         }
 
         private void Start()
@@ -431,6 +460,158 @@ namespace GameScript.UI.CardboardBoxUI
             Interactive3DDetector.DetectOutlineObject((int)Define.LayersMask.UI3D, ui3dCamera, true);
         }
 
+        private void RefreshCovers()
+        {
+            OutlineObject.TurnOnOff(boxCover1.gameObject, closedCovers.Contains(boxCover1) == false || closedCovers.IndexOf(boxCover1) == closedCovers.Count - 1 || (closedCovers.IndexOf(boxCover1) == closedCovers.Count - 2 && closedCovers[closedCovers.Count - 1] == boxCover3));
+            OutlineObject.TurnOnOff(boxCover2.gameObject, closedCovers.Contains(boxCover2) == false || closedCovers.IndexOf(boxCover2) == closedCovers.Count - 1 || (closedCovers.IndexOf(boxCover2) == closedCovers.Count - 2 && closedCovers[closedCovers.Count - 1] == boxCover4));
+            OutlineObject.TurnOnOff(boxCover3.gameObject, closedCovers.Contains(boxCover3) == false || closedCovers.IndexOf(boxCover3) == closedCovers.Count - 1 || (closedCovers.IndexOf(boxCover3) == closedCovers.Count - 2 && closedCovers[closedCovers.Count - 1] == boxCover1));
+            OutlineObject.TurnOnOff(boxCover4.gameObject, closedCovers.Contains(boxCover4) == false || closedCovers.IndexOf(boxCover4) == closedCovers.Count - 1 || (closedCovers.IndexOf(boxCover4) == closedCovers.Count - 2 && closedCovers[closedCovers.Count - 1] == boxCover2));
+
+            bool cover1Closed = closedCovers.Contains(boxCover1);
+            int cover1Index = closedCovers.IndexOf(boxCover1);
+            bool cover2Closed = closedCovers.Contains(boxCover2);
+            int cover2Index = closedCovers.IndexOf(boxCover2);
+            bool cover3Closed = closedCovers.Contains(boxCover3);
+            int cover3Index = closedCovers.IndexOf(boxCover3);
+            bool cover4Closed = closedCovers.Contains(boxCover4);
+            int cover4Index = closedCovers.IndexOf(boxCover4);
+
+            bool cover1LeftUp = cover1Closed && cover4Closed && cover1Index > cover4Index;
+            bool cover1LeftDown = cover1Closed && cover4Closed && cover4Index > cover1Index;
+            bool cover1RightUp = cover1Closed && cover2Closed && cover1Index > cover2Index;
+            bool cover1RightDown = cover1Closed && cover2Closed && cover2Index > cover1Index;
+
+            bool cover2LeftUp = cover2Closed && cover1Closed && cover2Index > cover1Index;
+            bool cover2LeftDown = cover2Closed && cover1Closed && cover1Index > cover2Index;
+            bool cover2RightUp = cover2Closed && cover3Closed && cover2Index > cover3Index;
+            bool cover2RightDown = cover2Closed && cover3Closed && cover3Index > cover2Index;
+
+            bool cover3LeftUp = cover3Closed && cover2Closed && cover3Index > cover2Index;
+            bool cover3LeftDown = cover3Closed && cover2Closed && cover2Index > cover3Index;
+            bool cover3RightUp = cover3Closed && cover4Closed && cover3Index > cover4Index;
+            bool cover3RightDown = cover3Closed && cover4Closed && cover4Index > cover3Index;
+
+            bool cover4LeftUp = cover4Closed && cover3Closed && cover4Index > cover3Index;
+            bool cover4LeftDown = cover4Closed && cover3Closed && cover3Index > cover4Index;
+            bool cover4RightUp = cover4Closed && cover1Closed && cover4Index > cover1Index;
+            bool cover4RightDown = cover4Closed && cover1Closed && cover1Index > cover4Index;
+
+            Vector3[] vertices = boxMesh.vertices;
+            Color[] colors = boxMesh.colors;
+            int numVertices = vertices.Length;
+            float vertexOffset = 0.00025f;
+            for (int i = 0; i < numVertices; i++)
+            {
+                Color c = colors[i];
+                Vector3 v = boxMeshVertices[i];
+                // Cover1
+                {
+                    if (c.r > 0.1f && c.r < 0.4f) // equals 0.3
+                    {
+                        if (cover1LeftUp)
+                        {
+                            v.y -= vertexOffset;
+                        }
+                        if (cover1LeftDown)
+                        {
+                            v.y += vertexOffset;
+                        }
+                    }
+                    if (c.r > 0.4f && c.r < 0.7f) // equals 0.6
+                    {
+                        if (cover1RightUp)
+                        {
+                            v.y -= vertexOffset;
+                        }
+                        if (cover1RightDown)
+                        {
+                            v.y += vertexOffset;
+                        }
+                    }
+                }
+                // Cover2
+                {
+                    if (c.r > 0.7f && c.r < 1f) // equals 0.9
+                    {
+                        if (cover2LeftUp)
+                        {
+                            v.x -= vertexOffset;
+                        }
+                        if (cover2LeftDown)
+                        {
+                            v.x += vertexOffset;
+                        }
+                    }
+                    if (c.g > 0.1f && c.g < 0.4f) // equals 0.3
+                    {
+                        if (cover2RightUp)
+                        {
+                            v.x -= vertexOffset;
+                        }
+                        if (cover2RightDown)
+                        {
+                            v.x += vertexOffset;
+                        }
+                    }
+                }
+                // Cover3
+                {
+                    if (c.g > 0.4f && c.g < 0.7f) // equals 0.6
+                    {
+                        if (cover3LeftUp)
+                        {
+                            v.y += vertexOffset;
+                        }
+                        if (cover3LeftDown)
+                        {
+                            v.y -= vertexOffset;
+                        }
+                    }
+                    if (c.g > 0.7f && c.g < 1f) // equals 0.9
+                    {
+                        if (cover3RightUp)
+                        {
+                            v.y += vertexOffset;
+                        }
+                        if (cover3RightDown)
+                        {
+                            v.y -= vertexOffset;
+                        }
+                    }
+                }
+                // Cover4
+                {
+                    if (c.b > 0.1f && c.b < 0.4f) // equals 0.3
+                    {
+                        if (cover4LeftUp)
+                        {
+                            v.x += vertexOffset;
+                        }
+                        if (cover4LeftDown)
+                        {
+                            v.x -= vertexOffset;
+                        }
+                    }
+                    if (c.b > 0.4f && c.b < 0.7f) // equals 0.6
+                    {
+                        if (cover4RightUp)
+                        {
+                            v.x += vertexOffset * (cover1RightUp ? 2 : 1); // a trick
+                        }
+                        if (cover4RightDown)
+                        {
+                            v.x -= vertexOffset;
+                        }
+                    }
+                }
+
+                vertices[i] = v;
+            }
+            boxMesh.vertices = vertices;
+            boxMesh.colors = colors;
+            boxMesh.UploadMeshData(false);
+        }
+
         private void UpdateCovers()
         {
             float speed = 0.25f;
@@ -439,11 +620,6 @@ namespace GameScript.UI.CardboardBoxUI
             boxCover2.rotation = Quaternion.Slerp(boxCover2.rotation, boxCover2Anchors[boxCover2AnchorIndex].rotation, speed);
             boxCover3.rotation = Quaternion.Slerp(boxCover3.rotation, boxCover3Anchors[boxCover3AnchorIndex].rotation, speed);
             boxCover4.rotation = Quaternion.Slerp(boxCover4.rotation, boxCover4Anchors[boxCover4AnchorIndex].rotation, speed);
-
-            OutlineObject.TurnOnOff(boxCover1.gameObject, closedCovers.Contains(boxCover1) == false || closedCovers.IndexOf(boxCover1) == closedCovers.Count - 1 || (closedCovers.IndexOf(boxCover1) == closedCovers.Count - 2 && closedCovers[closedCovers.Count - 1] == boxCover3));
-            OutlineObject.TurnOnOff(boxCover2.gameObject, closedCovers.Contains(boxCover2) == false || closedCovers.IndexOf(boxCover2) == closedCovers.Count - 1 || (closedCovers.IndexOf(boxCover2) == closedCovers.Count - 2 && closedCovers[closedCovers.Count - 1] == boxCover4));
-            OutlineObject.TurnOnOff(boxCover3.gameObject, closedCovers.Contains(boxCover3) == false || closedCovers.IndexOf(boxCover3) == closedCovers.Count - 1 || (closedCovers.IndexOf(boxCover3) == closedCovers.Count - 2 && closedCovers[closedCovers.Count - 1] == boxCover1));
-            OutlineObject.TurnOnOff(boxCover4.gameObject, closedCovers.Contains(boxCover4) == false || closedCovers.IndexOf(boxCover4) == closedCovers.Count - 1 || (closedCovers.IndexOf(boxCover4) == closedCovers.Count - 2 && closedCovers[closedCovers.Count - 1] == boxCover2));
         }
 
         private void UpdateHeroPanel()

@@ -55,6 +55,15 @@ namespace GameScript.Cutscene
             HideOutline();
         }
 
+        private void OnDisable()
+        {
+            if (Interactive3DDetector.recentOutlineObject == this)
+            {
+                HideOutline();
+                Interactive3DDetector.RecentOutlineObjectHide();
+            }
+        }
+
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))
