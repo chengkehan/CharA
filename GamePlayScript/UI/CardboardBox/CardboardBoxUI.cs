@@ -147,8 +147,6 @@ namespace GameScript.UI.CardboardBoxUI
             }
         }
 
-        private MeshRenderer[] allMeshRenderers = null;
-
         private bool isMouseButtonDown = false;
         private Vector3 mousePosition = Vector3.zero;
         private Quaternion box3DRotationMouseDown = Quaternion.identity;
@@ -341,7 +339,6 @@ namespace GameScript.UI.CardboardBoxUI
 
             OutlineObject.OnClick(boxCover1.gameObject, () =>
             {
-                Utils.Log("Click cover1");
                 if (closedCovers.Contains(boxCover1))
                 {
                     closedCovers.Remove(boxCover1);
@@ -363,7 +360,6 @@ namespace GameScript.UI.CardboardBoxUI
             });
             OutlineObject.OnClick(boxCover2.gameObject, () =>
             {
-                Utils.Log("Click cover2");
                 if (closedCovers.Contains(boxCover2))
                 {
                     closedCovers.Remove(boxCover2);
@@ -385,7 +381,6 @@ namespace GameScript.UI.CardboardBoxUI
             });
             OutlineObject.OnClick(boxCover3.gameObject, () =>
             {
-                Utils.Log("Click cover3");
                 if (closedCovers.Contains(boxCover3))
                 {
                     closedCovers.Remove(boxCover3);
@@ -407,7 +402,6 @@ namespace GameScript.UI.CardboardBoxUI
             });
             OutlineObject.OnClick(boxCover4.gameObject, () =>
             {
-                Utils.Log("Click cover4");
                 if (closedCovers.Contains(boxCover4))
                 {
                     closedCovers.Remove(boxCover4);
@@ -629,24 +623,10 @@ namespace GameScript.UI.CardboardBoxUI
 
         private void UpdateMaterials()
         {
-            if (allMeshRenderers == null)
+            if (boxRenderer != null && boxRenderer.material != null)
             {
-                allMeshRenderers = box3D.GetComponentsInChildren<MeshRenderer>();
-            }
-            if (allMeshRenderers != null && DayNight.GetInstance() != null)
-            {
-                foreach (var meshRenderer in allMeshRenderers)
-                {
-                    if (meshRenderer != null)
-                    {
-                        var material = meshRenderer.material;
-                        if (material != null)
-                        {
-                            // Keep 3d model lighting in ui
-                            material.SetFloat(DayNight.GetInstance().dayNightProgressID, 1);
-                        }
-                    }
-                }
+                // Keep 3d model lighting in ui
+                boxRenderer.material.SetFloat(DayNight.GetInstance().dayNightProgressID, 1);
             }
         }
 
