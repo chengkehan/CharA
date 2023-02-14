@@ -50,6 +50,7 @@ namespace GameScript
             }
 
             UpateBreakWall();
+            UpdateDropItemToSceneWhenSomeAnimations();
         }
 
         protected override void OnDestroy()
@@ -458,6 +459,30 @@ namespace GameScript
             }
         }
 
-        #endregion        
+        #endregion
+
+        #region Drop in hand item to scene when doing some animations
+
+        private void UpdateDropItemToSceneWhenSomeAnimations()
+        {
+            if (GetMotionAnimator() != null && ActorsManager.GetInstance() != null && ActorsManager.GetInstance().GetHeroActor() != null)
+            {
+                // Can't keep in hand item when climbing 
+                if (GetMotionAnimator().ContainsState(MotionAnimator.State.Climbing))
+                {
+                    var heroActor = ActorsManager.GetInstance().GetHeroActor();
+                    var heroActorPD = DataCenter.GetInstance().playerData.GetSerializableMonoBehaviourPD<ActorPD>(heroActor.guid);
+                    if (heroActorPD.inHandItem.IsEmpty() == false)
+                    {
+                        var notificationData = new DropItemToSceneND();
+                        notificationData.actorGUID = heroActor.guid;
+                        notificationData.itemGUID = heroActorPD.inHandItem.guid;
+                        EventSystem.GetInstance().Notify(EventID.DropItemToScene, notificationData);
+                    }
+                }
+            }
+        }
+
+        #endregion
     }
 }
