@@ -38,7 +38,19 @@ namespace GameScript.Cutscene
             {
                 if (target != null)
                 {
-                    var anims = target.GetComponentsInChildren<UnityEngine.Animation>();
+                    var allDelayActive = target.GetComponentsInChildren<DelayActive>(true);
+                    if (allDelayActive != null)
+                    {
+                        foreach (var delayActive in allDelayActive)
+                        {
+                            if (delayActive != null)
+                            {
+                                delayActive.enabled = false;
+                            }
+                        }
+                    }
+
+                    var anims = target.GetComponentsInChildren<UnityEngine.Animation>(true);
                     if (anims != null)
                     {
                         foreach (var anim in anims)

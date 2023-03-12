@@ -87,9 +87,24 @@ namespace GameScript
             RaiseException(condition, message);
         }
 
-        public static void LogObservably(string message, string color = "yellow")
+        public static void LogObservably(string message, bool condition = true, bool editorOnly = false, string color = "yellow")
         {
-            Log("<color=" + color + ">" + message + "</color>");
+            if (editorOnly)
+            {
+#if UNITY_EDITOR
+                if (condition)
+                {
+                    Log("<color=" + color + ">" + message + "</color>");
+                }
+#endif
+            }
+            else
+            {
+                if (condition)
+                {
+                    Log("<color=" + color + ">" + message + "</color>");
+                }
+            }
         }
 
         public static void Log(object message)

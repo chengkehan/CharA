@@ -187,26 +187,31 @@ namespace GameScript
 
         public Vector3 GetHeadPointPosition()
         {
+            Utils.LogObservably("headPointTransform is null", headPointTransform == null);
             return headPointTransform == null ? Vector3.zero : headPointTransform.position;
         }
 
         public Vector3 GetHeadDirection()
         {
+            Utils.LogObservably("mainHeadTransform is null", mainHeadTransform == null);
             return mainHeadTransform == null ? Vector3.one : mainHeadTransform.forward;
         }
 
         public Vector3 GetHeadPosition()
         {
+            Utils.LogObservably("mainHeadTransform is null", mainHeadTransform == null);
             return mainHeadTransform == null ? Vector3.zero : mainHeadTransform.position;
         }
 
         public Vector3 GetLeftHandPosition()
         {
+            Utils.LogObservably("leftHandTransform is null", leftHandTransform == null);
             return leftHandTransform == null ? Vector3.zero : leftHandTransform.position;
         }
 
         public Vector3 GetRightHandPosition()
         {
+            Utils.LogObservably("rightHeadTransform is null", rightHandTransform == null);
             return rightHandTransform == null ? Vector3.zero : rightHandTransform.position;
         }
 

@@ -48,10 +48,12 @@ namespace GameScriptEditor
                     {
                         if (File.Exists(DataCenter.SAVE_PATH) == false)
                         {
+                            Debug.Log(DataCenter.SAVE_DIRECTORY);
                             EditorUtility.RevealInFinder(DataCenter.SAVE_DIRECTORY);
                         }
                         else
                         {
+                            Debug.Log(DataCenter.SAVE_PATH);
                             EditorUtility.RevealInFinder(DataCenter.SAVE_PATH);
                         }
                     }
