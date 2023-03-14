@@ -642,6 +642,16 @@ namespace GameScript
             SetState(State.Solo);
         }
 
+        public bool IsInSoloState()
+        {
+            return pendingSolo == SoloSM.Transition.Undefined && recentSolo == SoloSM.Transition.Undefined;
+        }
+
+        public bool IsInSoloState(SoloSM.Transition solo)
+        {
+            return pendingSolo == solo || recentSolo == solo;
+        }
+
         public bool ContainsState(State state)
         {
             return (_state & (int)state) != 0;
@@ -1809,6 +1819,7 @@ namespace GameScript
         {
             if (recentSolo != SoloSM.Transition.StandingToCrouched)
             {
+                recentSolo = SoloSM.Transition.Undefined;
                 SetState(State.Undefined);
                 Update();
             }
