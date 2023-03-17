@@ -30,6 +30,11 @@ namespace GameScript
             return Animator.StringToHash("Turning");
         }
 
+        protected override int GetAction(string clipName)
+        {
+            return Utils.EnumToValue(Utils.StringToEnum<Transition>(clipName));
+        }
+
         protected override void InitializeCompleteTimeOfActions()
         {
             AddCompleteTimeOfAction(Transition.InjuredTurnLeft, 2f);

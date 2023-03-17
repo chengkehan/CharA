@@ -22,6 +22,11 @@ namespace GameScript
             return Animator.StringToHash("Moving");
         }
 
+        protected override int GetAction(string clipName)
+        {
+            return Utils.EnumToValue(Utils.StringToEnum<Transition>(clipName));
+        }
+
         private int _walkRunBlendID = 0;
         private int walkRunBlendID
         {

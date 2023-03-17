@@ -20,6 +20,8 @@ namespace GameScript
 
         private List<int[]> _equalActions = null;
 
+        private List<AnimatorClipInfo> clipInfos = new List<AnimatorClipInfo>();
+
         private int _actionNameId = 0;
 
         public void SetRoleAnimation(RoleAnimation roleAnimation)
@@ -74,6 +76,8 @@ namespace GameScript
             return _action;
         }
 
+        abstract protected int GetAction(string clipName);
+
         public int GetActionNameId()
         {
             if (_actionNameId == 0)
@@ -81,6 +85,62 @@ namespace GameScript
                 _actionNameId = InitializeActionNameId();
             }
             return _actionNameId;
+        }
+
+        public bool IsActionComplete(System.Enum action, Animator animator)
+        {
+            if (animator == null)
+            {
+                return true;
+            }
+            else
+            {
+                
+                int actionVal = Utils.EnumToValue(action);
+                while (GetSequenceAction(actionVal, out int sequenceAction))
+                {
+                    if (GetAction() == actionVal)
+                    {
+                        //Utils.Log("false  " + action + "   " + GetAction());
+                        return false;
+                    }
+
+                    actionVal = sequenceAction;
+                }
+                if (GetAction() == actionVal)
+                {
+                    if (IsInTransition(animator))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        var completeTime = GetCompleteTimeOfAction(actionVal);
+                        var animStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+                        if (animStateInfo.normalizedTime >= completeTime)
+                        {
+                            animator.GetCurrentAnimatorClipInfo(0, clipInfos);
+                            if (clipInfos.Count > 0 && clipInfos[0].clip != null)
+                            {
+                                var currentActionVal = GetAction(clipInfos[0].clip.name);
+                                return currentActionVal == actionVal;
+                            }
+                            else
+                            {
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            }
         }
 
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -121,7 +181,7 @@ namespace GameScript
             {
                 _completeTimeOfActions = new Dictionary<int, float>();
             }
-            _completeTimeOfActions.Add(System.Convert.ToInt32(action), time);
+            _completeTimeOfActions.Add(Utils.EnumToValue(action), time);
         }
 
         protected virtual void InitializeSequenceActions()
@@ -135,7 +195,7 @@ namespace GameScript
             {
                 _sequenceActions = new Dictionary<int, int>();
             }
-            _sequenceActions.Add(System.Convert.ToInt32(action1), System.Convert.ToInt32(action2));
+            _sequenceActions.Add(Utils.EnumToValue(action1), Utils.EnumToValue(action2));
         }
 
         protected virtual void InitializedEqualActions()
@@ -150,7 +210,7 @@ namespace GameScript
                 _equalActions = new List<int[]>();
             }
 
-            _equalActions.Add(new int[] { System.Convert.ToInt32(action1), System.Convert.ToInt32(action2) });
+            _equalActions.Add(new int[] { Utils.EnumToValue(action1), Utils.EnumToValue(action2) });
         }
 
         protected bool MatchTarget(

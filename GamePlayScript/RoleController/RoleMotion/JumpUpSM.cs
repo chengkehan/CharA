@@ -20,6 +20,11 @@ namespace GameScript
             return Animator.StringToHash("JumpUp");
         }
 
+        protected override int GetAction(string clipName)
+        {
+            return Utils.EnumToValue(Utils.StringToEnum<Transition>(clipName));
+        }
+
         public override void MatchTargetUpdate(Animator animator)
         {
             Waypoint jumpupWaypoint =

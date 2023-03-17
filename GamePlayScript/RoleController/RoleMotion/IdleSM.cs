@@ -54,6 +54,11 @@ namespace GameScript
             return Animator.StringToHash("Idle");
         }
 
+        protected override int GetAction(string clipName)
+        {
+            return Utils.EnumToValue(Utils.StringToEnum<Transition>(clipName));
+        }
+
         //public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         //{
         //    if (GetAction() == (int)Transition.Undefined)

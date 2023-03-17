@@ -23,6 +23,11 @@ namespace GameScript
             return Animator.StringToHash("Ladder");
         }
 
+        protected override int GetAction(string clipName)
+        {
+            return Utils.EnumToValue(Utils.StringToEnum<Transition>(clipName));
+        }
+
         public override void MatchTargetUpdate(Animator animator)
         {
             Waypoint targetWaypoint = GetRoleAnimation().GetWaypointPath().GetTargetWaypoint();

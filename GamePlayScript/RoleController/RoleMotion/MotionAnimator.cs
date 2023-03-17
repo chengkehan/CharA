@@ -642,6 +642,38 @@ namespace GameScript
             SetState(State.Solo);
         }
 
+        public bool IsSoloStateComplete(SoloSM.Transition solo)
+        {
+            if (actionSMs == null || animators == null)
+            {
+                return true;
+            }
+            else
+            {
+                if (actionSMs.ContainsKey(State.Solo))
+                {
+                    bool isComplete = true;
+                    var asmList = actionSMs[State.Solo];
+                    for (int asmI = 0; asmI < asmList.Count; asmI++)
+                    {
+                        if (animators.Length > asmI && asmList[asmI] != null && animators[asmI] != null)
+                        {
+                            if (asmList[asmI].IsActionComplete(solo, animators[asmI]) == false)
+                            {
+                                isComplete = false;
+                                break;
+                            }
+                        }
+                    }
+                    return isComplete;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
         public bool IsInSoloState()
         {
             return pendingSolo == SoloSM.Transition.Undefined && recentSolo == SoloSM.Transition.Undefined;
@@ -807,7 +839,7 @@ namespace GameScript
                     {
                         if (animators.Length > asmI && animators[asmI] != null)
                         {
-                            asmList[asmI].SetAction(animators[asmI], System.Convert.ToInt32(value));
+                            asmList[asmI].SetAction(animators[asmI], Utils.EnumToValue(value));
                         }
                     }
                 }

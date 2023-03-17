@@ -17,5 +17,10 @@ namespace GameScript
         {
             return Animator.StringToHash("Skill");
         }
+
+        protected override int GetAction(string clipName)
+        {
+            return Utils.EnumToValue(Utils.StringToEnum<Transition>(clipName));
+        }
     }
 }

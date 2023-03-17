@@ -16,6 +16,7 @@ namespace GameScript
 
         protected override TaskStatus OnUpdate()
         {
+            Utils.Log(npcBrain.GetMotionAnimator().IsSoloStateComplete(SoloSM.Transition.SittingGroundDown));
             //npcBrain.GetMotionAnimator().SetSoloState(SoloSM.Transition.SittingGroundDown);
             //if (npcBrain.GetMotionAnimator().IsInSoloState(SoloSM.Transition.SittingGroundDown))
             //{

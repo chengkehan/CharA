@@ -35,6 +35,11 @@ namespace GameScript
             return Animator.StringToHash("JumpDown");
         }
 
+        protected override int GetAction(string clipName)
+        {
+            return Utils.EnumToValue(Utils.StringToEnum<Transition>(clipName));
+        }
+
         protected override void InitializeCompleteTimeOfActions()
         {
             AddCompleteTimeOfAction(Transition.JumpDownFarHigh, 0.9f);

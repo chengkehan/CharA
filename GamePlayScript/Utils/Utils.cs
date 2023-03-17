@@ -31,6 +31,11 @@ namespace GameScript
             return (T)System.Enum.Parse(typeof(T), str);
         }
 
+        public static int EnumToValue(System.Enum e)
+        {
+            return System.Convert.ToInt32(e);
+        }
+
         public static string Serialize<T>(T obj)
         {
             return JsonUtility.ToJson(obj, true);

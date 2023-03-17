@@ -35,6 +35,11 @@ namespace GameScript
             return Animator.StringToHash("Climbing");
         }
 
+        protected override int GetAction(string clipName)
+        {
+            return Utils.EnumToValue(Utils.StringToEnum<Transition>(clipName));
+        }
+
         protected override void InitializeCompleteTimeOfActions()
         {
             AddCompleteTimeOfAction(Transition.ClimbingHighFreehandJump, 0.8f);

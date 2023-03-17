@@ -22,6 +22,11 @@ namespace GameScript
             return Animator.StringToHash("Solo");
         }
 
+        protected override int GetAction(string clipName)
+        {
+            return Utils.EnumToValue(Utils.StringToEnum<Transition>(clipName));
+        }
+
         protected override void InitializeSequenceActions()
         {
             base.InitializeSequenceActions();
