@@ -40,5 +40,12 @@ namespace GameScript
 
             AddCompleteTimeOfAction(Transition.SittingGround, 0.1f);
         }
+
+        protected override void InitializedEqualActions()
+        {
+            base.InitializedEqualActions();
+
+            AddEuqalActions(Transition.SittingGroundDown, Transition.SittingGround);
+        }
     }
 }

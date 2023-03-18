@@ -63,7 +63,7 @@ namespace GameScript
         {
             if (animator != null)
             {
-                if (AreEqualActions(_action, action) == false)
+                if (AreEqualActions(action, _action) == false)
                 {
                     _action = action;
                     animator.SetInteger(GetActionNameId(), _action);
@@ -255,7 +255,7 @@ namespace GameScript
             {
                 foreach (var item in _equalActions)
                 {
-                    if (item != null && System.Array.IndexOf(item, action1) != -1 && System.Array.IndexOf(item, action2) != -1)
+                    if (item != null && item[0] == action1 && item[1] == action2)
                     {
                         return true;
                     }
