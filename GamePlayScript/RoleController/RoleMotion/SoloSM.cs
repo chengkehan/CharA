@@ -33,5 +33,12 @@ namespace GameScript
 
             AddSequenceAction(Transition.SittingGroundDown, Transition.SittingGround);
         }
+
+        protected override void InitializeCompleteTimeOfActions()
+        {
+            base.InitializeCompleteTimeOfActions();
+
+            AddCompleteTimeOfAction(Transition.SittingGround, 0.1f);
+        }
     }
 }

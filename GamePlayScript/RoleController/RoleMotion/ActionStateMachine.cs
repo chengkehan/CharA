@@ -101,7 +101,6 @@ namespace GameScript
                 {
                     if (GetAction() == actionVal)
                     {
-                        //Utils.Log("false  " + action + "   " + GetAction());
                         return false;
                     }
 
