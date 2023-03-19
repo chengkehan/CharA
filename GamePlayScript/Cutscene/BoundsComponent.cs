@@ -37,6 +37,20 @@ namespace GameScript.Cutscene
         [SerializeField]
         private Color _handlesColor = Color.white;
 
+        [SerializeField]
+        private bool _handlesEnabled = true;
+        public bool handlesEnabled
+        {
+            set
+            {
+                _handlesEnabled = value;
+            }
+            get
+            {
+                return _handlesEnabled;
+            }
+        }
+
         // world space
         private Bounds _bounds = new Bounds();
         public Bounds bounds
@@ -97,14 +111,21 @@ namespace GameScript.Cutscene
             handleID = property.propertyPath;
 
             EditorGUI.PropertyField(position, property, label, true);
-
             property.vector3Value = HandlesHelper.PositionHandle(property.propertyPath, property.vector3Value, Quaternion.identity);
 
-            var boundsSizeProp = property.serializedObject.FindProperty(property.propertyPath.Replace("_boundsCenter", "_boundsSize"));
-            var handlesColorProp = property.serializedObject.FindProperty(property.propertyPath.Replace("_boundsCenter", "_handlesColor"));
+            var handlesEnabledProp = property.serializedObject.FindProperty(property.propertyPath.Replace("_boundsCenter", "_handlesEnabled"));
+            if (handlesEnabledProp.boolValue)
+            {
+                var boundsSizeProp = property.serializedObject.FindProperty(property.propertyPath.Replace("_boundsCenter", "_boundsSize"));
+                var handlesColorProp = property.serializedObject.FindProperty(property.propertyPath.Replace("_boundsCenter", "_handlesColor"));
 
-            HandlesHelper.LabelHandle(property.propertyPath + "LLL", property.propertyPath, property.vector3Value, handlesColorProp.colorValue);
-            HandlesHelper.WireCube(property.propertyPath + "CCC", property.vector3Value, boundsSizeProp.vector3Value, handlesColorProp.colorValue);
+                HandlesHelper.LabelHandle(property.propertyPath + "LLL", property.propertyPath, property.vector3Value, handlesColorProp.colorValue);
+                HandlesHelper.WireCube(property.propertyPath + "CCC", property.vector3Value, boundsSizeProp.vector3Value, handlesColorProp.colorValue);
+            }
+            else
+            {
+                DeleteHandles();
+            }
 
             property.serializedObject.ApplyModifiedProperties();
             property.serializedObject.Update();

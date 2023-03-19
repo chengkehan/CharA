@@ -81,22 +81,12 @@ namespace GameScript.Cutscene
         }
 
         [SerializeField]
-        private Vector3 _boundsPosition = Vector3.zero;
-        private Vector3 boundsPosition
+        private BoundsComponent _bounds = new BoundsComponent();
+        private BoundsComponent bounds
         {
             get
             {
-                return _boundsPosition;
-            }
-        }
-
-        [SerializeField]
-        private Vector3 _boundsSize = Vector3.one;
-        private Vector3 boundsSize
-        {
-            get
-            {
-                return _boundsSize;
+                return _bounds;
             }
         }
 
@@ -111,8 +101,6 @@ namespace GameScript.Cutscene
         }
 
         private float time = 0;
-
-        private Bounds bounds = new Bounds();
 
         private bool isHeroInBounds = false;
 
@@ -156,9 +144,6 @@ namespace GameScript.Cutscene
 
         private void Update()
         {
-            bounds.center = transform.position + boundsPosition;
-            bounds.size = boundsSize;
-
             var isHeroInBounds = IsHeroInBounds();
             if (isHeroInBounds)
             {
@@ -198,7 +183,7 @@ namespace GameScript.Cutscene
         {
             if (ActorsManager.GetInstance() != null && ActorsManager.GetInstance().GetHeroActor() != null)
             {
-                return bounds.Contains(ActorsManager.GetInstance().GetHeroActor().roleAnimation.GetMotionAnimator().GetPosition());
+                return bounds.InBounds(ActorsManager.GetInstance().GetHeroActor().roleAnimation.GetMotionAnimator().GetPosition());
             }
             else
             {
@@ -260,20 +245,11 @@ namespace GameScript.Cutscene
         }
 
 #if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
+        protected override void OnValidate()
         {
-            if (activeType == ActiveType.OnEnterBounds || activeType == ActiveType.OnExitBounds)
-            {
-                Gizmos.color = Color.white;
-                Gizmos.matrix = Matrix4x4.identity;
+            base.OnValidate();
 
-                Color gizmosColor = Gizmos.color;
-                {
-                    Gizmos.color = IsHeroInBounds() ? Color.green : Color.white;
-                    Gizmos.DrawWireCube(transform.position + boundsPosition, boundsSize);
-                }
-                Gizmos.color = gizmosColor;
-            }
+            bounds.handlesEnabled = activeType == ActiveType.OnEnterBounds || activeType == ActiveType.OnExitBounds;
         }
 #endif
     }
