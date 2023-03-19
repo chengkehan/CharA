@@ -9,8 +9,6 @@ namespace GameScript.UI.HUD
 {
     public class SceneItemHUD : Project3DHUD
     {
-        public const float CONSTRAINT_DISTANCE = 90;
-
         [SerializeField]
         private Button _button = null;
         private Button button
@@ -47,6 +45,8 @@ namespace GameScript.UI.HUD
         private SceneItemPD sceneItemPD = null;
 
         #region Neighbours
+
+        private const float CONSTRAINT_DISTANCE = 90;
 
         private SceneItemHUD[] _neighbours = new SceneItemHUD[6];
 

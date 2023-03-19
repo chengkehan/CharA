@@ -32,7 +32,7 @@ namespace GameScript.Cutscene
         {
             var itemConfig = DataCenter.GetInstance().GetItemConfig(itemID);
             Scene.GetInstance().AddSceneItem(
-                new ItemPD(guid, itemConfig), 
+                new ItemPD(System.Guid.NewGuid().ToString(), itemConfig), 
                 DataCenter.query.AdjustSceneItemWorldPosition(transform.position)
             );
         }
