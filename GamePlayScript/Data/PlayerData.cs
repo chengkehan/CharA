@@ -44,6 +44,9 @@ namespace GameScript
         [SerializeField]
         private SerializableDictionary<string, CardboardBoxPD> allCardboardBoxPD = new SerializableDictionary<string, CardboardBoxPD>();
 
+        [SerializeField]
+        private SerializableDictionary<string, SoliloquyTriggerPD> allSoliloquyPD = new SerializableDictionary<string, SoliloquyTriggerPD>();
+
         private class PDObjects
         {
             public Type pdType = null;
@@ -68,6 +71,7 @@ namespace GameScript
             allPDObjects.Add(new PDObjects() { pdType = typeof(PaperPD), monoType = typeof(Paper), collection = allPaperPD });
             allPDObjects.Add(new PDObjects() { pdType = typeof(DayNightPD), monoType = typeof(DayNight), collection = allDayNightPD });
             allPDObjects.Add(new PDObjects() { pdType = typeof(CardboardBoxPD), monoType = typeof(CardboardBox), collection = allCardboardBoxPD });
+            allPDObjects.Add(new PDObjects() { pdType = typeof(SoliloquyTriggerPD), monoType = typeof(SoliloquyTrigger), collection = allSoliloquyPD });
         }
 
         public void OnSave()
@@ -82,6 +86,7 @@ namespace GameScript
             SaveSerializableMonoBehaviours<PaperPD, Paper>(allPaperPD);
             SaveSerializableMonoBehaviours<DayNightPD, DayNight>(allDayNightPD);
             SaveSerializableMonoBehaviours<CardboardBoxPD, CardboardBox>(allCardboardBoxPD);
+            SaveSerializableMonoBehaviours<SoliloquyTriggerPD, SoliloquyTrigger>(allSoliloquyPD);
         }
 
         public T GetSerializableMonoBehaviourPD<T>(string guid)

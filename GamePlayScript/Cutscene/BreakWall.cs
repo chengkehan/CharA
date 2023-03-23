@@ -65,40 +65,19 @@ namespace GameScript.Cutscene
 
         [Tooltip("HUD visible when hero in this bounds.")]
         [SerializeField]
-        private Vector3 _hudBoundsPosition = Vector3.zero;
-
-        [Tooltip("HUD visible when hero in this bounds.")]
-        [SerializeField]
-        private Vector3 _hudBoundsSize = Vector3.one;
-
-        private Bounds _hudBounds = new Bounds();
-        private Bounds hudBounds
+        private BoundsComponent _hudBounds = new BoundsComponent();
+        private BoundsComponent hudBounds
         {
             get
             {
-                _hudBounds.center = GetPosition() + _hudBoundsPosition;
-                _hudBounds.size = _hudBoundsSize;
                 return _hudBounds;
             }
         }
 
         public bool InHUDBounds(Vector3 pos)
         {
-            return hudBounds.Contains(pos);
+            return hudBounds.InBounds(pos);
         }
-
-#if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
-        {
-            Color gizmosColor = Gizmos.color;
-            {
-                Gizmos.color = Color.gray;
-                var bounds = hudBounds;
-                Gizmos.DrawWireCube(bounds.center, bounds.size);
-            }
-            Gizmos.color = gizmosColor;
-        }
-#endif
 
         #endregion
 
