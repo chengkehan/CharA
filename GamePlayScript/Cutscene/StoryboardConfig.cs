@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
 
-namespace GameScript
+namespace GameScript.Cutscene
 {
-    public class RoleTalkConfig : MonoBehaviour
+    public class StoryboardConfig : MonoBehaviour
     {
         [SerializeField]
         private string _storyboardName = null;

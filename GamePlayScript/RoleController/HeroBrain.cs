@@ -341,19 +341,20 @@ namespace GameScript
                     // open ui
                     {
                         Actor actor = ActorsManager.GetInstance().GetActor(obj.npcId);
-                        if (actor.roleTalkConfig == null)
-                        {
-                            Utils.Log("There is not talk config at npc " + obj.npcId);
-                        }
-                        else
-                        {
-                            UIManager.GetInstance().OpenUI(UIManager.UIName.Talking, () =>
-                            {
-                                var talkingUI = UIManager.GetInstance().GetUI<Talking>(UIManager.UIName.Talking);
-                                var talkingController = UIManager.GetInstance().GetUI<TalkingController>(UIManager.UIName.Talking);
-                                talkingController.Initialize(talkingUI, actor.roleTalkConfig.storyboardName);
-                            });
-                        }
+                        Utils.Log("TODO: Talking");
+                        //if (actor.roleTalkConfig == null)
+                        //{
+                        //    Utils.Log("There is not talk config at npc " + obj.npcId);
+                        //}
+                        //else
+                        //{
+                        //    UIManager.GetInstance().OpenUI(UIManager.UIName.Talking, () =>
+                        //    {
+                        //        var talkingUI = UIManager.GetInstance().GetUI<Talking>(UIManager.UIName.Talking);
+                        //        var talkingController = UIManager.GetInstance().GetUI<TalkingController>(UIManager.UIName.Talking);
+                        //        talkingController.Initialize(talkingUI, actor.roleTalkConfig.storyboardName);
+                        //    });
+                        //}
                     }
                 }
                 else

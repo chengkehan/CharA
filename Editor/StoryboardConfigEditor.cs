@@ -4,19 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using GameScript;
+using GameScript.Cutscene;
 using StoryboardCore;
 using XNodeEditor;
 
 namespace GameScriptEditor
 {
-    [CustomEditor(typeof(RoleTalkConfig))]
-    public class RoleTalkConfigEditor : Editor
+    [CustomEditor(typeof(StoryboardConfig))]
+    public class StoryboardConfigEditor : Editor
     {
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
 
-            var roleTalkConfig = target as RoleTalkConfig;
+            var storyboardConfig = target as StoryboardConfig;
 
             if (GUILayout.Button("Open Storyboard"))
             {
@@ -27,7 +28,7 @@ namespace GameScriptEditor
                 {
                     var assetPath = AssetDatabase.GUIDToAssetPath(assetId);
                     var asset = AssetDatabase.LoadMainAssetAtPath(assetPath);
-                    if (asset.name == roleTalkConfig.storyboardName)
+                    if (asset.name == storyboardConfig.storyboardName)
                     {
                         opened = true;
                         NodeEditorWindow.Open(asset as Storyboard);

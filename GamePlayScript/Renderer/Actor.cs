@@ -86,19 +86,6 @@ namespace GameScript
         private int gridFadeDirection = 0; // 1:fadeIn, -1:fadeOut, 0:doNothing
         private float gridFadeSpeed = 5;
 
-        private RoleTalkConfig _roleTalkConfig = null;
-        public RoleTalkConfig roleTalkConfig
-        {
-            get
-            {
-                if (_roleTalkConfig == null)
-                {
-                    _roleTalkConfig = gameObject.GetComponent<RoleTalkConfig>();
-                }
-                return _roleTalkConfig;
-            }
-        }
-
         public void TalkingBubble(string txtKey, float duration = 1)
         {
             var notificationData = new TalkingBubbleND();
