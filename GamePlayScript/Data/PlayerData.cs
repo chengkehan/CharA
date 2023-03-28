@@ -16,11 +16,25 @@ namespace GameScript
 
         /*Auto Generate Config
         
-         BreakWallPD | ActorPD | DoorPD | ScenePD | ItemRefreshPD | SequencePlayerPD
-         DynamicLinkPD | PaperPD | DayNightPD | CardboardBoxPD | SoliloquyTriggerPD
+         BreakWall | Actor | Door | Scene | ItemRefresh | SequencePlayer
+         DynamicLink | Paper | DayNight | CardboardBox | SoliloquyTrigger
+         BoundsTrigger
 
          Auto Generate Config*/
 
+        /*Auto Generate Fields*/
+[SerializeField] private SerializableDictionary<string, BreakWallPD> allBreakWallPD = new SerializableDictionary<string, BreakWallPD>();
+[SerializeField] private SerializableDictionary<string, ActorPD> allActorPD = new SerializableDictionary<string, ActorPD>();
+[SerializeField] private SerializableDictionary<string, DoorPD> allDoorPD = new SerializableDictionary<string, DoorPD>();
+[SerializeField] private SerializableDictionary<string, ScenePD> allScenePD = new SerializableDictionary<string, ScenePD>();
+[SerializeField] private SerializableDictionary<string, ItemRefreshPD> allItemRefreshPD = new SerializableDictionary<string, ItemRefreshPD>();
+[SerializeField] private SerializableDictionary<string, SequencePlayerPD> allSequencePlayerPD = new SerializableDictionary<string, SequencePlayerPD>();
+[SerializeField] private SerializableDictionary<string, DynamicLinkPD> allDynamicLinkPD = new SerializableDictionary<string, DynamicLinkPD>();
+[SerializeField] private SerializableDictionary<string, PaperPD> allPaperPD = new SerializableDictionary<string, PaperPD>();
+[SerializeField] private SerializableDictionary<string, DayNightPD> allDayNightPD = new SerializableDictionary<string, DayNightPD>();
+[SerializeField] private SerializableDictionary<string, CardboardBoxPD> allCardboardBoxPD = new SerializableDictionary<string, CardboardBoxPD>();
+[SerializeField] private SerializableDictionary<string, SoliloquyTriggerPD> allSoliloquyTriggerPD = new SerializableDictionary<string, SoliloquyTriggerPD>();
+[SerializeField] private SerializableDictionary<string, BoundsTriggerPD> allBoundsTriggerPD = new SerializableDictionary<string, BoundsTriggerPD>();
         /*Auto Generate Fields*/
 
         private class PDObjects
@@ -38,13 +52,37 @@ namespace GameScript
         {
             allPDObjects.Clear();
             /*Auto Generate Wrap*/
-
+allPDObjects.Add(new PDObjects() { pdType = typeof(BreakWallPD), monoType = typeof(BreakWall), collection = allBreakWallPD });
+allPDObjects.Add(new PDObjects() { pdType = typeof(ActorPD), monoType = typeof(Actor), collection = allActorPD });
+allPDObjects.Add(new PDObjects() { pdType = typeof(DoorPD), monoType = typeof(Door), collection = allDoorPD });
+allPDObjects.Add(new PDObjects() { pdType = typeof(ScenePD), monoType = typeof(Scene), collection = allScenePD });
+allPDObjects.Add(new PDObjects() { pdType = typeof(ItemRefreshPD), monoType = typeof(ItemRefresh), collection = allItemRefreshPD });
+allPDObjects.Add(new PDObjects() { pdType = typeof(SequencePlayerPD), monoType = typeof(SequencePlayer), collection = allSequencePlayerPD });
+allPDObjects.Add(new PDObjects() { pdType = typeof(DynamicLinkPD), monoType = typeof(DynamicLink), collection = allDynamicLinkPD });
+allPDObjects.Add(new PDObjects() { pdType = typeof(PaperPD), monoType = typeof(Paper), collection = allPaperPD });
+allPDObjects.Add(new PDObjects() { pdType = typeof(DayNightPD), monoType = typeof(DayNight), collection = allDayNightPD });
+allPDObjects.Add(new PDObjects() { pdType = typeof(CardboardBoxPD), monoType = typeof(CardboardBox), collection = allCardboardBoxPD });
+allPDObjects.Add(new PDObjects() { pdType = typeof(SoliloquyTriggerPD), monoType = typeof(SoliloquyTrigger), collection = allSoliloquyTriggerPD });
+allPDObjects.Add(new PDObjects() { pdType = typeof(BoundsTriggerPD), monoType = typeof(BoundsTrigger), collection = allBoundsTriggerPD });
+            /*Auto Generate Wrap*/
         }
 
         public void OnSave()
         {
             /*Auto Generate Saving*/
-
+SaveSerializableMonoBehaviours<BreakWallPD, BreakWall>(allBreakWallPD);
+SaveSerializableMonoBehaviours<ActorPD, Actor>(allActorPD);
+SaveSerializableMonoBehaviours<DoorPD, Door>(allDoorPD);
+SaveSerializableMonoBehaviours<ScenePD, Scene>(allScenePD);
+SaveSerializableMonoBehaviours<ItemRefreshPD, ItemRefresh>(allItemRefreshPD);
+SaveSerializableMonoBehaviours<SequencePlayerPD, SequencePlayer>(allSequencePlayerPD);
+SaveSerializableMonoBehaviours<DynamicLinkPD, DynamicLink>(allDynamicLinkPD);
+SaveSerializableMonoBehaviours<PaperPD, Paper>(allPaperPD);
+SaveSerializableMonoBehaviours<DayNightPD, DayNight>(allDayNightPD);
+SaveSerializableMonoBehaviours<CardboardBoxPD, CardboardBox>(allCardboardBoxPD);
+SaveSerializableMonoBehaviours<SoliloquyTriggerPD, SoliloquyTrigger>(allSoliloquyTriggerPD);
+SaveSerializableMonoBehaviours<BoundsTriggerPD, BoundsTrigger>(allBoundsTriggerPD);
+            /*Auto Generate Saving*/
         }
 
         public T GetSerializableMonoBehaviourPD<T>(string guid)

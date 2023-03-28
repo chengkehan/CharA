@@ -7,6 +7,17 @@ namespace GameScript.Cutscene
 {
     public class BoundsTrigger : SerializableMonoBehaviour<BoundsTriggerPD>
     {
+        public enum TriggerType
+        {
+            OnEnter,
+            OnExit
+        }
+
+        public TriggerType triggerType = TriggerType.OnEnter;
+
+        [SerializeField]
+        private BoundsComponent bounds = new BoundsComponent();
+
         private bool isInBounds = false;
 
         private string _targetActorGUID = null;
@@ -45,6 +56,38 @@ namespace GameScript.Cutscene
             }
 
             if (actor != null)
+            {
+                var isActorInBounds = bounds.InBounds(actor.roleAnimation.GetMotionAnimator().GetPosition());
+                if (isActorInBounds)
+                {
+                    if (isInBounds == false)
+                    {
+                        isInBounds = true;
+                        OnEnter();
+                    }
+                }
+                else
+                {
+                    if (isInBounds)
+                    {
+                        isInBounds = false;
+                        OnExit();
+                    }
+                }
+            }
+        }
+
+        private void OnEnter()
+        {
+            if (triggerType == TriggerType.OnEnter)
+            {
+
+            }
+        }
+
+        private void OnExit()
+        {
+            if (triggerType == TriggerType.OnExit)
             {
 
             }
