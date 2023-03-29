@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using AYellowpaper;
 
 namespace GameScript.Cutscene
 {
@@ -14,6 +15,9 @@ namespace GameScript.Cutscene
         }
 
         public TriggerType triggerType = TriggerType.OnEnter;
+
+        [SerializeField]
+        private InterfaceReference<IBoundsTriggerTarget, MonoBehaviour> target = null;
 
         [SerializeField]
         private BoundsComponent bounds = new BoundsComponent();
@@ -81,7 +85,10 @@ namespace GameScript.Cutscene
         {
             if (triggerType == TriggerType.OnEnter)
             {
-
+                if (target != null && target.Value != null)
+                {
+                    target.Value.Triggger();
+                }
             }
         }
 
@@ -89,7 +96,10 @@ namespace GameScript.Cutscene
         {
             if (triggerType == TriggerType.OnExit)
             {
-
+                if (target != null && target.Value != null)
+                {
+                    target.Value.Triggger();
+                }
             }
         }
     }

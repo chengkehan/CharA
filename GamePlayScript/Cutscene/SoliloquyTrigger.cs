@@ -4,8 +4,11 @@ using UnityEngine;
 
 namespace GameScript.Cutscene
 {
-    public class SoliloquyTrigger : SerializableMonoBehaviour<SoliloquyTriggerPD>
+    public class SoliloquyTrigger : SerializableMonoBehaviour<SoliloquyTriggerPD>, IBoundsTriggerTarget
     {
-        
+        public void Triggger()
+        {
+            Utils.Log("Soliloquy ......");
+        }
     }
 }
