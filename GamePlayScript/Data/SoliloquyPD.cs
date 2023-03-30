@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameScript
 {
-    public class SoliloquyTriggerPD : SerializableMonoBehaviourPD
+    public class SoliloquyPD : SerializableMonoBehaviourPD
     {
         
     }

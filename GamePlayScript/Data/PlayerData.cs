@@ -17,8 +17,8 @@ namespace GameScript
         /*Auto Generate Config
         
          BreakWall | Actor | Door | Scene | ItemRefresh | SequencePlayer
-         DynamicLink | Paper | DayNight | CardboardBox | SoliloquyTrigger
-         BoundsTrigger
+         DynamicLink | Paper | DayNight | CardboardBox | Soliloquy
+         BoundsTrigger | RoleSpawn
 
          Auto Generate Config*/
 
@@ -33,8 +33,9 @@ namespace GameScript
 [SerializeField] private SerializableDictionary<string, PaperPD> allPaperPD = new SerializableDictionary<string, PaperPD>();
 [SerializeField] private SerializableDictionary<string, DayNightPD> allDayNightPD = new SerializableDictionary<string, DayNightPD>();
 [SerializeField] private SerializableDictionary<string, CardboardBoxPD> allCardboardBoxPD = new SerializableDictionary<string, CardboardBoxPD>();
-[SerializeField] private SerializableDictionary<string, SoliloquyTriggerPD> allSoliloquyTriggerPD = new SerializableDictionary<string, SoliloquyTriggerPD>();
+[SerializeField] private SerializableDictionary<string, SoliloquyPD> allSoliloquyPD = new SerializableDictionary<string, SoliloquyPD>();
 [SerializeField] private SerializableDictionary<string, BoundsTriggerPD> allBoundsTriggerPD = new SerializableDictionary<string, BoundsTriggerPD>();
+[SerializeField] private SerializableDictionary<string, RoleSpawnPD> allRoleSpawnPD = new SerializableDictionary<string, RoleSpawnPD>();
         /*Auto Generate Fields*/
 
         private class PDObjects
@@ -62,8 +63,9 @@ allPDObjects.Add(new PDObjects() { pdType = typeof(DynamicLinkPD), monoType = ty
 allPDObjects.Add(new PDObjects() { pdType = typeof(PaperPD), monoType = typeof(Paper), collection = allPaperPD });
 allPDObjects.Add(new PDObjects() { pdType = typeof(DayNightPD), monoType = typeof(DayNight), collection = allDayNightPD });
 allPDObjects.Add(new PDObjects() { pdType = typeof(CardboardBoxPD), monoType = typeof(CardboardBox), collection = allCardboardBoxPD });
-allPDObjects.Add(new PDObjects() { pdType = typeof(SoliloquyTriggerPD), monoType = typeof(SoliloquyTrigger), collection = allSoliloquyTriggerPD });
+allPDObjects.Add(new PDObjects() { pdType = typeof(SoliloquyPD), monoType = typeof(Soliloquy), collection = allSoliloquyPD });
 allPDObjects.Add(new PDObjects() { pdType = typeof(BoundsTriggerPD), monoType = typeof(BoundsTrigger), collection = allBoundsTriggerPD });
+allPDObjects.Add(new PDObjects() { pdType = typeof(RoleSpawnPD), monoType = typeof(RoleSpawn), collection = allRoleSpawnPD });
             /*Auto Generate Wrap*/
         }
 
@@ -80,8 +82,9 @@ SaveSerializableMonoBehaviours<DynamicLinkPD, DynamicLink>(allDynamicLinkPD);
 SaveSerializableMonoBehaviours<PaperPD, Paper>(allPaperPD);
 SaveSerializableMonoBehaviours<DayNightPD, DayNight>(allDayNightPD);
 SaveSerializableMonoBehaviours<CardboardBoxPD, CardboardBox>(allCardboardBoxPD);
-SaveSerializableMonoBehaviours<SoliloquyTriggerPD, SoliloquyTrigger>(allSoliloquyTriggerPD);
+SaveSerializableMonoBehaviours<SoliloquyPD, Soliloquy>(allSoliloquyPD);
 SaveSerializableMonoBehaviours<BoundsTriggerPD, BoundsTrigger>(allBoundsTriggerPD);
+SaveSerializableMonoBehaviours<RoleSpawnPD, RoleSpawn>(allRoleSpawnPD);
             /*Auto Generate Saving*/
         }
 

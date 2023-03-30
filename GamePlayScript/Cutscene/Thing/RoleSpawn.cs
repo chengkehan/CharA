@@ -5,7 +5,7 @@ using GameScript.WaypointSystem;
 
 namespace GameScript.Cutscene
 {
-    public class RoleSpawn : MonoBehaviour
+    public class RoleSpawn : SerializableMonoBehaviour<RoleSpawnPD>
     {
         [SerializeField]
         private string _roleID = null;
