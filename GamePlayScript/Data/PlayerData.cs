@@ -18,7 +18,7 @@ namespace GameScript
         
          BreakWall | Actor | Door | Scene | ItemRefresh | SequencePlayer
          DynamicLink | Paper | DayNight | CardboardBox | Soliloquy
-         BoundsTrigger | RoleSpawn
+         BoundsTrigger | RoleSpawn | StoryboardOneSelector | StoryboardLoopSelector
 
          Auto Generate Config*/
 
@@ -36,6 +36,8 @@ namespace GameScript
 [SerializeField] private SerializableDictionary<string, SoliloquyPD> allSoliloquyPD = new SerializableDictionary<string, SoliloquyPD>();
 [SerializeField] private SerializableDictionary<string, BoundsTriggerPD> allBoundsTriggerPD = new SerializableDictionary<string, BoundsTriggerPD>();
 [SerializeField] private SerializableDictionary<string, RoleSpawnPD> allRoleSpawnPD = new SerializableDictionary<string, RoleSpawnPD>();
+[SerializeField] private SerializableDictionary<string, StoryboardOneSelectorPD> allStoryboardOneSelectorPD = new SerializableDictionary<string, StoryboardOneSelectorPD>();
+[SerializeField] private SerializableDictionary<string, StoryboardLoopSelectorPD> allStoryboardLoopSelectorPD = new SerializableDictionary<string, StoryboardLoopSelectorPD>();
         /*Auto Generate Fields*/
 
         private class PDObjects
@@ -66,6 +68,8 @@ allPDObjects.Add(new PDObjects() { pdType = typeof(CardboardBoxPD), monoType = t
 allPDObjects.Add(new PDObjects() { pdType = typeof(SoliloquyPD), monoType = typeof(Soliloquy), collection = allSoliloquyPD });
 allPDObjects.Add(new PDObjects() { pdType = typeof(BoundsTriggerPD), monoType = typeof(BoundsTrigger), collection = allBoundsTriggerPD });
 allPDObjects.Add(new PDObjects() { pdType = typeof(RoleSpawnPD), monoType = typeof(RoleSpawn), collection = allRoleSpawnPD });
+allPDObjects.Add(new PDObjects() { pdType = typeof(StoryboardOneSelectorPD), monoType = typeof(StoryboardOneSelector), collection = allStoryboardOneSelectorPD });
+allPDObjects.Add(new PDObjects() { pdType = typeof(StoryboardLoopSelectorPD), monoType = typeof(StoryboardLoopSelector), collection = allStoryboardLoopSelectorPD });
             /*Auto Generate Wrap*/
         }
 
@@ -85,6 +89,8 @@ SaveSerializableMonoBehaviours<CardboardBoxPD, CardboardBox>(allCardboardBoxPD);
 SaveSerializableMonoBehaviours<SoliloquyPD, Soliloquy>(allSoliloquyPD);
 SaveSerializableMonoBehaviours<BoundsTriggerPD, BoundsTrigger>(allBoundsTriggerPD);
 SaveSerializableMonoBehaviours<RoleSpawnPD, RoleSpawn>(allRoleSpawnPD);
+SaveSerializableMonoBehaviours<StoryboardOneSelectorPD, StoryboardOneSelector>(allStoryboardOneSelectorPD);
+SaveSerializableMonoBehaviours<StoryboardLoopSelectorPD, StoryboardLoopSelector>(allStoryboardLoopSelectorPD);
             /*Auto Generate Saving*/
         }
 
