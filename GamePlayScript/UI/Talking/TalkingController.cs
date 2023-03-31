@@ -119,5 +119,14 @@ namespace GameScript.UI.Talking
 
             UIManager.GetInstance().CloseUI(UIManager.UIName.Talking);
         }
+
+        private void OnDestroy()
+        {
+            if (storyboard != null)
+            {
+                AssetsManager.GetInstance().UnloadAsset(storyboard);
+                storyboard = null;
+            }
+        }
     }
 }

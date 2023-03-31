@@ -15,12 +15,14 @@ namespace GameScript.Cutscene
 
         public void Triggger()
         {
-            Utils.Log("Soliloquy ......");
-
             if (selector != null && selector.Value != null)
             {
                 var item = selector.Value.Select(sourceList);
-                Utils.Log(item);
+                if (item != null)
+                {
+                    var storyboardName = item.storyboardName;
+                    new SoliloquyThread(storyboardName);
+                }
             }
         }
     }
