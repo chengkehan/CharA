@@ -33,7 +33,22 @@ namespace GameScript
             registry = new Dictionary<EventID, List<ListenerItem>>();
         }
 
-        public void AddListener(EventID id, Listener listener, ListenerPriority priority = ListenerPriority.Normal)
+        public void AddListener(EventID id, Listener listener)
+        {
+            AddListener(id, listener);
+        }
+
+        public void AddListener(EventID id, Listener listener, GameObject bindingGo)
+        {
+            AddListener(id, listener, ListenerPriority.Normal, bindingGo);
+        }
+
+        public void AddListener(EventID id, Listener listener, ListenerPriority priority)
+        {
+            AddListener(id, listener, priority, null);
+        }
+
+        public void AddListener(EventID id, Listener listener, ListenerPriority priority = ListenerPriority.Normal, GameObject bindingGo = null)
         {
             if (listener != null)
             {
@@ -42,7 +57,7 @@ namespace GameScript
                     listeners = new List<ListenerItem>();
                     registry.Add(id, listeners);
                 }
-                listeners.Add(new ListenerItem() { listener=listener, priority= priority });
+                listeners.Add(new ListenerItem() { listener=listener, priority=priority, bindingGo=bindingGo, isBindingGoSet=bindingGo!=null });
             }
         }
 
@@ -69,14 +84,32 @@ namespace GameScript
             if (registry.TryGetValue(id, out List<ListenerItem> listeners))
             {
                 var tempListeners = FetchTempListeners();
-                tempListeners.listeners.AddRange(listeners);
-                tempListeners.listeners.Sort(SortTempListeners);
-                foreach (var listener in tempListeners.listeners)
                 {
-                    listener?.listener?.Invoke(data);
-                    if (data != null && data.interrupted)
+                    tempListeners.listeners.AddRange(listeners);
+                    tempListeners.listeners.Sort(SortTempListeners);
+
+                    for (int listenerI = 0; listenerI < tempListeners.listeners.Count; listenerI++)
                     {
-                        break;
+                        var listener = tempListeners.listeners[listenerI];
+                        if (listener.isBindingGoSet && listener.bindingGo == null)
+                        {
+                            tempListeners.listeners.RemoveAt(listenerI);
+                            --listenerI;
+                        }
+                    }
+
+                    if (data != null)
+                    {
+                        data.interrupted = false;
+                    }
+
+                    foreach (var listener in tempListeners.listeners)
+                    {
+                        listener?.listener?.Invoke(data);
+                        if (data != null && data.interrupted)
+                        {
+                            break;
+                        }
                     }
                 }
                 RecycleTempListeners(tempListeners);
@@ -143,6 +176,9 @@ namespace GameScript
             public Listener listener = null;
 
             public ListenerPriority priority = ListenerPriority.Normal;
+
+            public bool isBindingGoSet = false;
+            public GameObject bindingGo = null;
         }
     }
 }

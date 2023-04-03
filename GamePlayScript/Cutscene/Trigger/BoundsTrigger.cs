@@ -16,30 +16,21 @@ namespace GameScript.Cutscene
 
         public TriggerType triggerType = TriggerType.OnEnter;
 
+        [Tooltip("How many times can be triggered. \nZero means infinite times.")]
+        [Min(0)]
+        public int triggeredMaxTimes = 0;
+
         [SerializeField]
         private InterfaceReference<IBoundsTriggerTarget, MonoBehaviour> target = null;
+
+        [Tooltip("Who will trigger it.\nLeave it empty for hero.")]
+        [SerializeField]
+        private string targetRoleId = null;
 
         [SerializeField]
         private BoundsComponent bounds = new BoundsComponent();
 
         private bool isInBounds = false;
-
-        private string _targetActorGUID = null;
-        public string targetActorGUID
-        {
-            set
-            {
-                if (_targetActorGUID != value)
-                {
-                    isInBounds = false;
-                    _targetActorGUID = value;
-                }
-            }
-            get
-            {
-                return _targetActorGUID;
-            }
-        }
 
         public void Update()
         {
@@ -48,14 +39,14 @@ namespace GameScript.Cutscene
             if (ActorsManager.GetInstance() != null)
             {
                 // Seem it as hero
-                if (targetActorGUID == null)
+                if (string.IsNullOrEmpty(targetRoleId))
                 {
                     actor = ActorsManager.GetInstance().GetHeroActor();
                 }
                 // Seem it as npc
                 else
                 {
-                    actor = ActorsManager.GetInstance().GetActorByGUID(targetActorGUID);
+                    actor = ActorsManager.GetInstance().GetActor(targetRoleId);
                 }
             }
 
@@ -85,9 +76,13 @@ namespace GameScript.Cutscene
         {
             if (triggerType == TriggerType.OnEnter)
             {
-                if (target != null && target.Value != null)
+                if (triggeredMaxTimes == 0 || pd.triggeredTimes < triggeredMaxTimes)
                 {
-                    target.Value.Triggger();
+                    ++pd.triggeredTimes;
+                    if (target != null && target.Value != null)
+                    {
+                        target.Value.Triggger();
+                    }
                 }
             }
         }
@@ -96,9 +91,13 @@ namespace GameScript.Cutscene
         {
             if (triggerType == TriggerType.OnExit)
             {
-                if (target != null && target.Value != null)
+                if (triggeredMaxTimes == 0 || pd.triggeredTimes < triggeredMaxTimes)
                 {
-                    target.Value.Triggger();
+                    ++pd.triggeredTimes;
+                    if (target != null && target.Value != null)
+                    {
+                        target.Value.Triggger();
+                    }
                 }
             }
         }

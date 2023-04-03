@@ -6,6 +6,9 @@ using GameScript.Cutscene;
 
 namespace GameScript
 {
+    // Some complex operations with several steps or need some validations.
+    // We implement this complex operation and validatinos at here.
+    // There is a high priority for events so that we can interrupt events when validation is not pass.
     public class Moderator : MonoBehaviour
     {
         private void Awake()
@@ -22,7 +25,7 @@ namespace GameScript
         {
             EventSystem.GetInstance().AddListener(EventID.PickUpSceneItem, PickUpSceneItemHandler, EventSystem.ListenerPriority.High);
             EventSystem.GetInstance().AddListener(EventID.DropItemToScene, DropItemToSceneHandler, EventSystem.ListenerPriority.High);
-            EventSystem.GetInstance().AddListener(EventID.DestroyItem, DestroyItemHandler);
+            EventSystem.GetInstance().AddListener(EventID.DestroyItem, DestroyItemHandler, EventSystem.ListenerPriority.High);
             EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToScene, TransferCardboardBoxItemToSceneHandler, EventSystem.ListenerPriority.High);
             EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler, EventSystem.ListenerPriority.High);
             EventSystem.GetInstance().AddListener(EventID.TransferPocketItemToCardboardBox, TransferPocketItemToCardboardBoxHandler, EventSystem.ListenerPriority.High);

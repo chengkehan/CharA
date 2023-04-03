@@ -88,9 +88,14 @@ namespace GameScript
 
         public void TalkingBubble(string txtKey, float duration = 1)
         {
+            TalkingBubbleText(DataCenter.GetInstance().GetLanguage(txtKey), duration);
+        }
+
+        public void TalkingBubbleText(string txt, float duration = 1)
+        {
             var notificationData = new TalkingBubbleND();
             notificationData.actorGUID = guid;
-            notificationData.talkingText = DataCenter.GetInstance().GetLanguage(txtKey);
+            notificationData.talkingText = txt;
             notificationData.duration = duration;
             EventSystem.GetInstance().Notify(EventID.TalkingBubble, notificationData);
         }

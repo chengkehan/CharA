@@ -24,7 +24,9 @@ namespace GameScript.Cutscene
         private void talkAsyncCallback(StoryThread.AsyncHandler<TalkNode> asyncHandler)
         {
             var talkNode = asyncHandler.nodes[0];
-            Utils.Log(talkNode.GetLangauge(talkNode.wordsId));
+
+            ActorsManager.GetInstance().GetHeroActor().TalkingBubbleText(talkNode.GetLangauge(talkNode.wordsId));
+
             asyncHandler.Complete();
         }
 
@@ -42,6 +44,8 @@ namespace GameScript.Cutscene
                 AssetsManager.GetInstance().UnloadAsset(storyboard);
                 storyboard = null;
             }
+
+            storyThread = null;
         }
     }
 }
