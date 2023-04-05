@@ -66,7 +66,10 @@ namespace GameScript.UI.HUD
 
         protected override void UpdateVisibleByDistanceFromHero_Internal(Vector3 heroPosition)
         {
-            button.gameObject.SetActive(breakWall.InHUDBounds(heroPosition) && DataCenter.query.IsWallBreaked(breakWall.pd) == false);
+            button.gameObject.SetActive(
+                breakWall.InHUDBounds(heroPosition) &&
+                DataCenter.query.IsWallBreaked(breakWall.pd) == false &&
+                DataCenter.GetInstance().bloackboard.heroSoloAndMuteOthers == false);
         }
 
         protected override Vector3 Get3DPosition()

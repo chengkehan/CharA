@@ -20,6 +20,10 @@ namespace GameScript
 
         protected override void Update()
         {
+            if (DataCenter.GetInstance().bloackboard.heroSoloAndMuteOthers)
+            {
+                return;
+            }
             if (GetMotionAnimator().ContainsState(MotionAnimator.State.Solo))
             {
                 return;

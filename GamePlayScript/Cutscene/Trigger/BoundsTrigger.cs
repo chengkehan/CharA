@@ -34,6 +34,11 @@ namespace GameScript.Cutscene
 
         public void Update()
         {
+            if (DataCenter.GetInstance().bloackboard.heroSoloAndMuteOthers)
+            {
+                return;
+            }
+
             Actor actor = null;
 
             if (ActorsManager.GetInstance() != null)

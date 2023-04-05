@@ -35,7 +35,7 @@ namespace GameScript
 
         public void AddListener(EventID id, Listener listener)
         {
-            AddListener(id, listener);
+            AddListener(id, listener, ListenerPriority.Normal, null);
         }
 
         public void AddListener(EventID id, Listener listener, GameObject bindingGo)

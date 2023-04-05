@@ -37,6 +37,7 @@ namespace GameScript.Cutscene
 
                 if (DataCenter.query.IsHeroRoleID(roleID))
                 {
+                    DataCenter.GetInstance().bloackboard.heroSoloAndMuteOthers = true;
                     actor.roleAnimation.GetMotionAnimator().SetSoloState(SoloSM.Transition.StandUp);
                     StartCoroutine(HeadacheAnimationCoroutine(actor));
                 }
@@ -70,6 +71,7 @@ namespace GameScript.Cutscene
             actor.roleAnimation.GetMotionAnimator().SetUpBodyAnimationLayer2(MotionAnimator.UpBodyAnimationLayer2.Headache);
             yield return new WaitForSeconds(5.0f);
             actor.roleAnimation.GetMotionAnimator().SetUpBodyAnimationLayer2(MotionAnimator.UpBodyAnimationLayer2.None);
+            DataCenter.GetInstance().bloackboard.heroSoloAndMuteOthers = false;
         }
 
         // when a role is created, role should be stand on a pure moving type waypoint,

@@ -91,6 +91,19 @@ namespace GameScript
             }
         }
 
+        private Blackboard _bloackboard = null;
+        public Blackboard bloackboard
+        {
+            get
+            {
+                if (_bloackboard == null)
+                {
+                    _bloackboard = new Blackboard();
+                }
+                return _bloackboard;
+            }
+        }
+
         private PlayerData _playerData = null;
         public PlayerData playerData
         {

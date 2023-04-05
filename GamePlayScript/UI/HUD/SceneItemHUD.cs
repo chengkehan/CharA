@@ -244,7 +244,7 @@ namespace GameScript.UI.HUD
                 var sceneItemPosition = sceneItemPD.worldPosition;
                 var inRange = Vector3.Distance(heroPosition, sceneItemPosition) < DataCenter.define.SceneItemVisibleRange;
                 var atTheSameHorizontalLevel = Mathf.Abs(sceneItemPosition.y - heroPosition.y) < (DataCenter.define.SceneItemYOffset + 0.5f);
-                buttonVisible = inRange && atTheSameHorizontalLevel;
+                buttonVisible = inRange && atTheSameHorizontalLevel && DataCenter.GetInstance().bloackboard.heroSoloAndMuteOthers == false;
             }            
         }
 
