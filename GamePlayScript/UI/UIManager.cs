@@ -84,7 +84,8 @@ namespace GameScript
         private Dictionary<UIName, UIName[]> _uiOpposite = new Dictionary<UIName, UIName[]>() {
             { UIName.CentraPlan, new UIName[]{ UIName.HUD } },
             { UIName.Paper, new UIName[]{ UIName.HUD } },
-            { UIName.CardboardBox, new UIName[]{ UIName.HUD } }
+            { UIName.CardboardBox, new UIName[]{ UIName.HUD } },
+            { UIName.Talking, new UIName[] { UIName.HUD } }
         };
 
         private void RefreshAllUIOpposite()
