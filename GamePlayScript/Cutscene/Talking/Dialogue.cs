@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using AYellowpaper;
+using GameScript.UI.Talking;
 
 namespace GameScript.Cutscene
 {
-    public class Soliloquy : TalkingBase<SoliloquyPD>
+    public class Dialogue : TalkingBase<DialoguePD>
     {
         public override void Triggger()
         {
@@ -13,7 +13,7 @@ namespace GameScript.Cutscene
 
             if (GetSelectedStoryboardName(out string storyboardName))
             {
-                new SoliloquyThread(storyboardName);
+                UIManager.GetInstance().OpenTalkingUI(storyboardName);
             }
         }
     }

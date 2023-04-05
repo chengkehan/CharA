@@ -118,6 +118,20 @@ namespace GameScript
 
         #endregion
 
+        #region Utils
+
+        public void OpenTalkingUI(string storyboardName)
+        {
+            UIManager.GetInstance().OpenUI(UIManager.UIName.Talking, () =>
+            {
+                var talkingUI = UIManager.GetInstance().GetUI<GameScript.UI.Talking.Talking>(UIManager.UIName.Talking);
+                var talkingController = UIManager.GetInstance().GetUI<GameScript.UI.Talking.TalkingController>(UIManager.UIName.Talking);
+                talkingController.Initialize(talkingUI, storyboardName);
+            });
+        }
+
+        #endregion
+
         private Transform _uiRoot = null;
 
         private List<UIInstance> allUIInstances = new List<UIInstance>();
