@@ -49,13 +49,6 @@ namespace GameScript
                 Vector3 myPosition = cameraTransform.position;
                 Vector3 targetPosition = ActorsManager.GetInstance().GetHeroActor().roleAnimation.GetMotionAnimator().GetPosition();
 
-                bool xRestricted = true;
-                if (UIManager.GetInstance().ContainsUI(UIManager.UIName.CardboardBox))
-                {
-                    xRestricted = false;
-                    targetPosition.x += 2;
-                }
-
                 targetPosition.z = myPosition.z;
                 targetPosition.y += 1;
 
@@ -72,10 +65,7 @@ namespace GameScript
                             var camAreaBounds = sceneNode.cameraAreaBounds;
                             var min = camAreaBounds.min;
                             var max = camAreaBounds.max;
-                            if (xRestricted)
-                            {
-                                tweenPosition.x = Mathf.Clamp(tweenPosition.x, min.x, max.x);
-                            }
+                            tweenPosition.x = Mathf.Clamp(tweenPosition.x, min.x, max.x);
                             tweenPosition.y = Mathf.Clamp(tweenPosition.y, min.y, max.y);
                             //tweenPosition.z = Mathf.Clamp(tweenPosition.z, min.z, max.z);
                         }

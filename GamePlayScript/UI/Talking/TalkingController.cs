@@ -26,6 +26,7 @@ namespace GameScript.UI.Talking
             if (this.talkingUI == null)
             {
                 this.talkingUI = talkingUI;
+                this.talkingUI.AdjustPivotPosition();
 
                 AssetsManager.GetInstance().LoadAsset<Storyboard>(AssetsManager.STORYBOARD_ASSET_PREFIX + storyboardName, (obj) =>
                 {

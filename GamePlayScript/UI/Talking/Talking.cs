@@ -13,6 +13,57 @@ namespace GameScript.UI.Talking
 
         public TalkingScrollRect scrollRect = null;
 
+        public RectTransform pivot = null;
+
+        public void AdjustPivotPosition()
+        {
+            if (ActorsManager.GetInstance() != null)
+            {
+                var heroActor = ActorsManager.GetInstance().GetHeroActor();
+                if (heroActor != null)
+                {
+                    var heroWPos = heroActor.roleAnimation.GetMotionAnimator().GetPosition();
+                    var heroFaceTo = heroActor.GetHeadDirection();
+
+                    heroFaceTo.z = 0;
+                    heroFaceTo.y = 0;
+                    heroFaceTo.Normalize();
+
+                    if (ComponentBase.ConvertWorldPositionToLocalPoint(heroWPos, true, pivot.parent.GetComponent<RectTransform>(), out var localPoint))
+                    {
+                        float halfSize = 336;
+                        float offsetX = 200;
+                        localPoint.y = pivot.anchoredPosition.y;
+                        localPoint.x += heroFaceTo.x * (halfSize + offsetX);
+                        pivot.anchoredPosition = localPoint;
+
+                        if (heroFaceTo.x < 0)
+                        {
+                            if (ComponentBase.ScreenPointToLocalPointInRectangle(pivot.parent.GetComponent<RectTransform>(), Vector2.zero, out var leftConerLocalPoint))
+                            {
+                                if (localPoint.x + heroFaceTo.x * halfSize < leftConerLocalPoint.x)
+                                {
+                                    localPoint.x -= 1.8f * heroFaceTo.x * (halfSize + offsetX);
+                                    pivot.anchoredPosition = localPoint;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (ComponentBase.ScreenPointToLocalPointInRectangle(pivot.parent.GetComponent<RectTransform>(), new Vector2(Screen.width, Screen.height), out var rightConerLocalPoint))
+                            {
+                                if (localPoint.x + heroFaceTo.x * halfSize > rightConerLocalPoint.x)
+                                {
+                                    localPoint.x -= 1.8f * heroFaceTo.x * (halfSize + offsetX);
+                                    pivot.anchoredPosition = localPoint;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         public void AddWords(string name, string words, bool isFromChoice)
         {
             scrollRect.AddWordsItem(name, words, isFromChoice);
