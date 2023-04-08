@@ -188,26 +188,24 @@ namespace GameScript.UI.CardboardBoxUI
 
         private void AddOneItem(ItemPD itemPD)
         {
-            AssetsManager.GetInstance().LoadSceneItem(itemPD.guid, itemPD.itemID, (go) =>
+            var itemGo = AssetsManager.GetInstance().LoadSceneItem(itemPD.guid, itemPD.itemID);
+            itemGo.transform.SetParent(spawnPoint, false);
+            itemGo.transform.localPosition = Vector3.zero;
+            Utils.SetLayerRecursively(itemGo, (int)Define.Layers.UI3D);
+
+            if (allItems == null)
             {
-                go.transform.SetParent(spawnPoint, false);
-                go.transform.localPosition = Vector3.zero;
-                Utils.SetLayerRecursively(go, (int)Define.Layers.UI3D);
+                allItems = new List<OneItem>();
+            }
+            allItems.Add(new OneItem() { itemGO = itemGo, itemGUID = itemPD.guid });
 
-                if (allItems == null)
-                {
-                    allItems = new List<OneItem>();
-                }
-                allItems.Add(new OneItem() { itemGO = go, itemGUID = itemPD.guid });
-
-                OutlineObject.OnClick(go, () =>
-                {
-                    var notificationData = new TransferCardboardBoxItemToActorND();
-                    notificationData.cardboardBoxGUID = cardboardBox.guid;
-                    notificationData.itemGUID = itemPD.guid;
-                    notificationData.actorGUID = ActorsManager.GetInstance().GetHeroActor().guid;
-                    EventSystem.GetInstance().Notify(EventID.TransferCardboardBoxItemToActor, notificationData);
-                });
+            OutlineObject.OnClick(itemGo, () =>
+            {
+                var notificationData = new TransferCardboardBoxItemToActorND();
+                notificationData.cardboardBoxGUID = cardboardBox.guid;
+                notificationData.itemGUID = itemPD.guid;
+                notificationData.actorGUID = ActorsManager.GetInstance().GetHeroActor().guid;
+                EventSystem.GetInstance().Notify(EventID.TransferCardboardBoxItemToActor, notificationData);
             });
         }
 

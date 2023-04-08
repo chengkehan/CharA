@@ -116,12 +116,12 @@ namespace GameScript
         {
             pd.inHandItem.Clone(itemPD);
             roleAnimation.GetMotionAnimator().SetUpBodyAnimation(MotionAnimator.UpBodyAnimation.StickInHands);
-            AssetsManager.GetInstance().LoadSceneItem(itemPD.guid, itemPD.itemID, (obj)=> {
-                var item = obj.GetComponent<Item>();
-                item.SetPhysics(false);
-                item.SetParent(transform);
-                item.Binding(this);
-            });
+
+            var inHandItemGo = AssetsManager.GetInstance().LoadSceneItem(itemPD.guid, itemPD.itemID);
+            var item = inHandItemGo.GetComponent<Item>();
+            item.SetPhysics(false);
+            item.SetParent(transform);
+            item.Binding(this);
         }
 
         public void SetPocketItem(Define.PocketType pocketType, ItemPD itemPD)

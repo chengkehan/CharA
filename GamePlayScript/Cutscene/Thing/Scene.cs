@@ -27,19 +27,17 @@ namespace GameScript.Cutscene
 
         private void AddSceneItem_Internal(ItemPD itemPD, Vector3 wPos, bool addPD)
         {
-            AssetsManager.GetInstance().LoadSceneItem(itemPD.guid, itemPD.itemID, (go) =>
+            var sceneItemGo = AssetsManager.GetInstance().LoadSceneItem(itemPD.guid, itemPD.itemID);
+            sceneItemGo.transform.parent = transform;
+            sceneItemGo.transform.position = wPos;
+            sceneItemGo.transform.eulerAngles = new Vector3(UnityEngine.Random.Range(-10, 10), UnityEngine.Random.Range(-10, 10), UnityEngine.Random.Range(-10, 10));
+
+            if (addPD)
             {
-                go.transform.parent = transform;
-                go.transform.position = wPos;
-                go.transform.eulerAngles = new Vector3(UnityEngine.Random.Range(-10, 10), UnityEngine.Random.Range(-10, 10), UnityEngine.Random.Range(-10, 10));
+                pd.AddSceneItem(itemPD, wPos);
+            }
 
-                if (addPD)
-                {
-                    pd.AddSceneItem(itemPD, wPos);
-                }
-
-                SendAddSceneItemEvent(itemPD.guid);
-            });
+            SendAddSceneItemEvent(itemPD.guid);
         }
 
         protected override void InitializeOnAwake()

@@ -133,7 +133,7 @@ namespace StoryboardEditor
 
         protected void DrawRoleHeadIcon(string roleId)
         {
-            var roleHeadIcon = AssetDatabase.LoadMainAssetAtPath(AssetsManager.EDITOR_ROLE_HEAD_ICON_PATH + roleId + ".png") as Texture;
+            var roleHeadIcon = AssetDatabase.LoadMainAssetAtPath(AssetsManager.GetEditorHeadIconPath(roleId)) as Texture;
             if (roleHeadIcon != null)
             {
                 Rect rect = GUILayoutUtility.GetRect(50, 50);

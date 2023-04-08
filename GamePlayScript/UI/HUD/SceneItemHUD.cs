@@ -211,11 +211,9 @@ namespace GameScript.UI.HUD
             sceneItemPD = scenePD.GetSceneItemPD(itemGUID);
             if (sceneItemPD != null)
             {
-                AssetsManager.GetInstance().LoadItemIcon(sceneItemPD.itemID, (obj) =>
-                {
-                    image.sprite = obj;
-                    image.enabled = true;
-                });
+                var icon = AssetsManager.GetInstance().LoadItemIcon(sceneItemPD.itemID);
+                image.sprite = icon;
+                image.enabled = true;
             }
         }
 

@@ -25,6 +25,8 @@ namespace GameScript.UI.Talking
 
         public UE.Object nextStepPrefab = null;
 
+        public UE.Object headIconPrefab = null;
+
         private PropertyInfo _vScrollingNeededProperty = null;
 
         private Action<float> _scrollValueChangedCB = null;

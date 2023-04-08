@@ -27,10 +27,8 @@ namespace GameScript.UI.CentraPlan.Hero
             var pocketItemPD = heroActorPD.GetPocketItem((int)pocketType);
             if (pocketItemPD.IsEmpty() == false)
             {
-                AssetsManager.GetInstance().LoadItemIcon(pocketItemPD.itemID, (obj) =>
-                {
-                    ShowIcon(obj);
-                });
+                var icon = AssetsManager.GetInstance().LoadItemIcon(pocketItemPD.itemID);
+                ShowIcon(icon);
             }
         }
 

@@ -130,10 +130,8 @@ namespace GameScript.UI.CentraPlan.Hero
             var heroActorPD = ActorsManager.GetInstance().GetHeroActor().pd;
             if (heroActorPD.inHandItem.IsEmpty() == false)
             {
-                AssetsManager.GetInstance().LoadItemIcon(heroActorPD.inHandItem.itemID, (obj) =>
-                {
-                    ShowIcon(obj);
-                });
+                var icon = AssetsManager.GetInstance().LoadItemIcon(heroActorPD.inHandItem.itemID);
+                ShowIcon(icon);
             }
         }
 

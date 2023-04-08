@@ -15,12 +15,6 @@ namespace GameScript
 {
     public class AssetsManager
     {
-#if UNITY_EDITOR
-        public const string EDITOR_CONFIG_PATH = "Assets/GameRes/Config/";
-
-        public const string EDITOR_ROLE_HEAD_ICON_PATH = "Assets/GameRes/Editor/RoleHeadIcon/";
-#endif
-
         public const string UI_ASSET_PREFIX = "UI_";
 
         public const string CONFIG_ASSET_PREFIX = "CFG_";
@@ -32,6 +26,8 @@ namespace GameScript
         public const string ITEM_MODEL_PREFIX = "IM_";
 
         public const string ITEM_ICON_PREFIX = "II_";
+
+        public const string HEAD_ICON_PREFIX = "HI_";
 
         public const string BUILDING_PREFAB_PREFIX = "BP_";
 
@@ -91,27 +87,66 @@ namespace GameScript
             return true;
         }
 
-        #region Item Icon
+#if UNITY_EDITOR
 
-        private List<Sprite> _allSprite = new List<Sprite>();
-
-        public void LoadItemIcon(string name, Action<Sprite> completeCB)
+        public static string GetEditorHeadIconPath(string roleId)
         {
-            LoadAsset<Sprite>(ITEM_ICON_PREFIX + name, (obj)=>
+            if (DataCenter.query.IsHeroRoleIdSimplified(roleId))
             {
-                _allSprite.Add(obj);
-                completeCB?.Invoke(obj);
-            });
+                roleId = AssetsManager.HERO_ROLE_ID;
+            }
+            return "Assets/GameRes/Role/" + roleId + "/" + roleId + ".png";
         }
 
-        // Don't release icon assets until loading a new scene.
-        private void ReleaseAllSprite()
+#endif
+
+        #region Head Icon
+
+        private List<Sprite> _allHeadIcons = new List<Sprite>();
+
+        public Sprite LoadHeadIcon(string name)
         {
-            foreach (var sprite in _allSprite)
+            var icon = LoadAsset<Sprite>(HEAD_ICON_PREFIX + name);
+            if (icon != null)
+            {
+                _allHeadIcons.Add(icon);
+            }
+            return icon;
+        }
+
+        private void ReleaseAllHeadIcons()
+        {
+            foreach (var sprite in _allHeadIcons)
             {
                 UnloadAsset(sprite);
             }
-            _allSprite.Clear();
+            _allHeadIcons.Clear();
+        }
+
+        #endregion
+
+        #region Item Icon
+
+        private List<Sprite> _allItemIcons = new List<Sprite>();
+
+        public Sprite LoadItemIcon(string name)
+        {
+            var icon = LoadAsset<Sprite>(ITEM_ICON_PREFIX + name);
+            if (icon != null)
+            {
+                _allItemIcons.Add(icon);
+            }
+            return icon;
+        }
+
+        // Don't release icon assets until loading a new scene.
+        private void ReleaseAllItemIcons()
+        {
+            foreach (var sprite in _allItemIcons)
+            {
+                UnloadAsset(sprite);
+            }
+            _allItemIcons.Clear();
         }
 
         #endregion
@@ -127,26 +162,15 @@ namespace GameScript
 
         private Dictionary<string/*guid*/, SceneItemDelegate> _allSceneItem = new Dictionary<string, SceneItemDelegate>();
 
-        public void LoadSceneItem(string itemGUID, string itemID, Action<GameObject> completeCB)
+        public GameObject LoadSceneItem(string itemGUID, string itemID)
         {
             Utils.Assert(ContainsSceneItem(itemGUID) == false);
 
             var sceneItemDelegate = new SceneItemDelegate();
             sceneItemDelegate.guid = itemGUID;
             _allSceneItem.Add(itemGUID, sceneItemDelegate);
-
-            LoadGameObject(ITEM_MODEL_PREFIX + itemID, (obj)=>
-            {
-                if (ContainsSceneItem(itemGUID))
-                {
-                    sceneItemDelegate.go = obj;
-                    completeCB?.Invoke(obj);
-                }
-                else
-                {
-                    UnloadGameObject(obj);
-                }
-            });
+            sceneItemDelegate.go = LoadGameObject(ITEM_MODEL_PREFIX + itemID);
+            return sceneItemDelegate.go;
         }
 
         public void UnloadSceneItem(string guid)
@@ -175,6 +199,8 @@ namespace GameScript
 
         #endregion
 
+        #region Load GameObject
+
         public void LoadGameObject(string name, Action<GameObject> completeCB)
         {
             loadingCount++;
@@ -195,6 +221,13 @@ namespace GameScript
             };
         }
 
+        public GameObject LoadGameObject(string name)
+        {
+            var handle = Addressables.InstantiateAsync(name);
+            var go = handle.WaitForCompletion();
+            return go;
+        }
+
         public void UnloadGameObject(GameObject go)
         {
             if (go != null)
@@ -203,11 +236,14 @@ namespace GameScript
             }
         }
 
+        #endregion
+
+        #region Load Asset
+
         public void LoadAsset<T>(string name, Action<T> completeCB)
         {
             loadingCount++;
 
-            var sceneName = SceneManager.GetInstance().sceneName;
             Addressables.LoadAssetAsync<T>(name).Completed += (obj) =>
             {
                 if (obj.Status == AsyncOperationStatus.Failed)
@@ -224,14 +260,24 @@ namespace GameScript
             };
         }
 
+        public T LoadAsset<T>(string name)
+        {
+            var handle = Addressables.LoadAssetAsync<T>(name);
+            var asset = handle.WaitForCompletion();
+            return asset;
+        }
+
         public void UnloadAsset<T>(T obj)
         {
             Addressables.Release(obj);
         }
 
+        #endregion
+
         public void LoadScene(string name, Action completeCB)
         {
-            ReleaseAllSprite();
+            ReleaseAllHeadIcons();
+            ReleaseAllItemIcons();
             ReleaseAllSceneItemGo();
 
             Addressables.LoadSceneAsync(name, USM.LoadSceneMode.Single).Completed += (obj) =>
