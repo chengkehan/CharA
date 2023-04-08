@@ -37,8 +37,6 @@ namespace GameScript
 
         public const string ITEM_CONFIG = CONFIG_ASSET_PREFIX + "Item";
 
-        public const string HERO_ROLE_ID = "200000";
-
         private static AssetsManager s_instance = null;
 
         public static AssetsManager GetInstance()
@@ -93,7 +91,7 @@ namespace GameScript
         {
             if (DataCenter.query.IsHeroRoleIdSimplified(roleId))
             {
-                roleId = AssetsManager.HERO_ROLE_ID;
+                roleId = DataCenter.define.HeroRoleID;
             }
             return "Assets/GameRes/Role/" + roleId + "/" + roleId + ".png";
         }
@@ -104,9 +102,9 @@ namespace GameScript
 
         private List<Sprite> _allHeadIcons = new List<Sprite>();
 
-        public Sprite LoadHeadIcon(string name)
+        public Sprite LoadHeadIcon(string roleId)
         {
-            var icon = LoadAsset<Sprite>(HEAD_ICON_PREFIX + name);
+            var icon = LoadAsset<Sprite>(HEAD_ICON_PREFIX + roleId);
             if (icon != null)
             {
                 _allHeadIcons.Add(icon);

@@ -37,11 +37,12 @@ namespace GameScript.UI.Talking
 
         private List<ComponentBase> allItems = new List<ComponentBase>();
 
-        public void AddWordsItem(string name, string words, bool isFromChoice)
+        public void AddWordsItem(string name, string words, bool isFromChoice, string roleIdForHeadIcon)
         {
             var wordsItem = Utils.InstantiateUIPrefab(wordsItemPrefab, container).GetComponent<WordsItem>();
             allItems.Add(wordsItem);
             wordsItem.SetText(name, words, isFromChoice);
+            wordsItem.SetHeadIcon(roleIdForHeadIcon);
             wordsItem.InsertBefore(GetBottomSpacer());
         }
 

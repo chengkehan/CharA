@@ -49,9 +49,15 @@ namespace GameScript.UI.Talking
             var nameStr = string.Empty;
             var talkNode = storyThreadAsyncHandler_talk.nodes[0];
             var roleId = talkNode.roleId;
+
+            if (DataCenter.query.IsHeroRoleIdSimplified(roleId))
+            {
+                roleId = DataCenter.define.HeroRoleID;
+            }
+
             if (string.IsNullOrWhiteSpace(roleId) == false)
             {
-                if (DataCenter.query.IsHeroRoleIdSimplified(roleId))
+                if (DataCenter.query.IsHeroRoleID(roleId))
                 {
                     nameStr = talkingUI.GetLanguage("me");
                 }
@@ -63,7 +69,7 @@ namespace GameScript.UI.Talking
             }
 
             talkingUI.SetAllItemsAsGray();
-            talkingUI.AddWords(nameStr, talkNode.GetLangauge(talkNode.wordsId), false);
+            talkingUI.AddWords(nameStr, talkNode.GetLangauge(talkNode.wordsId), false, roleId);
             talkingUI.AddNextStep(TalkCompleteCB);
 
             talkingUI.ScrollToBottom();
@@ -100,7 +106,7 @@ namespace GameScript.UI.Talking
             }
 
             var choiceNode = choiceNodes[index - 1];
-            talkingUI.AddWords(talkingUI.GetLanguage("me"), choiceNode.GetLangauge(choiceNode.wordsId), true);
+            talkingUI.AddWords(talkingUI.GetLanguage("me"), choiceNode.GetLangauge(choiceNode.wordsId), true, null);
             talkingUI.ScrollToBottom();
 
             storyThreadAsyncHandler_choice.Complete(choiceNode);

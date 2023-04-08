@@ -194,7 +194,7 @@ namespace GameScript
         {
             if (query.IsHeroRoleIdSimplified(id))
             {
-                id = AssetsManager.HERO_ROLE_ID;
+                id = DataCenter.define.HeroRoleID;
             }
             if (roleConfigs.TryGetValue(id, out var roleConfig))
             {

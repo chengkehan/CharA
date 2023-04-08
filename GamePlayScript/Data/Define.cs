@@ -33,6 +33,8 @@ namespace GameScript
             UI3D = 1 << Layers.UI3D
         }
 
+        public readonly string HeroRoleID = "200000";
+
         public readonly float SceneItemYOffset = 1;
 
         public readonly float SceneItemVisibleRange = 3;

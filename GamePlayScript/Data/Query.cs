@@ -92,7 +92,7 @@ namespace GameScript
 
         public bool IsHeroRoleID(string roleID)
         {
-            return roleID == AssetsManager.HERO_ROLE_ID;
+            return roleID == DataCenter.define.HeroRoleID || IsHeroRoleIdSimplified(roleID);
         }
 
         public bool IsHeroRoleIdSimplified(string roleId)

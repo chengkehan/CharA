@@ -47,6 +47,7 @@ namespace GameScript.UI.Talking
         {
             wordsText.color = textColor;
             nameText.color = nameColor;
+            SetHeadIconVisible(true);
         }
 
         private void SetAsGrayInternal()
@@ -62,6 +63,8 @@ namespace GameScript.UI.Talking
             c.g *= 0.8f;
             c.b *= 0.8f;
             nameText.color = c;
+
+            SetHeadIconVisible(false);
         }
 
         public void SetText(string name, string words, bool isFromChoice)
@@ -113,6 +116,55 @@ namespace GameScript.UI.Talking
                 }
             }
         }
+
+        #region Head Icon
+
+        [SerializeField]
+        private UnityEngine.Object _headIconPrefab = null;
+        private UnityEngine.Object headIconPrefab
+        {
+            get
+            {
+                return _headIconPrefab;
+            }
+        }
+
+        [SerializeField]
+        private Transform _headIconBindingPoint = null;
+        private Transform headIconBindingPoint
+        {
+            get
+            {
+                return _headIconBindingPoint;
+            }
+        }
+
+        private GameObject _headIconGo = null;
+
+        public void SetHeadIcon(string roleId)
+        {
+            if (string.IsNullOrWhiteSpace(roleId) == false)
+            {
+                _headIconGo = Utils.InstantiateUIPrefab(headIconPrefab, headIconBindingPoint);
+                var headIcon = _headIconGo.GetComponent<HeadIcon>();
+                headIcon.LoadHeadIcon(roleId);
+            }
+        }
+
+        private void SetHeadIconVisible(bool visible)
+        {
+            if (_headIconGo != null)
+            {
+                _headIconGo.SetActive(visible);
+                var headIcon = _headIconGo.GetComponent<HeadIcon>();
+                if (headIcon != null)
+                {
+                    headIcon.OverlayOthers(visible);
+                }
+            }
+        }
+
+        #endregion
 
         private IEnumerator TypeCharsCoroutine(string words)
         {
