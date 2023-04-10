@@ -27,12 +27,16 @@ namespace GameScript.Cutscene
         [SerializeField]
         private string targetRoleId = null;
 
+        [Tooltip("When several BoundsTrigger are overlapped, which one will be triggered firstly, and which one is secondly.\nThe order of BoundsTrigger with same priority is undefined.")]
+        [SerializeField]
+        private BoundsTriggerPriority priority = BoundsTriggerPriority.Normal;
+
         [SerializeField]
         private BoundsComponent bounds = new BoundsComponent();
 
         private bool isInBounds = false;
 
-        public void Update()
+        private void Update()
         {
             if (DataCenter.GetInstance().bloackboard.heroSoloAndMuteOthers)
             {

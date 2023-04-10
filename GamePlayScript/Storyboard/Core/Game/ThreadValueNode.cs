@@ -39,7 +39,7 @@ namespace StoryboardCore
 
         public string valueName = string.Empty;
 
-        [Tooltip("A persistent value will be saved even if thread is complete, and restored when thread startup next time.\nNon-persistent value will be cleared then thread exits.\nInput only.")]
+        [Tooltip("A persistent value will be saved even if thread is complete, and restored when thread startup next time.\nNon-persistent value will be cleared then thread exits.")]
         public bool persistent = false;
 
         public override object GetValue(NodePort port)
@@ -131,8 +131,6 @@ namespace StoryboardCore
         {
             Utils.Assert(completeCallback != null);
 
-            // TODO set ThreadValues
-            Debug.Log("ThreadValueNode TriggerOn");
             SetValue();
 
             completeCallback();
