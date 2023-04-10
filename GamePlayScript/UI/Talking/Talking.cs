@@ -31,7 +31,6 @@ namespace GameScript.UI.Talking
 
                     if (ComponentBase.ConvertWorldPositionToLocalPoint(heroWPos, true, pivot.parent.GetComponent<RectTransform>(), out var localPoint))
                     {
-                        //float headIconSize = 120;
                         float halfSize = 336;
                         float offsetX = 100;
                         localPoint.y = pivot.anchoredPosition.y;

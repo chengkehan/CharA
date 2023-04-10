@@ -38,6 +38,9 @@ namespace GameScript.Cutscene
         private Color _handlesColor = Color.white;
 
         [SerializeField]
+        private string _name = string.Empty;
+
+        [SerializeField]
         private bool _handlesEnabled = true;
         public bool handlesEnabled
         {
@@ -116,10 +119,17 @@ namespace GameScript.Cutscene
             var handlesEnabledProp = property.serializedObject.FindProperty(property.propertyPath.Replace("_boundsCenter", "_handlesEnabled"));
             if (handlesEnabledProp.boolValue)
             {
+                var nameProp = property.serializedObject.FindProperty(property.propertyPath.Replace("_boundsCenter", "_name"));
                 var boundsSizeProp = property.serializedObject.FindProperty(property.propertyPath.Replace("_boundsCenter", "_boundsSize"));
                 var handlesColorProp = property.serializedObject.FindProperty(property.propertyPath.Replace("_boundsCenter", "_handlesColor"));
 
-                HandlesHelper.LabelHandle(property.propertyPath + "LLL", property.propertyPath, property.vector3Value, handlesColorProp.colorValue);
+                var handleLabel = nameProp.stringValue;
+                if (string.IsNullOrWhiteSpace(handleLabel))
+                {
+                    handleLabel = property.propertyPath;
+                }
+
+                HandlesHelper.LabelHandle(property.propertyPath + "LLL", handleLabel, property.vector3Value, handlesColorProp.colorValue);
                 HandlesHelper.WireCube(property.propertyPath + "CCC", property.vector3Value, boundsSizeProp.vector3Value, handlesColorProp.colorValue);
             }
             else
