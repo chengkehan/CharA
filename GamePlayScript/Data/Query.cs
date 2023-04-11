@@ -188,7 +188,6 @@ namespace GameScript
         // items of a role should be mathcing all settings in one of pairs.
         public bool ActorHasKeyItem(ActorPD actorPD, PairsData pairsData)
         {
-            return true;
             if (actorPD != null && pairsData != null)
             {
                 for (int keyToDoorPairI = 0; keyToDoorPairI < pairsData.NumberPairs(); keyToDoorPairI++)

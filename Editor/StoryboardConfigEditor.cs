@@ -21,26 +21,37 @@ namespace GameScriptEditor
 
             if (GUILayout.Button("Open Storyboard"))
             {
-                bool opened = false;
-
-                var assetIds = AssetDatabase.FindAssets("t:Storyboard");
-                foreach (var assetId in assetIds)
+                var asset = GetAsset(storyboardConfig);
+                if (asset != null)
                 {
-                    var assetPath = AssetDatabase.GUIDToAssetPath(assetId);
-                    var asset = AssetDatabase.LoadMainAssetAtPath(assetPath);
-                    if (asset.name == storyboardConfig.storyboardName)
-                    {
-                        opened = true;
-                        NodeEditorWindow.Open(asset as Storyboard);
-                        break;
-                    }
-                }
-
-                if (opened == false)
-                {
-                    EditorUtility.DisplayDialog(string.Empty, "Storyboard not found.", "ok");
+                    NodeEditorWindow.Open(asset as Storyboard);
                 }
             }
+
+            if (GUILayout.Button("Select Storyboard"))
+            {
+                var asset = GetAsset(storyboardConfig);
+                if (asset != null)
+                {
+                    Selection.activeObject = asset;
+                }
+            }
+        }
+
+        private Object GetAsset(StoryboardConfig storyboardConfig)
+        {
+            var assetIds = AssetDatabase.FindAssets("t:Storyboard");
+            foreach (var assetId in assetIds)
+            {
+                var assetPath = AssetDatabase.GUIDToAssetPath(assetId);
+                var asset = AssetDatabase.LoadMainAssetAtPath(assetPath);
+                if (asset.name == storyboardConfig.storyboardName)
+                {
+                    return asset;
+                }
+            }
+
+            return null;
         }
     }
 }
