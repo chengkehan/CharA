@@ -100,6 +100,18 @@ namespace GameScript
             return roleId == "0";
         }
 
+        public string ProcessRoleId(string roleId)
+        {
+            if (IsHeroRoleIdSimplified(roleId))
+            {
+                return DataCenter.define.HeroRoleID;
+            }
+            else
+            {
+                return roleId;
+            }
+        }
+
         public bool IsWallBreaked(BreakWallPD breakWallPD)
         {
             if (breakWallPD == null)

@@ -14,7 +14,8 @@ namespace GameScript
             CrouchedToStanding = 3,
             SittingGroundDown = 4,
             SittingGround = 5,
-            SittingGroundUp = 6
+            SittingGroundUp = 6,
+            Dynamic = 7
         }
 
         protected override int InitializeActionNameId()
@@ -38,7 +39,7 @@ namespace GameScript
         {
             base.InitializeCompleteTimeOfActions();
 
-            AddCompleteTimeOfAction(Transition.SittingGround, 0.1f);
+            AddCompleteTimeOfAction(Transition.SittingGround, 0.25f);
         }
 
         protected override void InitializedEqualActions()
@@ -46,6 +47,19 @@ namespace GameScript
             base.InitializedEqualActions();
 
             AddEuqalActions(Transition.SittingGroundDown, Transition.SittingGround);
+        }
+
+        protected override void LoopTypeActionCompleteFirstCircle(int action)
+        {
+            base.LoopTypeActionCompleteFirstCircle(action);
+
+            var transition = (Transition)action;
+            var roleId = GetRoleAnimation().actor.o.GetId();
+
+            var notificationData = new LoopTypeSoloCompleteND();
+            notificationData.roleId = roleId;
+            notificationData.transition = transition;
+            EventSystem.GetInstance().Notify(EventID.LoopTypeSoloComplete, notificationData);
         }
     }
 }

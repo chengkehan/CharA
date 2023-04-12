@@ -158,8 +158,17 @@ namespace GameScript
                     {
                         ExecuteActionCompleteCB();
                     }
+                    else
+                    {
+                        LoopTypeActionCompleteFirstCircle(GetAction());
+                    }
                 }
             }
+        }
+
+        protected virtual void LoopTypeActionCompleteFirstCircle(int action)
+        {
+            // Do nothing
         }
 
         public virtual void MatchTargetUpdate(Animator animator)

@@ -1849,6 +1849,8 @@ namespace GameScript
 
         private void SoloCompleteCB()
         {
+            // TODO finishing signal
+            Utils.Log("SoloCompleteCB");
             if (recentSolo != SoloSM.Transition.StandingToCrouched)
             {
                 recentSolo = SoloSM.Transition.Undefined;

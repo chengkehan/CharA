@@ -27,6 +27,7 @@ namespace GameScript
         SceneLoaded,
         TransferCardboardBoxItemToScene, 
         TransferCardboardBoxItemToActor,
-        TransferPocketItemToCardboardBox
+        TransferPocketItemToCardboardBox,
+        LoopTypeSoloComplete
     }
 }
