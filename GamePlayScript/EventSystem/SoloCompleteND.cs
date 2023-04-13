@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameScript
 {
-    public class LoopTypeSoloCompleteND : NotificationData
+    public class SoloCompleteND : NotificationData
     {
         public string roleId = null;
 

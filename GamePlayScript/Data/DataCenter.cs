@@ -91,6 +91,19 @@ namespace GameScript
             }
         }
 
+        private Cache _cache = null;
+        public Cache cache
+        {
+            get
+            {
+                if (_cache == null)
+                {
+                    _cache = new Cache();
+                }
+                return _cache;
+            }
+        }
+
         private Blackboard _bloackboard = null;
         public Blackboard bloackboard
         {

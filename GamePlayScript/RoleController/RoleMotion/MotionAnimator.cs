@@ -1849,8 +1849,11 @@ namespace GameScript
 
         private void SoloCompleteCB()
         {
-            // TODO finishing signal
-            Utils.Log("SoloCompleteCB");
+            var notificationData = DataCenter.GetInstance().cache.soloCompleteND;
+            notificationData.roleId = GetRoleAnimation().actor.o.GetId();
+            notificationData.transition = recentSolo;
+            EventSystem.GetInstance().Notify(EventID.SoloComplete, notificationData);
+
             if (recentSolo != SoloSM.Transition.StandingToCrouched)
             {
                 recentSolo = SoloSM.Transition.Undefined;

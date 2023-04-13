@@ -28,6 +28,6 @@ namespace GameScript
         TransferCardboardBoxItemToScene, 
         TransferCardboardBoxItemToActor,
         TransferPocketItemToCardboardBox,
-        LoopTypeSoloComplete
+        SoloComplete
     }
 }

@@ -58,7 +58,7 @@ namespace StoryboardCore
                     if (finishingSignal != SoloSM.Transition.Undefined)
                     {
                         this.completeCallback = completeCallback;
-                        EventSystem.GetInstance().AddListener(EventID.LoopTypeSoloComplete, LoopTypeSoloCompleteHandler);
+                        EventSystem.GetInstance().AddListener(EventID.SoloComplete, LoopTypeSoloCompleteHandler);
                     }
                 }
                 else
@@ -74,14 +74,14 @@ namespace StoryboardCore
 
         private void LoopTypeSoloCompleteHandler(NotificationData _data)
         {
-            var data = _data as LoopTypeSoloCompleteND;
+            var data = _data as SoloCompleteND;
             if (data != null)
             {
                 if (DataCenter.query.ProcessRoleId(roleId) == DataCenter.query.ProcessRoleId(data.roleId))
                 {
                     if (data.transition == finishingSignal)
                     {
-                        EventSystem.GetInstance().RemoveListener(EventID.LoopTypeSoloComplete, LoopTypeSoloCompleteHandler);
+                        EventSystem.GetInstance().RemoveListener(EventID.SoloComplete, LoopTypeSoloCompleteHandler);
                         completeCallback();
                         completeCallback = null;
                     }

@@ -56,10 +56,10 @@ namespace GameScript
             var transition = (Transition)action;
             var roleId = GetRoleAnimation().actor.o.GetId();
 
-            var notificationData = new LoopTypeSoloCompleteND();
+            var notificationData = DataCenter.GetInstance().cache.soloCompleteND;
             notificationData.roleId = roleId;
             notificationData.transition = transition;
-            EventSystem.GetInstance().Notify(EventID.LoopTypeSoloComplete, notificationData);
+            EventSystem.GetInstance().Notify(EventID.SoloComplete, notificationData);
         }
     }
 }
