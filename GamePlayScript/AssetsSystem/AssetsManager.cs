@@ -31,6 +31,8 @@ namespace GameScript
 
         public const string BUILDING_PREFAB_PREFIX = "BP_";
 
+        public const string ANIMATION_PREFIX = "ANIM_";
+
         public const string ROLE_CONFIG = CONFIG_ASSET_PREFIX + "Role";
 
         public const string LANGUAGE_CONFIG = CONFIG_ASSET_PREFIX + "Language";
@@ -97,6 +99,21 @@ namespace GameScript
         }
 
 #endif
+
+        #region Animations
+
+        public AnimationClip LoadAnimation(string animationAssetName)
+        {
+            var animationAsset = LoadAsset<AnimationClip>(ANIMATION_PREFIX + animationAssetName);
+            return animationAsset;
+        }
+
+        public void UnloadAnimation(AnimationClip animationClip)
+        {
+            UnloadAsset(animationClip);
+        }
+
+        #endregion
 
         #region Head Icon
 

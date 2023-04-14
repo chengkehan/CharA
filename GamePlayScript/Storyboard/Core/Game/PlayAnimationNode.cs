@@ -48,7 +48,16 @@ namespace StoryboardCore
             }
             else
             {
-                actor.roleAnimation.GetMotionAnimator().SetSoloState(animation);
+                if (animation == SoloSM.Transition.Dynamic)
+                {
+                    var loadedAnimation = AssetsManager.GetInstance().LoadAnimation(dynamic);
+                    actor.roleAnimation.GetMotionAnimator().SetDynamicSolo(loadedAnimation);
+                    actor.roleAnimation.GetMotionAnimator().SetSoloState(animation);
+                }
+                else
+                {
+                    actor.roleAnimation.GetMotionAnimator().SetSoloState(animation);
+                }
             }
 
             if (waitingForComplete)
@@ -63,7 +72,7 @@ namespace StoryboardCore
                 }
                 else
                 {
-                    Coroutines.GetInstance().StartCoroutine(TimeoutCoroutine(completeCallback));
+                    Coroutines.GetInstance().Execute(TimeoutCoroutine(completeCallback));
                 }
             }
             else
@@ -82,6 +91,16 @@ namespace StoryboardCore
                     if (data.transition == finishingSignal)
                     {
                         EventSystem.GetInstance().RemoveListener(EventID.SoloComplete, LoopTypeSoloCompleteHandler);
+
+                        if (animation == SoloSM.Transition.Dynamic)
+                        {
+                            var roleId = DataCenter.query.ProcessRoleId(this.roleId);
+                            Actor actor = ActorsManager.GetInstance().GetActor(roleId);
+                            var animationAsset = actor.roleAnimation.GetMotionAnimator().GetDynamicSolo();
+
+                            Coroutines.GetInstance().Execute(CleanupAnimationDelayCoroutine(actor, animationAsset));
+                        }
+
                         completeCallback();
                         completeCallback = null;
                     }
@@ -94,6 +113,17 @@ namespace StoryboardCore
             yield return new WaitForSeconds(timeout);
 
             completeCallback();
+        }
+
+        // Cleanup assets delayed because of we must wait animations' transition complete totally,
+        // otherwise animations' transition is not smoothness with unexpected behaviours.
+        private IEnumerator CleanupAnimationDelayCoroutine(Actor actor, AnimationClip animationClip)
+        {
+            // Maybe this delay time is not enough, we should test and try to get a better value.
+            yield return new WaitForSeconds(0.5f);
+
+            actor.roleAnimation.GetMotionAnimator().ClearDynamicSolo();
+            AssetsManager.GetInstance().UnloadAnimation(animationClip);
         }
     }
 }

@@ -636,6 +636,55 @@ namespace GameScript
             SetState(State.Skill);
         }
 
+        public void SetDynamicSolo(AnimationClip animationClip)
+        {
+            if (animators != null && animationClip != null)
+            {
+                foreach (var animator in animators)
+                {
+                    if (animator != null)
+                    {
+                        if (animator.runtimeAnimatorController is AnimatorOverrideController)
+                        {
+                            var animatorController = animator.runtimeAnimatorController as AnimatorOverrideController;
+                            animatorController["DynamicSolo"] = animationClip;
+                        }
+                    }
+                }
+            }
+        }
+
+        public AnimationClip GetDynamicSolo()
+        {
+            if (animators != null && animators.Length > 0 && animators[0] != null)
+            {
+                if (animators[0].runtimeAnimatorController is AnimatorOverrideController)
+                {
+                    var animatorController = animators[0].runtimeAnimatorController as AnimatorOverrideController;
+                    return animatorController["DynamicSolo"];
+                }
+            }
+            return null;
+        }
+
+        public void ClearDynamicSolo()
+        {
+            if (animators != null && animators.Length > 0 && animators[0] != null)
+            {
+                foreach (var animator in animators)
+                {
+                    if (animator != null)
+                    {
+                        if (animator.runtimeAnimatorController is AnimatorOverrideController)
+                        {
+                            var animatorController = animator.runtimeAnimatorController as AnimatorOverrideController;
+                            animatorController["DynamicSolo"] = null;
+                        }
+                    }
+                }
+            }
+        }
+
         public void SetSoloState(SoloSM.Transition solo)
         {
             pendingSolo = solo;
@@ -1849,10 +1898,7 @@ namespace GameScript
 
         private void SoloCompleteCB()
         {
-            var notificationData = DataCenter.GetInstance().cache.soloCompleteND;
-            notificationData.roleId = GetRoleAnimation().actor.o.GetId();
-            notificationData.transition = recentSolo;
-            EventSystem.GetInstance().Notify(EventID.SoloComplete, notificationData);
+            var tRecentSolo = recentSolo;
 
             if (recentSolo != SoloSM.Transition.StandingToCrouched)
             {
@@ -1860,6 +1906,11 @@ namespace GameScript
                 SetState(State.Undefined);
                 Update();
             }
+
+            var notificationData = DataCenter.GetInstance().cache.soloCompleteND;
+            notificationData.roleId = GetRoleAnimation().actor.o.GetId();
+            notificationData.transition = tRecentSolo;
+            EventSystem.GetInstance().Notify(EventID.SoloComplete, notificationData);
         }
 
         private void DummyCompleteCB()
