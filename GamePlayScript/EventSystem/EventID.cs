@@ -28,6 +28,7 @@ namespace GameScript
         TransferCardboardBoxItemToScene, 
         TransferCardboardBoxItemToActor,
         TransferPocketItemToCardboardBox,
-        SoloComplete
+        SoloComplete,
+        UpBodyAnimationComplete
     }
 }

@@ -19,6 +19,12 @@ namespace StoryboardCore
         [Tooltip("Which animation will be played.")]
         public SoloSM.Transition animation = SoloSM.Transition.Undefined;
 
+        [Tooltip("Which up body animation will be played.\nUsing this as finishing signal.")]
+        public MotionAnimator.UpBodyAnimation upBodyAnimation = MotionAnimator.UpBodyAnimation.None;
+
+        [Tooltip("Which up body2 animation will be played.\nUsing this as finishing signal.")]
+        public MotionAnimator.UpBodyAnimationLayer2 upBody2Animation = MotionAnimator.UpBodyAnimationLayer2.None;
+
         [Tooltip("Name of AnimatorOverrideController when animation is dynamic.")]
         public string dynamic = string.Empty;
 
@@ -51,12 +57,43 @@ namespace StoryboardCore
                 if (animation == SoloSM.Transition.Dynamic)
                 {
                     var loadedAnimation = AssetsManager.GetInstance().LoadAnimation(dynamic);
-                    actor.roleAnimation.GetMotionAnimator().SetDynamicSolo(loadedAnimation);
+                    actor.roleAnimation.GetMotionAnimator().SetDynamic(loadedAnimation, MotionAnimator.DynamicAnimation.DynamicSolo);
                     actor.roleAnimation.GetMotionAnimator().SetSoloState(animation);
                 }
                 else
                 {
-                    actor.roleAnimation.GetMotionAnimator().SetSoloState(animation);
+                    if (animation != SoloSM.Transition.Undefined)
+                    {
+                        actor.roleAnimation.GetMotionAnimator().SetSoloState(animation);
+                    }
+                }
+
+                if (upBodyAnimation == MotionAnimator.UpBodyAnimation.Dynamic)
+                {
+                    var loadedAnimation = AssetsManager.GetInstance().LoadAnimation(dynamic);
+                    actor.roleAnimation.GetMotionAnimator().SetDynamic(loadedAnimation, MotionAnimator.DynamicAnimation.DynamicUpBody);
+                    actor.roleAnimation.GetMotionAnimator().SetUpBodyAnimation(upBodyAnimation);
+                }
+                else
+                {
+                    if (upBodyAnimation != MotionAnimator.UpBodyAnimation.None)
+                    {
+                        actor.roleAnimation.GetMotionAnimator().SetUpBodyAnimation(upBodyAnimation);
+                    }
+                }
+
+                if (upBody2Animation == MotionAnimator.UpBodyAnimationLayer2.Dynamic)
+                {
+                    var loadedAnimation = AssetsManager.GetInstance().LoadAnimation(dynamic);
+                    actor.roleAnimation.GetMotionAnimator().SetDynamic(loadedAnimation, MotionAnimator.DynamicAnimation.DynamicUpBody2);
+                    actor.roleAnimation.GetMotionAnimator().SetUpBodyAnimationLayer2(upBody2Animation);
+                }
+                else
+                {
+                    if (upBody2Animation != MotionAnimator.UpBodyAnimationLayer2.None)
+                    {
+                        actor.roleAnimation.GetMotionAnimator().SetUpBodyAnimationLayer2(upBody2Animation);
+                    }
                 }
             }
 
@@ -64,10 +101,13 @@ namespace StoryboardCore
             {
                 if (timeout == 0)
                 {
-                    if (finishingSignal != SoloSM.Transition.Undefined)
+                    if (finishingSignal != SoloSM.Transition.Undefined ||
+                        upBodyAnimation != MotionAnimator.UpBodyAnimation.None ||
+                        upBody2Animation != MotionAnimator.UpBodyAnimationLayer2.None)
                     {
                         this.completeCallback = completeCallback;
-                        EventSystem.GetInstance().AddListener(EventID.SoloComplete, LoopTypeSoloCompleteHandler);
+                        EventSystem.GetInstance().AddListener(EventID.SoloComplete, SoloCompleteHandler);
+                        EventSystem.GetInstance().AddListener(EventID.UpBodyAnimationComplete, UpBodyAnimationCompleteHandler);
                     }
                 }
                 else
@@ -81,7 +121,22 @@ namespace StoryboardCore
             }
         }
 
-        private void LoopTypeSoloCompleteHandler(NotificationData _data)
+        private void UpBodyAnimationCompleteHandler(NotificationData _data)
+        {
+            var data = _data as UpBodyAnimationCompleteND;
+            if (data != null)
+            {
+                if (DataCenter.query.ProcessRoleId(roleId) == DataCenter.query.ProcessRoleId(data.roleId))
+                {
+                    if (data.upBodyAnimation == upBodyAnimation || data.upBodyAnimation2 == upBody2Animation)
+                    {
+                        Complete();
+                    }
+                }
+            }
+        }
+
+        private void SoloCompleteHandler(NotificationData _data)
         {
             var data = _data as SoloCompleteND;
             if (data != null)
@@ -90,22 +145,29 @@ namespace StoryboardCore
                 {
                     if (data.transition == finishingSignal)
                     {
-                        EventSystem.GetInstance().RemoveListener(EventID.SoloComplete, LoopTypeSoloCompleteHandler);
-
-                        if (animation == SoloSM.Transition.Dynamic)
-                        {
-                            var roleId = DataCenter.query.ProcessRoleId(this.roleId);
-                            Actor actor = ActorsManager.GetInstance().GetActor(roleId);
-                            var animationAsset = actor.roleAnimation.GetMotionAnimator().GetDynamicSolo();
-
-                            Coroutines.GetInstance().Execute(CleanupAnimationDelayCoroutine(actor, animationAsset));
-                        }
-
-                        completeCallback();
-                        completeCallback = null;
+                        Complete();
                     }
                 }
             }
+        }
+
+        private void Complete()
+        {
+            EventSystem.GetInstance().RemoveListener(EventID.SoloComplete, SoloCompleteHandler);
+            EventSystem.GetInstance().RemoveListener(EventID.UpBodyAnimationComplete, UpBodyAnimationCompleteHandler);
+
+            if (animation == SoloSM.Transition.Dynamic)
+            {
+                var roleId = DataCenter.query.ProcessRoleId(this.roleId);
+                Actor actor = ActorsManager.GetInstance().GetActor(roleId);
+                var animationAsset = actor.roleAnimation.GetMotionAnimator().GetDynamic(MotionAnimator.DynamicAnimation.DynamicSolo);
+                var animationAssetUpBody = actor.roleAnimation.GetMotionAnimator().GetDynamic(MotionAnimator.DynamicAnimation.DynamicUpBody);
+                var animationAssetUpBody2 = actor.roleAnimation.GetMotionAnimator().GetDynamic(MotionAnimator.DynamicAnimation.DynamicUpBody2);
+                Coroutines.GetInstance().Execute(CleanupAnimationDelayCoroutine(actor, animationAsset, animationAssetUpBody, animationAssetUpBody2));
+            }
+
+            completeCallback();
+            completeCallback = null;
         }
 
         private IEnumerator TimeoutCoroutine(Action completeCallback)
@@ -117,13 +179,17 @@ namespace StoryboardCore
 
         // Cleanup assets delayed because of we must wait animations' transition complete totally,
         // otherwise animations' transition is not smoothness with unexpected behaviours.
-        private IEnumerator CleanupAnimationDelayCoroutine(Actor actor, AnimationClip animationClip)
+        private IEnumerator CleanupAnimationDelayCoroutine(Actor actor, AnimationClip animationClip, AnimationClip animationAssetUpBody, AnimationClip animationAssetUpBody2)
         {
             // Maybe this delay time is not enough, we should test and try to get a better value.
             yield return new WaitForSeconds(0.5f);
 
-            actor.roleAnimation.GetMotionAnimator().ClearDynamicSolo();
+            actor.roleAnimation.GetMotionAnimator().ClearDynamic(MotionAnimator.DynamicAnimation.DynamicSolo);
+            actor.roleAnimation.GetMotionAnimator().ClearDynamic(MotionAnimator.DynamicAnimation.DynamicUpBody);
+            actor.roleAnimation.GetMotionAnimator().ClearDynamic(MotionAnimator.DynamicAnimation.DynamicUpBody2);
             AssetsManager.GetInstance().UnloadAnimation(animationClip);
+            AssetsManager.GetInstance().UnloadAnimation(animationAssetUpBody);
+            AssetsManager.GetInstance().UnloadAnimation(animationAssetUpBody2);
         }
     }
 }

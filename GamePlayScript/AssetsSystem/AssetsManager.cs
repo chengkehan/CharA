@@ -284,7 +284,10 @@ namespace GameScript
 
         public void UnloadAsset<T>(T obj)
         {
-            Addressables.Release(obj);
+            if (obj != null)
+            {
+                Addressables.Release(obj);
+            }
         }
 
         #endregion

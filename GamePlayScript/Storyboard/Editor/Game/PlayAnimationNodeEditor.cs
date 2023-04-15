@@ -27,11 +27,21 @@ namespace StoryboardEditor
         {
             base.OnValidate();
 
+            var animationMutex =
+                (node.animation != SoloSM.Transition.Undefined && node.upBodyAnimation == MotionAnimator.UpBodyAnimation.None && node.upBody2Animation == MotionAnimator.UpBodyAnimationLayer2.None) ||
+                (node.upBodyAnimation != MotionAnimator.UpBodyAnimation.None && node.animation == SoloSM.Transition.Undefined && node.upBody2Animation == MotionAnimator.UpBodyAnimationLayer2.None) ||
+                (node.upBody2Animation != MotionAnimator.UpBodyAnimationLayer2.None && node.animation == SoloSM.Transition.Undefined && node.upBodyAnimation == MotionAnimator.UpBodyAnimation.None);
+
+            var finishingSignal =
+                node.upBodyAnimation != MotionAnimator.UpBodyAnimation.None || node.upBody2Animation != MotionAnimator.UpBodyAnimationLayer2.None ?
+                true :
+                !(node.timeout == 0 && node.finishingSignal == SoloSM.Transition.Undefined && node.waitingForComplete);
+
             Validate(false,
                 !string.IsNullOrWhiteSpace(node.roleId), "role id is required",
-                node.animation != SoloSM.Transition.Undefined, "animation is required",
+                animationMutex, "Missing Animation Setting.\nAnimation | UpBodyAnimation | UpBody2Animation, choose one of three.",
                 node.animation != SoloSM.Transition.Dynamic ? true : !string.IsNullOrWhiteSpace(node.dynamic), "dynamic is required",
-                !(node.timeout == 0 && node.finishingSignal == SoloSM.Transition.Undefined && node.waitingForComplete), "missing exiting condition"
+                finishingSignal, "missing exiting condition"
             );
         }
     }

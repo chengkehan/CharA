@@ -324,12 +324,13 @@ namespace GameScript
             return _isMarkedAsStopMoving;
         }
 
-        #region Up body animation Layer2
+        #region Up body animation Layer2(Two Arms and Head)
 
         public enum UpBodyAnimationLayer2
         {
             None = 0,
-            Headache = 1
+            Headache = 1,
+            Dynamic = 2
         }
 
         private int _upBodyAnimationNameId2 = 0;
@@ -358,12 +359,13 @@ namespace GameScript
 
         #endregion
 
-        #region Up body animation
+        #region Up body animation(Two Arms)
 
         public enum UpBodyAnimation
         {
             None = 0,
-            StickInHands = 1
+            StickInHands = 1,
+            Dynamic = 2
         }
 
         private int _upBodyAnimationNameId = 0;
@@ -636,7 +638,16 @@ namespace GameScript
             SetState(State.Skill);
         }
 
-        public void SetDynamicSolo(AnimationClip animationClip)
+        #region Dynamic Animation of AnimatorOverrideController
+
+        public enum DynamicAnimation
+        {
+            DynamicSolo,
+            DynamicUpBody,
+            DynamicUpBody2
+        }
+
+        public void SetDynamic(AnimationClip animationClip, DynamicAnimation dynamicAnimation)
         {
             if (animators != null && animationClip != null)
             {
@@ -647,27 +658,38 @@ namespace GameScript
                         if (animator.runtimeAnimatorController is AnimatorOverrideController)
                         {
                             var animatorController = animator.runtimeAnimatorController as AnimatorOverrideController;
-                            animatorController["DynamicSolo"] = animationClip;
+                            animatorController[dynamicAnimation.ToString()] = animationClip;
                         }
                     }
                 }
             }
         }
 
-        public AnimationClip GetDynamicSolo()
+        public AnimationClip GetDynamic(DynamicAnimation dynamicAnimation)
         {
             if (animators != null && animators.Length > 0 && animators[0] != null)
             {
                 if (animators[0].runtimeAnimatorController is AnimatorOverrideController)
                 {
                     var animatorController = animators[0].runtimeAnimatorController as AnimatorOverrideController;
-                    return animatorController["DynamicSolo"];
+                    var asset = animatorController[dynamicAnimation.ToString()];
+                    if (asset != null)
+                    {
+                        var assetName = asset.name;
+                        if (assetName == DynamicAnimation.DynamicSolo.ToString() ||
+                            assetName == DynamicAnimation.DynamicUpBody.ToString() ||
+                            assetName == DynamicAnimation.DynamicUpBody2.ToString())
+                        {
+                            asset = null;
+                        }
+                    }
+                    return asset;
                 }
             }
             return null;
         }
 
-        public void ClearDynamicSolo()
+        public void ClearDynamic(DynamicAnimation dynamicAnimation)
         {
             if (animators != null && animators.Length > 0 && animators[0] != null)
             {
@@ -678,12 +700,14 @@ namespace GameScript
                         if (animator.runtimeAnimatorController is AnimatorOverrideController)
                         {
                             var animatorController = animator.runtimeAnimatorController as AnimatorOverrideController;
-                            animatorController["DynamicSolo"] = null;
+                            animatorController[dynamicAnimation.ToString()] = null;
                         }
                     }
                 }
             }
         }
+
+        #endregion
 
         public void SetSoloState(SoloSM.Transition solo)
         {
