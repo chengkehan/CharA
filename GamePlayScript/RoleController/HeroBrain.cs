@@ -381,7 +381,7 @@ namespace GameScript
         {
             if (actor.o.HasInHandItem())
             {
-                GetMotionAnimator().SetUpBodyAnimation(MotionAnimator.UpBodyAnimation.StickInHands);
+                GetMotionAnimator().SetUpBodyAnimation(UpBodySM.Transition.StickInHands);
             }
             DeleteBreakWallSkill();
         }
@@ -417,7 +417,7 @@ namespace GameScript
 
                         GetMotionAnimator().StopShakeHead(false);
                         GetMotionAnimator().SetSkillState(animName);
-                        GetMotionAnimator().SetUpBodyAnimation(MotionAnimator.UpBodyAnimation.None);
+                        GetMotionAnimator().SetUpBodyAnimation(UpBodySM.Transition.None);
 
                         _breakWallSkill = new BreakWallSkill(actor.o, _recentBreakWall, BreakWallSkillCompleteCB, BreakWallSkillItemBrokenCB);
                     }   

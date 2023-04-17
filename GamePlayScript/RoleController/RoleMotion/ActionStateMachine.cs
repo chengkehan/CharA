@@ -22,7 +22,14 @@ namespace GameScript
 
         private List<AnimatorClipInfo> clipInfos = new List<AnimatorClipInfo>();
 
+        private List<string> _ignoreStateNames = null;
+
         private int _actionNameId = 0;
+
+        public virtual void Initialize()
+        {
+            // Do nothing
+        }
 
         public void SetRoleAnimation(RoleAnimation roleAnimation)
         {
@@ -145,6 +152,12 @@ namespace GameScript
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             var animStateInfo = animator.GetCurrentAnimatorStateInfo(layerIndex);
+
+            if (MatchingIgnoreStateNames(ref animStateInfo))
+            {
+                return;
+            }
+
             var completeTime = GetCompleteTimeOfAction(GetAction());
             if (animStateInfo.normalizedTime >= completeTime && IsInTransition(animator) == false)
             {
@@ -219,6 +232,20 @@ namespace GameScript
             }
 
             _equalActions.Add(new int[] { Utils.EnumToValue(action1), Utils.EnumToValue(action2) });
+        }
+
+        protected virtual void InitializeIgnoreStateNames()
+        {
+            // Do nothing
+        }
+
+        protected void AddIgnoreStateName(string stateName)
+        {
+            if (_ignoreStateNames == null)
+            {
+                _ignoreStateNames = new List<string>();
+            }
+            _ignoreStateNames.Add(stateName);
         }
 
         protected bool MatchTarget(
@@ -305,6 +332,23 @@ namespace GameScript
                 action2 = _sequenceActions[action1];
                 return true;
             }
+        }
+
+        private bool MatchingIgnoreStateNames(ref AnimatorStateInfo animatorStateInfo)
+        {
+            InitializeIgnoreStateNames();
+
+            if (_ignoreStateNames != null)
+            {
+                foreach (var ignoreStateName in _ignoreStateNames)
+                {
+                    if (animatorStateInfo.IsName(ignoreStateName))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }

@@ -28,12 +28,12 @@ namespace StoryboardEditor
             base.OnValidate();
 
             var animationMutex =
-                (node.animation != SoloSM.Transition.Undefined && node.upBodyAnimation == MotionAnimator.UpBodyAnimation.None && node.upBody2Animation == MotionAnimator.UpBodyAnimationLayer2.None) ||
-                (node.upBodyAnimation != MotionAnimator.UpBodyAnimation.None && node.animation == SoloSM.Transition.Undefined && node.upBody2Animation == MotionAnimator.UpBodyAnimationLayer2.None) ||
-                (node.upBody2Animation != MotionAnimator.UpBodyAnimationLayer2.None && node.animation == SoloSM.Transition.Undefined && node.upBodyAnimation == MotionAnimator.UpBodyAnimation.None);
+                (node.animation != SoloSM.Transition.Undefined && node.upBodyAnimation == UpBodySM.Transition.None && node.upBody2Animation == UpBody2SM.Transition.None) ||
+                (node.upBodyAnimation != UpBodySM.Transition.None && node.animation == SoloSM.Transition.Undefined && node.upBody2Animation == UpBody2SM.Transition.None) ||
+                (node.upBody2Animation != UpBody2SM.Transition.None && node.animation == SoloSM.Transition.Undefined && node.upBodyAnimation == UpBodySM.Transition.None);
 
             var finishingSignal =
-                node.upBodyAnimation != MotionAnimator.UpBodyAnimation.None || node.upBody2Animation != MotionAnimator.UpBodyAnimationLayer2.None ?
+                node.upBodyAnimation != UpBodySM.Transition.None || node.upBody2Animation != UpBody2SM.Transition.None ?
                 true :
                 !(node.timeout == 0 && node.finishingSignal == SoloSM.Transition.Undefined && node.waitingForComplete);
 

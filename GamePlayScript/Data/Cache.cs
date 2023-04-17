@@ -15,5 +15,14 @@ namespace GameScript
                 return _soloCompleteND;
             }
         }
+
+        private UpBodyAnimationCompleteND _upBodyAnimationCompleteND = new UpBodyAnimationCompleteND();
+        public UpBodyAnimationCompleteND upBodyAnimationCompleteND
+        {
+            get
+            {
+                return _upBodyAnimationCompleteND;
+            }
+        }
     }
 }

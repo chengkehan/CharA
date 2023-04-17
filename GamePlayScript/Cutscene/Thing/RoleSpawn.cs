@@ -68,9 +68,9 @@ namespace GameScript.Cutscene
         private IEnumerator HeadacheAnimationCoroutine(Actor actor)
         {
             yield return new WaitForSeconds(7.0f);
-            actor.roleAnimation.GetMotionAnimator().SetUpBodyAnimationLayer2(MotionAnimator.UpBodyAnimationLayer2.Headache);
+            actor.roleAnimation.GetMotionAnimator().SetUpBody2Animation(UpBody2SM.Transition.Headache);
             yield return new WaitForSeconds(5.0f);
-            actor.roleAnimation.GetMotionAnimator().SetUpBodyAnimationLayer2(MotionAnimator.UpBodyAnimationLayer2.None);
+            actor.roleAnimation.GetMotionAnimator().SetUpBody2Animation(UpBody2SM.Transition.None);
             DataCenter.GetInstance().bloackboard.heroSoloAndMuteOthers = false;
         }
 

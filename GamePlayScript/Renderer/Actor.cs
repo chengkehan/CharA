@@ -109,13 +109,13 @@ namespace GameScript
         {
             AssetsManager.GetInstance().UnloadSceneItem(pd.inHandItem.guid);
             pd.inHandItem.SetEmpty();
-            roleAnimation.GetMotionAnimator().SetUpBodyAnimation(MotionAnimator.UpBodyAnimation.None);
+            roleAnimation.GetMotionAnimator().SetUpBodyAnimation(UpBodySM.Transition.None);
         }
 
         public void SetInHandItem(ItemPD itemPD)
         {
             pd.inHandItem.Clone(itemPD);
-            roleAnimation.GetMotionAnimator().SetUpBodyAnimation(MotionAnimator.UpBodyAnimation.StickInHands);
+            roleAnimation.GetMotionAnimator().SetUpBodyAnimation(UpBodySM.Transition.StickInHands);
 
             var inHandItemGo = AssetsManager.GetInstance().LoadSceneItem(itemPD.guid, itemPD.itemID);
             var item = inHandItemGo.GetComponent<Item>();

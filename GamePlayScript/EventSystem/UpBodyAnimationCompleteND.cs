@@ -8,14 +8,14 @@ namespace GameScript
     {
         public string roleId = null;
 
-        public MotionAnimator.UpBodyAnimation upBodyAnimation = MotionAnimator.UpBodyAnimation.None;
+        public UpBodySM.Transition upBodyAnimation = UpBodySM.Transition.None;
 
-        public MotionAnimator.UpBodyAnimationLayer2 upBodyAnimation2 = MotionAnimator.UpBodyAnimationLayer2.None;
+        public UpBody2SM.Transition upBodyAnimation2 = UpBody2SM.Transition.None;
 
         public void Reset()
         {
-            upBodyAnimation = MotionAnimator.UpBodyAnimation.None;
-            upBodyAnimation2 = MotionAnimator.UpBodyAnimationLayer2.None;
+            upBodyAnimation = UpBodySM.Transition.None;
+            upBodyAnimation2 = UpBody2SM.Transition.None;
         }
     }
 }

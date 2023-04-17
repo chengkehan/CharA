@@ -40,6 +40,10 @@ namespace GameScript
 
         private Dictionary<State, List<ActionStateMachine>> actionSMs = null;
 
+        private ActionStateMachine[] upBodySMs = null;
+
+        private ActionStateMachine[] upBody2SMs = null;
+
         private MotionCorrection[] motionCorrections = null;
 
         private csHomebrewIK[] allFootIKs = null;
@@ -324,75 +328,30 @@ namespace GameScript
             return _isMarkedAsStopMoving;
         }
 
-        #region Up body animation Layer2(Two Arms and Head)
-
-        public enum UpBodyAnimationLayer2
+        public void SetUpBodyAnimation(UpBodySM.Transition animation)
         {
-            None = 0,
-            Headache = 1,
-            Dynamic = 2
+            SetUpBodyAnimation_Internal(animation, upBodySMs);
         }
 
-        private int _upBodyAnimationNameId2 = 0;
-        private int upBodyAnimationNameId2
+        public void SetUpBody2Animation(UpBody2SM.Transition animation)
         {
-            get
-            {
-                if (_upBodyAnimationNameId2 == 0)
-                {
-                    _upBodyAnimationNameId2 = Animator.StringToHash("UpBodyAnimation2");
-                }
-                return _upBodyAnimationNameId2;
-            }
+            SetUpBodyAnimation_Internal(animation, upBody2SMs);
         }
 
-        public void SetUpBodyAnimationLayer2(UpBodyAnimationLayer2 animation)
+        private void SetUpBodyAnimation_Internal<T>(T animation, ActionStateMachine[] upBodySMs)
+            where T : System.Enum
         {
-            if (animators != null)
+            if (upBodySMs != null && animators != null)
             {
-                foreach (var animator in animators)
+                for (int smI = 0; smI < upBodySMs.Length; smI++)
                 {
-                    animator.SetInteger(upBodyAnimationNameId2, (int)animation);
+                    if (smI < animators.Length && upBodySMs[smI] != null)
+                    {
+                        upBodySMs[smI].SetAction(animators[smI], Utils.EnumToValue(animation));
+                    }
                 }
             }
         }
-
-        #endregion
-
-        #region Up body animation(Two Arms)
-
-        public enum UpBodyAnimation
-        {
-            None = 0,
-            StickInHands = 1,
-            Dynamic = 2
-        }
-
-        private int _upBodyAnimationNameId = 0;
-        private int upBodyAnimationNameId
-        {
-            get
-            {
-                if (_upBodyAnimationNameId == 0)
-                {
-                    _upBodyAnimationNameId = Animator.StringToHash("UpBodyAnimation");
-                }
-                return _upBodyAnimationNameId;
-            }
-        }
-
-        public void SetUpBodyAnimation(UpBodyAnimation animation)
-        {
-            if (animators != null)
-            {
-                foreach (var animator in animators)
-                {
-                    animator.SetInteger(upBodyAnimationNameId, (int)animation);
-                }
-            }
-        }
-
-        #endregion
 
         public void MatchTargetUpdate()
         {
@@ -1454,6 +1413,8 @@ namespace GameScript
                 motionCorrections = new MotionCorrection[animators.Length];
                 allFootIKs = new csHomebrewIK[animators.Length];
                 allHandIKs = new RoleHandIK[animators.Length];
+                upBodySMs = new ActionStateMachine[animators.Length];
+                upBody2SMs = new ActionStateMachine[animators.Length];
                 for (int animatorI = 0; animatorI < animators.Length; animatorI++)
                 {
                     actionSMs[State.Idle].Add(animators[animatorI].GetBehaviour<IdleSM>());
@@ -1476,6 +1437,13 @@ namespace GameScript
 
                     allFootIKs[animatorI] = animators[animatorI].gameObject.GetComponent<csHomebrewIK>();
                     allHandIKs[animatorI] = animators[animatorI].gameObject.GetComponent<RoleHandIK>();
+
+                    upBodySMs[animatorI] = animators[animatorI].GetBehaviour<UpBodySM>();
+                    upBodySMs[animatorI].SetRoleAnimation(GetRoleAnimation());
+                    upBodySMs[animatorI].Initialize();
+                    upBody2SMs[animatorI] = animators[animatorI].GetBehaviour<UpBody2SM>();
+                    upBody2SMs[animatorI].SetRoleAnimation(GetRoleAnimation());
+                    upBody2SMs[animatorI].Initialize();
                 }
 
                 SetFootIK(false);
@@ -1505,6 +1473,7 @@ namespace GameScript
                             asmList[asmI].SetActionCompleteCB(actionCompleteCB);
                         }
 
+                        asmList[asmI].Initialize();
                     }
                 }
             }
