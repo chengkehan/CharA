@@ -12,10 +12,13 @@ namespace GameScript
 
         public UpBody2SM.Transition upBodyAnimation2 = UpBody2SM.Transition.None;
 
+        public UpBody3SM.Transition upBodyAnimation3 = UpBody3SM.Transition.None;
+
         public void Reset()
         {
             upBodyAnimation = UpBodySM.Transition.None;
             upBodyAnimation2 = UpBody2SM.Transition.None;
+            upBodyAnimation3 = UpBody3SM.Transition.None;
         }
     }
 }

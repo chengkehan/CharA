@@ -102,15 +102,22 @@ namespace GameScript
 
         #region Animations
 
+        private List<AnimationClip> _allAnimations = new List<AnimationClip>();
+
         public AnimationClip LoadAnimation(string animationAssetName)
         {
             var animationAsset = LoadAsset<AnimationClip>(ANIMATION_PREFIX + animationAssetName);
+            _allAnimations.Add(animationAsset);
             return animationAsset;
         }
 
-        public void UnloadAnimation(AnimationClip animationClip)
+        private void ReleaseAllAnimations()
         {
-            UnloadAsset(animationClip);
+            foreach (var animation in _allAnimations)
+            {
+                UnloadAsset(animation);
+            }
+            _allAnimations.Clear();
         }
 
         #endregion
@@ -297,6 +304,7 @@ namespace GameScript
             ReleaseAllHeadIcons();
             ReleaseAllItemIcons();
             ReleaseAllSceneItemGo();
+            ReleaseAllAnimations();
 
             Addressables.LoadSceneAsync(name, USM.LoadSceneMode.Single).Completed += (obj) =>
             {

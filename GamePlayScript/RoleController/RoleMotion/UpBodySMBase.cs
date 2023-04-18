@@ -36,9 +36,8 @@ namespace GameScript
         private void AnimationCompleteCB()
         {
             var notificationData = DataCenter.GetInstance().cache.upBodyAnimationCompleteND;
+            notificationData.Reset();
             notificationData.roleId = GetRoleAnimation().actor.o.GetId();
-            notificationData.upBodyAnimation = 0;
-            notificationData.upBodyAnimation2 = 0;
             FillUpBodyAnimationCompleteND(notificationData);
             EventSystem.GetInstance().Notify(EventID.UpBodyAnimationComplete, notificationData);
         }

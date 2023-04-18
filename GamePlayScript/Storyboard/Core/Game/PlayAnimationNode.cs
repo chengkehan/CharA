@@ -25,6 +25,9 @@ namespace StoryboardCore
         [Tooltip("Which up body2 animation will be played.\nUsing this as finishing signal.")]
         public UpBody2SM.Transition upBody2Animation = UpBody2SM.Transition.None;
 
+        [Tooltip("Which up body3 animation will be played.\nUsing this as finishing signal.")]
+        public UpBody3SM.Transition upBody3Animation = UpBody3SM.Transition.None;
+
         [Tooltip("Name of AnimatorOverrideController when animation is dynamic.")]
         public string dynamic = string.Empty;
 
@@ -95,6 +98,20 @@ namespace StoryboardCore
                         actor.roleAnimation.GetMotionAnimator().SetUpBody2Animation(upBody2Animation);
                     }
                 }
+
+                if (upBody3Animation == UpBody3SM.Transition.Dynamic)
+                {
+                    var loadedAnimation = AssetsManager.GetInstance().LoadAnimation(dynamic);
+                    actor.roleAnimation.GetMotionAnimator().SetDynamic(loadedAnimation, MotionAnimator.DynamicAnimation.DynamicUpBody3);
+                    actor.roleAnimation.GetMotionAnimator().SetUpBody3Animation(upBody3Animation);
+                }
+                else
+                {
+                    if (upBody3Animation != UpBody3SM.Transition.None)
+                    {
+                        actor.roleAnimation.GetMotionAnimator().SetUpBody3Animation(upBody3Animation);
+                    }
+                }
             }
 
             if (waitingForComplete)
@@ -103,7 +120,8 @@ namespace StoryboardCore
                 {
                     if (finishingSignal != SoloSM.Transition.Undefined ||
                         upBodyAnimation != UpBodySM.Transition.None ||
-                        upBody2Animation != UpBody2SM.Transition.None)
+                        upBody2Animation != UpBody2SM.Transition.None ||
+                        upBody3Animation != UpBody3SM.Transition.None)
                     {
                         this.completeCallback = completeCallback;
                         EventSystem.GetInstance().AddListener(EventID.SoloComplete, SoloCompleteHandler);
@@ -156,14 +174,11 @@ namespace StoryboardCore
             EventSystem.GetInstance().RemoveListener(EventID.SoloComplete, SoloCompleteHandler);
             EventSystem.GetInstance().RemoveListener(EventID.UpBodyAnimationComplete, UpBodyAnimationCompleteHandler);
 
-            if (animation == SoloSM.Transition.Dynamic || upBodyAnimation == UpBodySM.Transition.Dynamic || upBody2Animation == UpBody2SM.Transition.Dynamic)
+            if (animation == SoloSM.Transition.Dynamic || upBodyAnimation == UpBodySM.Transition.Dynamic || upBody2Animation == UpBody2SM.Transition.Dynamic || upBody3Animation == UpBody3SM.Transition.Dynamic)
             {
                 var roleId = DataCenter.query.ProcessRoleId(this.roleId);
                 Actor actor = ActorsManager.GetInstance().GetActor(roleId);
-                var animationAsset = actor.roleAnimation.GetMotionAnimator().GetDynamic(MotionAnimator.DynamicAnimation.DynamicSolo);
-                var animationAssetUpBody = actor.roleAnimation.GetMotionAnimator().GetDynamic(MotionAnimator.DynamicAnimation.DynamicUpBody);
-                var animationAssetUpBody2 = actor.roleAnimation.GetMotionAnimator().GetDynamic(MotionAnimator.DynamicAnimation.DynamicUpBody2);
-                Coroutines.GetInstance().Execute(CleanupAnimationDelayCoroutine(actor, animationAsset, animationAssetUpBody, animationAssetUpBody2));
+                Coroutines.GetInstance().Execute(CleanupAnimationDelayCoroutine(actor));
             }
             else
             {
@@ -180,13 +195,14 @@ namespace StoryboardCore
 
         // Cleanup assets delayed because of we must wait animations' transition complete totally,
         // otherwise animations' transition is not smoothness with unexpected behaviours.
-        private IEnumerator CleanupAnimationDelayCoroutine(Actor actor, AnimationClip animationClip, AnimationClip animationAssetUpBody, AnimationClip animationAssetUpBody2)
+        private IEnumerator CleanupAnimationDelayCoroutine(Actor actor)
         {
             // Maybe this delay time is not enough, we should test and try to get a better value.
             yield return new WaitForSeconds(0.5f);
 
-            actor.roleAnimation.GetMotionAnimator().SetUpBody2Animation(UpBody2SM.Transition.None);
             actor.roleAnimation.GetMotionAnimator().SetUpBodyAnimation(UpBodySM.Transition.None);
+            actor.roleAnimation.GetMotionAnimator().SetUpBody2Animation(UpBody2SM.Transition.None);
+            actor.roleAnimation.GetMotionAnimator().SetUpBody3Animation(UpBody3SM.Transition.None);
 
             // Waiting for transition from upbody animation to dummy state
             yield return new WaitForSeconds(0.25f);
@@ -194,9 +210,7 @@ namespace StoryboardCore
             actor.roleAnimation.GetMotionAnimator().ClearDynamic(MotionAnimator.DynamicAnimation.DynamicSolo);
             actor.roleAnimation.GetMotionAnimator().ClearDynamic(MotionAnimator.DynamicAnimation.DynamicUpBody);
             actor.roleAnimation.GetMotionAnimator().ClearDynamic(MotionAnimator.DynamicAnimation.DynamicUpBody2);
-            AssetsManager.GetInstance().UnloadAnimation(animationClip);
-            AssetsManager.GetInstance().UnloadAnimation(animationAssetUpBody);
-            AssetsManager.GetInstance().UnloadAnimation(animationAssetUpBody2);
+            actor.roleAnimation.GetMotionAnimator().ClearDynamic(MotionAnimator.DynamicAnimation.DynamicUpBody3);
 
             ExecuteCompleteCallback();
         }

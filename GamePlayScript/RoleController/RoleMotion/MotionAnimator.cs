@@ -44,6 +44,8 @@ namespace GameScript
 
         private ActionStateMachine[] upBody2SMs = null;
 
+        private ActionStateMachine[] upBody3SMs = null;
+
         private MotionCorrection[] motionCorrections = null;
 
         private csHomebrewIK[] allFootIKs = null;
@@ -338,6 +340,11 @@ namespace GameScript
             SetUpBodyAnimation_Internal(animation, upBody2SMs);
         }
 
+        public void SetUpBody3Animation(UpBody3SM.Transition animation)
+        {
+            SetUpBodyAnimation_Internal(animation, upBody3SMs);
+        }
+
         private void SetUpBodyAnimation_Internal<T>(T animation, ActionStateMachine[] upBodySMs)
             where T : System.Enum
         {
@@ -603,7 +610,8 @@ namespace GameScript
         {
             DynamicSolo,
             DynamicUpBody,
-            DynamicUpBody2
+            DynamicUpBody2,
+            DynamicUpBody3
         }
 
         public void SetDynamic(AnimationClip animationClip, DynamicAnimation dynamicAnimation)
@@ -622,30 +630,6 @@ namespace GameScript
                     }
                 }
             }
-        }
-
-        public AnimationClip GetDynamic(DynamicAnimation dynamicAnimation)
-        {
-            if (animators != null && animators.Length > 0 && animators[0] != null)
-            {
-                if (animators[0].runtimeAnimatorController is AnimatorOverrideController)
-                {
-                    var animatorController = animators[0].runtimeAnimatorController as AnimatorOverrideController;
-                    var asset = animatorController[dynamicAnimation.ToString()];
-                    if (asset != null)
-                    {
-                        var assetName = asset.name;
-                        if (assetName == DynamicAnimation.DynamicSolo.ToString() ||
-                            assetName == DynamicAnimation.DynamicUpBody.ToString() ||
-                            assetName == DynamicAnimation.DynamicUpBody2.ToString())
-                        {
-                            asset = null;
-                        }
-                    }
-                    return asset;
-                }
-            }
-            return null;
         }
 
         public void ClearDynamic(DynamicAnimation dynamicAnimation)
@@ -1415,6 +1399,7 @@ namespace GameScript
                 allHandIKs = new RoleHandIK[animators.Length];
                 upBodySMs = new ActionStateMachine[animators.Length];
                 upBody2SMs = new ActionStateMachine[animators.Length];
+                upBody3SMs = new ActionStateMachine[animators.Length];
                 for (int animatorI = 0; animatorI < animators.Length; animatorI++)
                 {
                     actionSMs[State.Idle].Add(animators[animatorI].GetBehaviour<IdleSM>());
@@ -1444,6 +1429,9 @@ namespace GameScript
                     upBody2SMs[animatorI] = animators[animatorI].GetBehaviour<UpBody2SM>();
                     upBody2SMs[animatorI].SetRoleAnimation(GetRoleAnimation());
                     upBody2SMs[animatorI].Initialize();
+                    upBody3SMs[animatorI] = animators[animatorI].GetBehaviour<UpBody3SM>();
+                    upBody3SMs[animatorI].SetRoleAnimation(GetRoleAnimation());
+                    upBody3SMs[animatorI].Initialize();
                 }
 
                 SetFootIK(false);
