@@ -190,7 +190,7 @@ namespace StoryboardCore
         {
             yield return new WaitForSeconds(timeout);
 
-            completeCallback();
+            Complete();
         }
 
         // Cleanup assets delayed because of we must wait animations' transition complete totally,

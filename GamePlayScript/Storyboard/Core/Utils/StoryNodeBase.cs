@@ -46,6 +46,13 @@ namespace StoryboardCore
             return null;
         }
 
+        public override void OnCloneFromOther()
+        {
+            base.OnCloneFromOther();
+
+            guid = Guid.NewGuid().ToString();
+        }
+
         protected override void Init()
         {
             base.Init();
