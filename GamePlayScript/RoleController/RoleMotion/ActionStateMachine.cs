@@ -66,7 +66,7 @@ namespace GameScript
             GetActionCompleteCB()?.Invoke();
         }
 
-        public void SetAction(Animator animator, int action)
+        public bool SetAction(Animator animator, int action)
         {
             if (animator != null)
             {
@@ -74,8 +74,10 @@ namespace GameScript
                 {
                     _action = action;
                     animator.SetInteger(GetActionNameId(), _action);
+                    return true;
                 }
             }
+            return false;
         }
 
         public int GetAction()

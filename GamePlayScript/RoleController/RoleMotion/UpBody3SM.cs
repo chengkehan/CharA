@@ -5,12 +5,22 @@ using UnityEngine;
 namespace GameScript
 {
     // Up body animation Layer2(Two Arms, Head and Spine)
-    public class UpBody3SM : UpBodySMBase<UpBody3SM.Transition>
+    public class UpBody3SM : UpBodySMBase
     {
         public enum Transition
         {
             None = 0,
             Dynamic = 1
+        }
+
+        protected override int GetLayerIndex()
+        {
+            return 3;
+        }
+
+        protected override int GetAction(string clipName)
+        {
+            return Utils.EnumToValue(Utils.StringToEnum<Transition>(clipName));
         }
 
         protected override string GetActionName()

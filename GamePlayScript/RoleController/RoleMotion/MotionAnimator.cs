@@ -40,11 +40,11 @@ namespace GameScript
 
         private Dictionary<State, List<ActionStateMachine>> actionSMs = null;
 
-        private ActionStateMachine[] upBodySMs = null;
+        private UpBodySMBase[] upBodySMs = null;
 
-        private ActionStateMachine[] upBody2SMs = null;
+        private UpBodySMBase[] upBody2SMs = null;
 
-        private ActionStateMachine[] upBody3SMs = null;
+        private UpBodySMBase[] upBody3SMs = null;
 
         private MotionCorrection[] motionCorrections = null;
 
@@ -330,22 +330,22 @@ namespace GameScript
             return _isMarkedAsStopMoving;
         }
 
-        public void SetUpBodyAnimation(UpBodySM.Transition animation)
+        public void SetUpBodyAnimation(UpBodySM.Transition animation, bool isSmooth = true)
         {
-            SetUpBodyAnimation_Internal(animation, upBodySMs);
+            SetUpBodyAnimation_Internal(animation, upBodySMs, isSmooth);
         }
 
-        public void SetUpBody2Animation(UpBody2SM.Transition animation)
+        public void SetUpBody2Animation(UpBody2SM.Transition animation, bool isSmooth = true)
         {
-            SetUpBodyAnimation_Internal(animation, upBody2SMs);
+            SetUpBodyAnimation_Internal(animation, upBody2SMs, isSmooth);
         }
 
-        public void SetUpBody3Animation(UpBody3SM.Transition animation)
+        public void SetUpBody3Animation(UpBody3SM.Transition animation, bool isSmooth = true)
         {
-            SetUpBodyAnimation_Internal(animation, upBody3SMs);
+            SetUpBodyAnimation_Internal(animation, upBody3SMs, isSmooth);
         }
 
-        private void SetUpBodyAnimation_Internal<T>(T animation, ActionStateMachine[] upBodySMs)
+        private void SetUpBodyAnimation_Internal<T>(T animation, UpBodySMBase[] upBodySMs, bool isSmooth)
             where T : System.Enum
         {
             if (upBodySMs != null && animators != null)
@@ -354,7 +354,12 @@ namespace GameScript
                 {
                     if (smI < animators.Length && upBodySMs[smI] != null)
                     {
-                        upBodySMs[smI].SetAction(animators[smI], Utils.EnumToValue(animation));
+                        int actionValue = Utils.EnumToValue(animation);
+                        bool isActionSet = upBodySMs[smI].SetAction(animators[smI], actionValue);
+                        if (isActionSet)
+                        {
+                            upBodySMs[smI].BlendWeight(animators[smI], actionValue != 0, isSmooth);
+                        }
                     }
                 }
             }
@@ -1397,9 +1402,9 @@ namespace GameScript
                 motionCorrections = new MotionCorrection[animators.Length];
                 allFootIKs = new csHomebrewIK[animators.Length];
                 allHandIKs = new RoleHandIK[animators.Length];
-                upBodySMs = new ActionStateMachine[animators.Length];
-                upBody2SMs = new ActionStateMachine[animators.Length];
-                upBody3SMs = new ActionStateMachine[animators.Length];
+                upBodySMs = new UpBodySMBase[animators.Length];
+                upBody2SMs = new UpBodySMBase[animators.Length];
+                upBody3SMs = new UpBodySMBase[animators.Length];
                 for (int animatorI = 0; animatorI < animators.Length; animatorI++)
                 {
                     actionSMs[State.Idle].Add(animators[animatorI].GetBehaviour<IdleSM>());

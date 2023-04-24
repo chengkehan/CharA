@@ -5,15 +5,11 @@ using UnityEngine;
 
 namespace GameScript
 {
-    public abstract class UpBodySMBase<T> : ActionStateMachine
-        where T : Enum
+    public abstract class UpBodySMBase : ActionStateMachine
     {
-        abstract protected string GetActionName(); 
+        abstract protected string GetActionName();
 
-        protected override int GetAction(string clipName)
-        {
-            return Utils.EnumToValue(Utils.StringToEnum<T>(clipName));
-        }
+        abstract protected int GetLayerIndex();
 
         protected override int InitializeActionNameId()
         {
@@ -43,5 +39,18 @@ namespace GameScript
         }
 
         abstract protected void FillUpBodyAnimationCompleteND(UpBodyAnimationCompleteND notificationData);
+
+        public void BlendWeight(Animator animator, bool isBlendIn, bool isSmooth)
+        {
+            if (isSmooth)
+            {
+                var updater = new UpBodyBlendWeightUpdater(animator, isBlendIn, GetLayerIndex());
+                Updaters.GetInstance().Add(updater);
+            }
+            else
+            {
+                animator.SetLayerWeight(GetLayerIndex(), isBlendIn ? 1 : 0);
+            }
+        }
     }
 }

@@ -15,7 +15,12 @@ namespace GameScript
 
         public void Execute(IEnumerator enumerator)
         {
-            StartCoroutine(enumerator);
+            base.StartCoroutine(enumerator);
+        }
+
+        public new Coroutine StartCoroutine(IEnumerator routine)
+        {
+            throw new System.NotSupportedException();
         }
 
         private void Awake()
