@@ -7,6 +7,7 @@ namespace GameScript.Cutscene
     public class StoryboardConfig : MonoBehaviour, IStoryboardConfig
     {
         [SerializeField]
+        [StoryboardNameAttribute]
         private string _storyboardName = null;
         public string storyboardName
         {

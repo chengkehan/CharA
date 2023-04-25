@@ -5,25 +5,9 @@ using UnityEngine;
 
 namespace GameScript
 {
-    public class SerializableMonoBehaviour<T> : MonoBehaviour
+    public class SerializableMonoBehaviour<T> : GuidMonoBehaviour
         where T : SerializableMonoBehaviourPD, new()
     {
-        [Tooltip("GUID of Serializable MonoBehaviour")]
-        [StoryboardCore.ReadOnly]
-        [SerializeField]
-        private string _guid = null;
-        public string guid
-        {
-            private set
-            {
-                _guid = value;
-            }
-            get
-            {
-                return _guid;
-            }
-        }
-
         private T _pd = null;
         public T pd
         {
@@ -36,17 +20,6 @@ namespace GameScript
                 return _pd;
             }
         }
-
-#if UNITY_EDITOR
-        protected virtual void OnValidate()
-        {
-            if (string.IsNullOrEmpty(guid))
-            {
-                guid = Guid.NewGuid().ToString();
-                UnityEditor.EditorUtility.SetDirty(this);
-            }
-        }
-#endif
 
         public virtual void Save()
         {

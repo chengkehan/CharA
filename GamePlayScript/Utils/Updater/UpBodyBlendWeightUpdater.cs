@@ -14,15 +14,22 @@ namespace GameScript
 
         private float weight = 0;
 
-        private float speed = 2.5f;
+        private float speed = 2f;
 
-        public UpBodyBlendWeightUpdater(Animator animator, bool isBlendIn, int layerIndex)
+        private UpBodySMBase upBodySM = null;
+
+        private int actionValue = 0;
+
+        public UpBodyBlendWeightUpdater(UpBodySMBase upBodySM, Animator animator, int actionValue, bool isBlendIn, int layerIndex)
         {
             Utils.Assert(animator != null);
+            Utils.Assert(upBodySM != null);
 
+            this.upBodySM = upBodySM;
             this.animator = animator;
             this.isBlendIn = isBlendIn;
             this.layerIndex = layerIndex;
+            this.actionValue = actionValue;
 
             weight = animator.GetLayerWeight(layerIndex);
         }
@@ -47,6 +54,11 @@ namespace GameScript
 
             if (weight <= 0 || weight >= 1)
             {
+                if (actionValue == 0)
+                {
+                    upBodySM.SetAction(animator, actionValue);
+                }
+
                 return false;
             }
             else

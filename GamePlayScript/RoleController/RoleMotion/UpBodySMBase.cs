@@ -40,17 +40,11 @@ namespace GameScript
 
         abstract protected void FillUpBodyAnimationCompleteND(UpBodyAnimationCompleteND notificationData);
 
-        public void BlendWeight(Animator animator, bool isBlendIn, bool isSmooth)
+        public void BlendWeight(Animator animator, int actionValue)
         {
-            if (isSmooth)
-            {
-                var updater = new UpBodyBlendWeightUpdater(animator, isBlendIn, GetLayerIndex());
-                Updaters.GetInstance().Add(updater);
-            }
-            else
-            {
-                animator.SetLayerWeight(GetLayerIndex(), isBlendIn ? 1 : 0);
-            }
+            bool isBlendIn = actionValue != 0;
+            var updater = new UpBodyBlendWeightUpdater(this, animator, actionValue, isBlendIn, GetLayerIndex());
+            Updaters.GetInstance().Add(updater);
         }
     }
 }

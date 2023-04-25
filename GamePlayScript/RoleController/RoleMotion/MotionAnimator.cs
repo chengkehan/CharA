@@ -330,22 +330,22 @@ namespace GameScript
             return _isMarkedAsStopMoving;
         }
 
-        public void SetUpBodyAnimation(UpBodySM.Transition animation, bool isSmooth = true)
+        public void SetUpBodyAnimation(UpBodySM.Transition animation)
         {
-            SetUpBodyAnimation_Internal(animation, upBodySMs, isSmooth);
+            SetUpBodyAnimation_Internal(animation, upBodySMs);
         }
 
-        public void SetUpBody2Animation(UpBody2SM.Transition animation, bool isSmooth = true)
+        public void SetUpBody2Animation(UpBody2SM.Transition animation)
         {
-            SetUpBodyAnimation_Internal(animation, upBody2SMs, isSmooth);
+            SetUpBodyAnimation_Internal(animation, upBody2SMs);
         }
 
-        public void SetUpBody3Animation(UpBody3SM.Transition animation, bool isSmooth = true)
+        public void SetUpBody3Animation(UpBody3SM.Transition animation)
         {
-            SetUpBodyAnimation_Internal(animation, upBody3SMs, isSmooth);
+            SetUpBodyAnimation_Internal(animation, upBody3SMs);
         }
 
-        private void SetUpBodyAnimation_Internal<T>(T animation, UpBodySMBase[] upBodySMs, bool isSmooth)
+        private void SetUpBodyAnimation_Internal<T>(T animation, UpBodySMBase[] upBodySMs)
             where T : System.Enum
         {
             if (upBodySMs != null && animators != null)
@@ -355,10 +355,18 @@ namespace GameScript
                     if (smI < animators.Length && upBodySMs[smI] != null)
                     {
                         int actionValue = Utils.EnumToValue(animation);
-                        bool isActionSet = upBodySMs[smI].SetAction(animators[smI], actionValue);
-                        if (isActionSet)
+                        if (actionValue != 0)
                         {
-                            upBodySMs[smI].BlendWeight(animators[smI], actionValue != 0, isSmooth);
+                            bool isActionSet = upBodySMs[smI].SetAction(animators[smI], actionValue);
+                            if (isActionSet)
+                            {
+                                upBodySMs[smI].BlendWeight(animators[smI], actionValue);
+                            }
+                        }
+                        else
+                        {
+                            // SetAction when blend weight is complete
+                            upBodySMs[smI].BlendWeight(animators[smI], actionValue);
                         }
                     }
                 }
