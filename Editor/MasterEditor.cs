@@ -16,6 +16,31 @@ namespace GameScriptEditor
             EditorWindow.GetWindow<MasterEditor>().Show();
         }
 
+        #region Jump Back
+
+        private static Object _jumpBackTarget = null;
+
+        public static void RecordSelection()
+        {
+            _jumpBackTarget = Selection.activeObject;
+        }
+
+        public static void JumpBackSelection()
+        {
+            if (_jumpBackTarget != null)
+            {
+                Selection.activeObject = _jumpBackTarget;
+                _jumpBackTarget = null;
+            }
+        }
+
+        public static bool HasRecordedSelection()
+        {
+            return _jumpBackTarget != null;
+        }
+
+        #endregion
+
         public static Object GetStoryboardAsset(string storyboardName)
         {
             var assetIds = AssetDatabase.FindAssets("t:Storyboard");
@@ -32,22 +57,31 @@ namespace GameScriptEditor
             return null;
         }
 
-        public static void Select(string guid)
+        public static T Find<T>(string guid)
+            where T : GuidMonoBehaviour
         {
-            bool found = false;
-            var objs = FindObjectsOfType<GuidMonoBehaviour>();
+            var objs = FindObjectsOfType<T>();
             foreach (var obj in objs)
             {
                 if (obj.guid == guid)
                 {
-                    Selection.activeGameObject = obj.gameObject;
-                    found = true;
-                    break;
+                    return obj;
                 }
             }
-            if (found == false)
+            return null;
+        }
+
+        public static void Select<T>(string guid)
+            where T : GuidMonoBehaviour
+        {
+            T obj = Find<T>(guid);
+            if (obj == null)
             {
                 Utils.Log("Cannot find " + guid + " in scene.");
+            }
+            else
+            {
+                Selection.activeGameObject = obj.gameObject;
             }
         }
 
@@ -104,9 +138,25 @@ namespace GameScriptEditor
                 guidInput = EditorGUILayout.TextField(guidInput);
                 if (GUILayout.Button("Find In Scene By GUID"))
                 {
-                    Select(guidInput);
+                    Select<GuidMonoBehaviour>(guidInput);
                 }
 
+            }
+            EndBox();
+
+            BeginBox();
+            {
+                EditorGUILayout.BeginHorizontal();
+                {
+                    EditorGUILayout.PrefixLabel("Jump Back");
+                    GUI.enabled = HasRecordedSelection();
+                    if (GUILayout.Button("->"))
+                    {
+                        JumpBackSelection();
+                    }
+                    GUI.enabled = true;
+                }
+                EditorGUILayout.EndHorizontal();
             }
             EndBox();
         }

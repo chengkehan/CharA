@@ -21,7 +21,7 @@ namespace GameScript
     {
         private GUIContent openButtonGUIContent = new GUIContent("O", "Open Storyboard");
 
-        private GUIContent selectButtonGUIContent = new GUIContent("S", "Select Storyboard");
+        private GUIContent findButtonGUIContent = new GUIContent("F", "Find Storyboard");
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -48,13 +48,14 @@ namespace GameScript
                 }
             }
 
-            Rect selectButtonPosition = openButtonPosition;
-            selectButtonPosition.x += buttonSize + gap;
-            if (GUI.Button(selectButtonPosition, selectButtonGUIContent))
+            Rect findButtonPosition = openButtonPosition;
+            findButtonPosition.x += buttonSize + gap;
+            if (GUI.Button(findButtonPosition, findButtonGUIContent))
             {
                 var asset = MasterEditor.GetStoryboardAsset(property.stringValue);
                 if (asset != null)
                 {
+                    MasterEditor.RecordSelection();
                     Selection.activeObject = asset;
                 }
                 else

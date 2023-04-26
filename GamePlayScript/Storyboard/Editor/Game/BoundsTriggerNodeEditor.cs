@@ -8,6 +8,7 @@ using XNode;
 using XNodeEditor;
 using StoryboardCore;
 using GameScript.Cutscene;
+using GameScriptEditor;
 
 namespace StoryboardEditor
 {
@@ -17,18 +18,19 @@ namespace StoryboardEditor
         public override void OnBodyGUI()
         {
             base.OnBodyGUI();
+        }
 
-            if (GUILayout.Button("Goto BoundsTrigger"))
+        public override void OnValidate()
+        {
+            base.OnValidate();
+
+            if (string.IsNullOrEmpty(node.guidBT) == false)
             {
-                var allBoundsTriggers = GameObject.FindObjectsOfType<BoundsTrigger>(true);
-                foreach (var boundsTrigger in allBoundsTriggers)
-                {
-                    if (boundsTrigger.guid == node.guidBT)
-                    {
-                        Selection.activeGameObject = boundsTrigger.gameObject;
-                        break;
-                    }
-                }
+                var boundsTrigger = MasterEditor.Find<BoundsTrigger>(node.guidBT);
+
+                Validate(false,
+                    boundsTrigger != null, "Invalid guid"
+                );
             }
         }
     }

@@ -16,6 +16,7 @@ namespace StoryboardCore
 
         [Tooltip("GUID of BoundsTrigger")]
         [Input(typeConstraint = TypeConstraint.Strict)]
+        [GuidMono]
         public string guidBT = string.Empty;
 
         [Tooltip("Enabled of BoundsTrigger")]
