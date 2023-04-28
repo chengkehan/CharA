@@ -46,6 +46,7 @@ namespace StoryboardCore
         public void TriggerOn(Action completeCallback)
         {
             Utils.Assert(completeCallback != null);
+            this.completeCallback = completeCallback;
 
             string roleId = DataCenter.query.ProcessRoleId(this.roleId);
 
@@ -53,7 +54,7 @@ namespace StoryboardCore
             if (actor == null)
             {
                 Utils.LogObservably("Storyboard, PlayAnimationNode, Failed, actor not found. " + roleId);
-                completeCallback();
+                ExecuteCompleteCallback();
             }
             else
             {
@@ -123,19 +124,18 @@ namespace StoryboardCore
                         upBody2Animation != UpBody2SM.Transition.None ||
                         upBody3Animation != UpBody3SM.Transition.None)
                     {
-                        this.completeCallback = completeCallback;
                         EventSystem.GetInstance().AddListener(EventID.SoloComplete, SoloCompleteHandler);
                         EventSystem.GetInstance().AddListener(EventID.UpBodyAnimationComplete, UpBodyAnimationCompleteHandler);
                     }
                 }
                 else
                 {
-                    Coroutines.GetInstance().Execute(TimeoutCoroutine(completeCallback));
+                    Coroutines.GetInstance().Execute(TimeoutCoroutine());
                 }
             }
             else
             {
-                completeCallback();
+                ExecuteCompleteCallback();
             }
         }
 
@@ -174,45 +174,28 @@ namespace StoryboardCore
             EventSystem.GetInstance().RemoveListener(EventID.SoloComplete, SoloCompleteHandler);
             EventSystem.GetInstance().RemoveListener(EventID.UpBodyAnimationComplete, UpBodyAnimationCompleteHandler);
 
-            if (animation == SoloSM.Transition.Dynamic || upBodyAnimation == UpBodySM.Transition.Dynamic || upBody2Animation == UpBody2SM.Transition.Dynamic || upBody3Animation == UpBody3SM.Transition.Dynamic)
-            {
-                var roleId = DataCenter.query.ProcessRoleId(this.roleId);
-                Actor actor = ActorsManager.GetInstance().GetActor(roleId);
-                Coroutines.GetInstance().Execute(CleanupAnimationDelayCoroutine(actor));
-            }
-            else
-            {
-                ExecuteCompleteCallback();
-            }
+            var roleId = DataCenter.query.ProcessRoleId(this.roleId);
+            Actor actor = ActorsManager.GetInstance().GetActor(roleId);
+            CleanupAnimation(actor);
+            ExecuteCompleteCallback();
         }
 
-        private IEnumerator TimeoutCoroutine(Action completeCallback)
+        private IEnumerator TimeoutCoroutine()
         {
             yield return new WaitForSeconds(timeout);
-
             Complete();
         }
 
-        // Cleanup assets delayed because of we must wait animations' transition complete totally,
-        // otherwise animations' transition is not smoothness with unexpected behaviours.
-        private IEnumerator CleanupAnimationDelayCoroutine(Actor actor)
+        private void CleanupAnimation(Actor actor)
         {
-            // Maybe this delay time is not enough, we should test and try to get a better value.
-            yield return new WaitForSeconds(0.5f);
-
             actor.roleAnimation.GetMotionAnimator().SetUpBodyAnimation(UpBodySM.Transition.None);
             actor.roleAnimation.GetMotionAnimator().SetUpBody2Animation(UpBody2SM.Transition.None);
             actor.roleAnimation.GetMotionAnimator().SetUpBody3Animation(UpBody3SM.Transition.None);
-
-            // Waiting for transition from upbody animation to dummy state
-            yield return new WaitForSeconds(0.25f);
 
             actor.roleAnimation.GetMotionAnimator().ClearDynamic(MotionAnimator.DynamicAnimation.DynamicSolo);
             actor.roleAnimation.GetMotionAnimator().ClearDynamic(MotionAnimator.DynamicAnimation.DynamicUpBody);
             actor.roleAnimation.GetMotionAnimator().ClearDynamic(MotionAnimator.DynamicAnimation.DynamicUpBody2);
             actor.roleAnimation.GetMotionAnimator().ClearDynamic(MotionAnimator.DynamicAnimation.DynamicUpBody3);
-
-            ExecuteCompleteCallback();
         }
 
         private void ExecuteCompleteCallback()

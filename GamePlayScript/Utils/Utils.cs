@@ -158,6 +158,48 @@ namespace GameScript
             }
         }
 
+        #region GUI color
+
+        private static GuiColor _guiColor = null;
+        public static GuiColor guiColor
+        {
+            get
+            {
+                if (_guiColor == null)
+                {
+                    _guiColor = new GuiColor();
+                }
+                return _guiColor;
+            }
+        }
+
+        public class GuiColor
+        {
+            private Color guiColor = Color.white;
+
+            public void Record()
+            {
+                guiColor = GUI.color;
+            }
+
+            public void Reset()
+            {
+                GUI.color = guiColor;
+            }
+
+            public void Temp(Color color)
+            {
+                GUI.color = color;
+            }
+
+            public void Alert()
+            {
+                GUI.color = Color.red;
+            }
+        }
+
+        #endregion
+
 #if UNITY_EDITOR
         [UnityEditor.Callbacks.OnOpenAssetAttribute(-1)]
         private static bool OnOpenAsset(int instanceID, int line)

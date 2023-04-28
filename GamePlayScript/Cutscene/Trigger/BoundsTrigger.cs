@@ -23,8 +23,9 @@ namespace GameScript.Cutscene
         [SerializeField]
         private InterfaceReference<IBoundsTriggerTarget, MonoBehaviour> target = null;
 
-        [Tooltip("Who will trigger it.\nLeave it empty for hero.")]
+        [Tooltip("Who will trigger it.")]
         [SerializeField]
+        [RoleId]
         private string targetRoleId = null;
 
         [SerializeField]
@@ -43,12 +44,10 @@ namespace GameScript.Cutscene
 
             if (ActorsManager.GetInstance() != null)
             {
-                // Seem it as hero
-                if (string.IsNullOrEmpty(targetRoleId))
+                if (DataCenter.query.IsHeroRoleID(targetRoleId))
                 {
                     actor = ActorsManager.GetInstance().GetHeroActor();
                 }
-                // Seem it as npc
                 else
                 {
                     actor = ActorsManager.GetInstance().GetActor(targetRoleId);

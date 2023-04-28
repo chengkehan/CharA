@@ -23,6 +23,10 @@ namespace GameScript
 
         private GUIContent findButtonGUIContent = new GUIContent("F", "Find Storyboard");
 
+        private string input = null;
+
+        private Object asset = null;
+
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             float buttonSize = 20;
@@ -32,37 +36,51 @@ namespace GameScript
             newPosition.width -= buttonSize * 2 + gap * 2;
             EditorGUI.PropertyField(newPosition, property, label);
 
+            if (property.stringValue != input)
+            {
+                input = property.stringValue;
+                asset = MasterEditor.GetStoryboardAsset(property.stringValue);
+            }
+
             Rect openButtonPosition = newPosition;
             openButtonPosition.x += openButtonPosition.width + gap;
             openButtonPosition.width = buttonSize;
-            if (GUI.Button(openButtonPosition, openButtonGUIContent))
-            {
-                var asset = MasterEditor.GetStoryboardAsset(property.stringValue);
-                if (asset != null)
-                {
-                    NodeEditorWindow.Open(asset as Storyboard);
-                }
-                else
-                {
-                    Utils.Log("Cannot find Storyboard. " + property.stringValue);
-                }
-            }
 
-            Rect findButtonPosition = openButtonPosition;
-            findButtonPosition.x += buttonSize + gap;
-            if (GUI.Button(findButtonPosition, findButtonGUIContent))
+            Utils.guiColor.Record();
             {
-                var asset = MasterEditor.GetStoryboardAsset(property.stringValue);
-                if (asset != null)
+                if (asset == null)
                 {
-                    MasterEditor.RecordSelection();
-                    Selection.activeObject = asset;
+                    Utils.guiColor.Alert();
                 }
-                else
+
+                if (GUI.Button(openButtonPosition, openButtonGUIContent))
                 {
-                    Utils.Log("Cannot find Storyboard. " + property.stringValue);
+                    if (asset != null)
+                    {
+                        NodeEditorWindow.Open(asset as Storyboard);
+                    }
+                    else
+                    {
+                        Utils.Log("Cannot find Storyboard. " + property.stringValue);
+                    }
+                }
+
+                Rect findButtonPosition = openButtonPosition;
+                findButtonPosition.x += buttonSize + gap;
+                if (GUI.Button(findButtonPosition, findButtonGUIContent))
+                {
+                    if (asset != null)
+                    {
+                        MasterEditor.RecordSelection();
+                        Selection.activeObject = asset;
+                    }
+                    else
+                    {
+                        Utils.Log("Cannot find Storyboard. " + property.stringValue);
+                    }
                 }
             }
+            Utils.guiColor.Reset();
         }
     }
 #endif

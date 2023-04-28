@@ -40,11 +40,20 @@ namespace GameScript
 
         abstract protected void FillUpBodyAnimationCompleteND(UpBodyAnimationCompleteND notificationData);
 
+        #region Blend weight
+
+        private UpBodyBlendWeightUpdater upBodyBlendWeightUpdater = new UpBodyBlendWeightUpdater();
+
         public void BlendWeight(Animator animator, int actionValue)
         {
             bool isBlendIn = actionValue != 0;
-            var updater = new UpBodyBlendWeightUpdater(this, animator, actionValue, isBlendIn, GetLayerIndex());
-            Updaters.GetInstance().Add(updater);
+            upBodyBlendWeightUpdater.Init(this, animator, actionValue, isBlendIn, GetLayerIndex());
+            if (Updaters.GetInstance().Contains(upBodyBlendWeightUpdater) == false)
+            {
+                Updaters.GetInstance().Add(upBodyBlendWeightUpdater);
+            }
         }
+
+        #endregion
     }
 }

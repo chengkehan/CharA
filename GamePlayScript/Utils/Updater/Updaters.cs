@@ -23,6 +23,18 @@ namespace GameScript
             }
         }
 
+        public bool Contains(IUpdater updater)
+        {
+            if (updater == null)
+            {
+                return false;
+            }
+            else
+            {
+                return updaters.Contains(updater);
+            }
+        }
+
         public void Add(IUpdater.UpdateHandle updateHandle)
         {
             if (updateHandle == null)

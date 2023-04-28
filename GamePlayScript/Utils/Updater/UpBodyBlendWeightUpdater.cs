@@ -20,7 +20,7 @@ namespace GameScript
 
         private int actionValue = 0;
 
-        public UpBodyBlendWeightUpdater(UpBodySMBase upBodySM, Animator animator, int actionValue, bool isBlendIn, int layerIndex)
+        public void Init(UpBodySMBase upBodySM, Animator animator, int actionValue, bool isBlendIn, int layerIndex)
         {
             Utils.Assert(animator != null);
             Utils.Assert(upBodySM != null);
