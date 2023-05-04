@@ -1,0 +1,135 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Brus_Roof
+  m_Shader: {fileID: -3642670375701237265, guid: 74494bae36ac24e25abcc00694a3630e, type: 3}
+  m_ShaderKeywords: _ALPHA_TEST_OFF _NORMALMAP _OUTLINE_ON _SPECULARHIGHLIGHTS_OFF
+    _TOON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaTestMaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 039fa32ee32ec5342bb370c50ed08d08, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: 6850a2b7acb62aa4b98c0990da784d40, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicSpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 2800000, guid: 5d01ce90d011bd8428753e7a4783afd8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ToonDetailMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AdditionalLightIntensity: 1
+    - _AdditionalLightRangeScale: 10
+    - _Alpha_Test: 0
+    - _BumpScale: 1
+    - _Contrast: 0.7
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _Emission: 0
+    - _EnvironmentalReflections: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0
+    - _GlossyReflections: 1
+    - _Metallic: 0
+    - _MetallicSpecGlossMapToggle: 0
+    - _MetallicSpecToggle: 0
+    - _Mode: 0
+    - _NormalMapToggle: 1
+    - _OcclusionStrength: 1
+    - _OcclusionToggle: 0
+    - _Outline: 1
+    - _Parallax: 0.02
+    - _Sketch: 1
+    - _Smoothness: 0.5
+    - _SmoothnessSource: 0
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _StylizedColored: 0.5
+    - _Toon: 1
+    - _ToonDetail: 0
+    - _ToonDetailHighlightInput: 255
+    - _ToonDetailHighlightOutput: 255
+    - _ToonDetailLighting: 0
+    - _ToonDetailLightingOffset: 0.5
+    - _ToonDetailMidtoneInput: 1
+    - _ToonDetailShadowInput: 0
+    - _ToonDetailShadowOutput: 0
+    - _ToonIntensity: 1
+    - _ToonOcclusionOffset: 0.5
+    - _ToonOcclusionSmoothness: 0
+    - _ToonOffset: 0.5
+    - _ToonRim: 0
+    - _ToonRimIntensity: 1
+    - _ToonRimPower: 1
+    - _ToonSmoothness: 0
+    - _UVSec: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _BaseColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Color: {r: 1, g: 0.9858491, b: 0.9858491, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
+    - _ToonInShadowOcclusionTintOffset: {r: 0.34999996, g: 0.34999996, b: 0.34999996, a: 1}
+    - _ToonInShadowTint: {r: 0, g: 0, b: 0, a: 0.333}
+    - _ToonOutShadowTint: {r: 0, g: 0, b: 0, a: 0.333}
+    - _ToonRimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ToonSSSTint: {r: 0, g: 0, b: 0, a: 0.333}
+    - _ToonTint: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_BuildTextureStacks: []

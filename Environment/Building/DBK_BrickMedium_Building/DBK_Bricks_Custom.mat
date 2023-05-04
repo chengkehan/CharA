@@ -1,0 +1,639 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: DBK_Bricks_Custom
+  m_Shader: {fileID: -3642670375701237265, guid: 768dec794472948f793bc14114ce5962, type: 3}
+  m_ShaderKeywords: _ADD_PRECOMPUTED_VELOCITY _ALPHA_TEST_OFF _BRICK _BRICK_ON _DISABLE_SSR
+    _ENVIRONMENTREFLECTIONS_OFF _HATCH_UV_DEFAULT _NORMALMAP _SPECULARHIGHLIGHTS_OFF
+    _TOON _TOON_HATCH _TOON_HATCH_UV_DEFAULT _TOON_ON _USEPAINTNORMALS_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap:
+    MotionVector: User
+  disabledShaderPasses:
+  - TransparentBackface
+  - MOTIONVECTORS
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaTestMaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BK_BrickUniqueNM:
+        m_Texture: {fileID: 2800000, guid: 1a870ccd827dd9d48b79710838d14ae3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BK_DBK_Brick_NM:
+        m_Texture: {fileID: 2800000, guid: 5b51302e23bec5547b188ac35d9f8845, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BK_MainTex:
+        m_Texture: {fileID: 2800000, guid: a4b54f4a931b12047a9252ab1e0b62a0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BK_RGBAMaskB:
+        m_Texture: {fileID: 2800000, guid: 8f09dd62ab8dbe147aabae135c002c75, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BK_RGBAMaskC:
+        m_Texture: {fileID: 2800000, guid: 5cd6e5fc40f342846b61030f083de2fd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BK_RGBA_Mask_A:
+        m_Texture: {fileID: 2800000, guid: e61e67a9b8d15444a84d7d27624a2bbe, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BK_TextureSample3:
+        m_Texture: {fileID: 2800000, guid: 5b51302e23bec5547b188ac35d9f8845, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BrickNM:
+        m_Texture: {fileID: 2800000, guid: 5b51302e23bec5547b188ac35d9f8845, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BrickThemeTex:
+        m_Texture: {fileID: 2800000, guid: 514a57ce8b1392442bdc46377f2ef95d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BrickUniqueNM:
+        m_Texture: {fileID: 2800000, guid: 1a870ccd827dd9d48b79710838d14ae3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BricksDirtMap_RGBA:
+        m_Texture: {fileID: 2800000, guid: f4e650918914b6548b843faa5ec6fd61, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BricksHeightMap_RGBA:
+        m_Texture: {fileID: 2800000, guid: c85f90795ddf8484387ace9a9237921a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BricksMask_RGBA:
+        m_Texture: {fileID: 2800000, guid: 666da3864fe088d41be5d454257054ba, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BricksNM:
+        m_Texture: {fileID: 2800000, guid: ccc496b7685dfc046b1c96a8243b5144, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BricksSelection_RGBA:
+        m_Texture: {fileID: 2800000, guid: 7e3253e606df980498082007b49747fb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BricksSmall_AO:
+        m_Texture: {fileID: 2800000, guid: 8d20c836ac501a74483c0baf753a56a2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BricksSmall_Mixed_AO:
+        m_Texture: {fileID: 2800000, guid: 8d20c836ac501a74483c0baf753a56a2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BricksTileColor:
+        m_Texture: {fileID: 2800000, guid: 91a1c4fe83f031b4c98f1900311b60b0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BricksTiledNormals:
+        m_Texture: {fileID: 2800000, guid: 67be5a0c6d14b5343978aabd254508a5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BricksUnique:
+        m_Texture: {fileID: 2800000, guid: 5bcba592f615cfe49af6310156add76d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BricksUniqueColor:
+        m_Texture: {fileID: 2800000, guid: 29e0f23670f01924698b2d3cc7ca6983, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BricksUniqueNM:
+        m_Texture: {fileID: 2800000, guid: 1a870ccd827dd9d48b79710838d14ae3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BricksUniqueNormals:
+        m_Texture: {fileID: 2800000, guid: 7b85b261fe37cfc408ad6b283e44b6bd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BricksUnique_height:
+        m_Texture: {fileID: 2800000, guid: 231f55b931aacb446914222b18a47ae4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: 67be5a0c6d14b5343978aabd254508a5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Color:
+        m_Texture: {fileID: 2800000, guid: 8b69dded48f65064bbdfc675d0e81a00, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ColorTheme:
+        m_Texture: {fileID: 2800000, guid: 8b69dded48f65064bbdfc675d0e81a00, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ColorTheme1:
+        m_Texture: {fileID: 2800000, guid: 8b69dded48f65064bbdfc675d0e81a00, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ColorTheme2:
+        m_Texture: {fileID: 2800000, guid: 8b69dded48f65064bbdfc675d0e81a00, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ConcreteDamageTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ConcreteTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CubemapLightingTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DBK_Brick_NM:
+        m_Texture: {fileID: 2800000, guid: 5b51302e23bec5547b188ac35d9f8845, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DBK_Brick_Paint_NM:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Hatch210:
+        m_Texture: {fileID: 2800000, guid: 27b614e326ce64e8d9f79afb321730d8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Hatch543:
+        m_Texture: {fileID: 2800000, guid: 0194173675b4744568f50e43c1f00460, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HatchTex:
+        m_Texture: {fileID: 2800000, guid: 2afffeba1de644acdadc67a435d9d885, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Height:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HeightBricks:
+        m_Texture: {fileID: 2800000, guid: c4052a256eb1cb04293aae79602243e9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HeightBricksUnique:
+        m_Texture: {fileID: 2800000, guid: 231f55b931aacb446914222b18a47ae4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: a4b54f4a931b12047a9252ab1e0b62a0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicSpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalCracks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalDamaged:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalGood:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PlasterDirtMasksRGBA:
+        m_Texture: {fileID: 2800000, guid: 854da58ad22c19b44acf3bad96e37b40, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PlasterGood_height:
+        m_Texture: {fileID: 2800000, guid: c85f90795ddf8484387ace9a9237921a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PlasterGood_height1:
+        m_Texture: {fileID: 2800000, guid: 0b090f502dbaccf43979a7c679f2968b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RGBAHeightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RGBAMaskB:
+        m_Texture: {fileID: 2800000, guid: 8f09dd62ab8dbe147aabae135c002c75, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RGBAMaskC:
+        m_Texture: {fileID: 2800000, guid: 5cd6e5fc40f342846b61030f083de2fd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RGBA_Mask_A:
+        m_Texture: {fileID: 2800000, guid: e61e67a9b8d15444a84d7d27624a2bbe, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RGBA_Mask_B:
+        m_Texture: {fileID: 2800000, guid: 666da3864fe088d41be5d454257054ba, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RGBA_Mask_C:
+        m_Texture: {fileID: 2800000, guid: ab4bb1e56c2f0e84285bc01d3a3ba4ab, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture0:
+        m_Texture: {fileID: 2800000, guid: 67be5a0c6d14b5343978aabd254508a5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture1:
+        m_Texture: {fileID: 2800000, guid: a49cdd4011e71f3468c1e9b3146de9e8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureArray0:
+        m_Texture: {fileID: 2800000, guid: c6dc0a1f790ab8042be5faff5655b1bd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample0:
+        m_Texture: {fileID: 2800000, guid: 67be5a0c6d14b5343978aabd254508a5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample1:
+        m_Texture: {fileID: 2800000, guid: 455260ed35a7f4f46ae465f755108ffb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample10:
+        m_Texture: {fileID: 2800000, guid: d350dd4aa8a3f454fb3e961ee6b6c1a7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample11:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample2:
+        m_Texture: {fileID: 2800000, guid: e65a07ccb8741e34fac80cb29e6fb268, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample3:
+        m_Texture: {fileID: 2800000, guid: 5b51302e23bec5547b188ac35d9f8845, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample4:
+        m_Texture: {fileID: 2800000, guid: fff0df9ebc600ee48abc8a903d3db600, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample5:
+        m_Texture: {fileID: 2800000, guid: 686b707031e912d4d9a16b83f521ed26, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample6:
+        m_Texture: {fileID: 2800000, guid: 6794c03f0d5fb1a4db640fb764360e6b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample7:
+        m_Texture: {fileID: 2800000, guid: 91a1c4fe83f031b4c98f1900311b60b0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample8:
+        m_Texture: {fileID: 2800000, guid: 33e04a3d6761c484d853a1549d91ae32, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample9:
+        m_Texture: {fileID: 2800000, guid: d5b3d8746147e2941aa3afcda5b4ad59, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ToonDetailMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _UniqueBricksColor:
+        m_Texture: {fileID: 2800000, guid: 29e0f23670f01924698b2d3cc7ca6983, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _UniqueBricksSelection:
+        m_Texture: {fileID: 2800000, guid: dc2a7c7d8ba347f4db82ef9358034f95, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _UniqueMatID:
+        m_Texture: {fileID: 2800000, guid: dc2a7c7d8ba347f4db82ef9358034f95, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord4:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Add: 0.040237248
+    - _AddPrecomputedVelocity: 1
+    - _AdditionalLightInHatch: 5
+    - _AdditionalLightIntensity: 1
+    - _AdditionalLightRangeScale: 10
+    - _AlphaCutoff: 0.5
+    - _AlphaCutoffEnable: 0
+    - _AlphaDstBlend: 0
+    - _AlphaSrcBlend: 1
+    - _Alpha_Test: 0
+    - _BK_BrickBareSmoothness: 9.5
+    - _BK_BrickDarkSmoothness: 0.555
+    - _BK_BrickDirtMainSmoothness: 0.396
+    - _BK_BrickDirtSmoothness: 0.672
+    - _BK_BrickOverlay: 0.0215
+    - _BK_BrickPaintSmoothness: 0.774
+    - _BK_BrickScale: 1.348
+    - _BK_BrickUniqueScale: 1.28
+    - _BK_CementBrightness: 0.794
+    - _BK_CustomColor: 0
+    - _BK_DamageAmount: 0.6
+    - _BK_DamageSmoothness: 7.170697
+    - _BK_DarkBrick: 0.4222656
+    - _BK_DarkBrickAmount: 0.1
+    - _BK_DirtRange: 0.212
+    - _BK_DirtSmooth: 0.314
+    - _BK_PaintedBrickScale: 0.265
+    - _BK_SmoothnessScale: 1
+    - _BK_TransitionScale: 0.182
+    - _BK_WhiteBrick: 0.04023725
+    - _BK_WhiteBrickRange: 0
+    - _BK_WhiteBrickSmooth: 0.2811882
+    - _BRICK: 1
+    - _Base: 0.208
+    - _BlendMode: 0
+    - _Brick: 1
+    - _BrickBareSmoothness: 0.6040428
+    - _BrickDarkSmoothness: 0.63072526
+    - _BrickDirtMainSmoothness: 1
+    - _BrickDirtSmoothness: 0.2660194
+    - _BrickOverlay: 0.0215
+    - _BrickPaintSmoothness: 0.251
+    - _BrickScale: 1.348
+    - _BrickUniqueScale: 1.28
+    - _BricksBareSmoothness: 0.6040428
+    - _BricksDarkSmoothness: 0.63072526
+    - _BricksDirtMainSmoothness: 1
+    - _BricksDirtSmoothness: 0.2660194
+    - _BricksOverlay: 0.0215
+    - _BricksPaint: 1
+    - _BricksPaintSmoothness: 0.49656764
+    - _BricksScale: 1.145
+    - _BricksUniqueScale: 1
+    - _BricksUniqueSmoothness: 0.7176471
+    - _BrightBricks: 0.040237248
+    - _BumpScale: 1
+    - _CementBrightness: 0.794
+    - _CementPower: 0.82138383
+    - _Color: 0
+    - _Color1: 0
+    - _ColorSelect: 0
+    - _ConcreteEdges: 0
+    - _ConcreteMultiply: 0.023076223
+    - _ConcreteMultiply1: 0.043156285
+    - _Contrast: 0.5
+    - _CracksAmount: 0
+    - _CracksColorMultiply: 0
+    - _CracksDepth: 0
+    - _CracksSmoothness: 0
+    - _CracksTiling: 0
+    - _CubemapLighting: 0
+    - _CubemapLighting_Intensity: 0.5
+    - _CubemapLighting_LodFactor: 0
+    - _CubemapLighting_Shadowed: 1
+    - _CubemapLighting_ShadowedRamp: 0.1
+    - _CullMode: 2
+    - _CullModeForward: 2
+    - _Curvature: 0.017611831
+    - _CustomColor: 0
+    - _CustomColor1: 12
+    - _Cutoff: 0.5
+    - _DamageAmount: 0.6
+    - _DamageAmount1: 0.403
+    - _DamageAmountInside: 0.581
+    - _DamageMultiplier: 0
+    - _DamageSize: 0
+    - _DamageSmoothness: 7.170697
+    - _DamageSmoothness1: 6.7
+    - _DamageTiling: 0
+    - _DarkBrick: 0.42226565
+    - _DarkBrickAmount: 0.1
+    - _DarkBricks: 0.42226565
+    - _DarkBricksAmount: 0.1
+    - _DetailNormalMapScale: 1
+    - _DirtAmount: 0
+    - _DirtBlend1: 0
+    - _DirtBlend2: 0
+    - _DirtBrightness: 1
+    - _DirtBrightness1: 0.25
+    - _DirtEdges: 0.65144414
+    - _DirtMultiply: 0
+    - _DirtRange: 0.212
+    - _DirtSmooth: 0.314
+    - _DirtSmoothness: 0
+    - _DoubleSidedEnable: 0
+    - _DoubleSidedNormalMode: 2
+    - _DstBlend: 0
+    - _EdgesPower: 2.54
+    - _EdgesSmoothnes: 0.34
+    - _Emission: 0
+    - _EnableFogOnTransparent: 1
+    - _EnvironmentalReflections: 1
+    - _Exp: 0.246
+    - _ExtraDamage: 0
+    - _Filter: 0.1882353
+    - _Float0: 2.2705882
+    - _Float1: 0.32941177
+    - _Float2: 0.08893251
+    - _Float3: 1
+    - _Float4: 0.77
+    - _Float5: 36.57
+    - _Float6: 1
+    - _Fuzzinies: 0.314
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _HatchEnabled: 1
+    - _HatchLighting: 0.125
+    - _HatchRotation: 1.9
+    - _HatchScale: 4
+    - _HatchUVDefault: 1
+    - _Hatch_UV: 0
+    - _InsideAmount: 0
+    - _InsideColor: 0
+    - _InsideSmoothness: 0
+    - _Metallic: 0
+    - _MetallicSpecGlossMapToggle: 0
+    - _MetallicSpecToggle: 0
+    - _Mode: 0
+    - _Multi: 0.135
+    - _NormalMapToggle: 1
+    - _NormalScale: 1
+    - _OcclusionStrength: 1
+    - _OcclusionToggle: 0
+    - _Offset: 0
+    - _Outline: 0
+    - _OutsideColor: 0
+    - _PaintAmount: 0
+    - _PaintDetails: 0
+    - _PaintOpacity: 0
+    - _PaintSmoothness: 0
+    - _PaintedBrickScale: 0.265
+    - _PaintedBricksScale: 0.194
+    - _Parallax: 0.02
+    - _Power: 0.17354307
+    - _RangeConcrete: 0.026240807
+    - _RangeConcrete1: 0.25823265
+    - _RangeFuzziness: 0.28118825
+    - _RangeFuzziness1: 0.70952356
+    - _Rangeer: 0.149
+    - _ReceivesSSR: 0
+    - _RenderQueueType: 1
+    - _RequireSplitLighting: 0
+    - _Right: 0.65
+    - _RoughnessConcrete: 0.5
+    - _RoughnessPaint: 0.5
+    - _Scale: 1.82
+    - _Scale2: 0.26487967
+    - _Sketch: 1
+    - _Smoothness: 1
+    - _SmoothnessBlack: 0.10588236
+    - _SmoothnessSource: 0
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _StencilRef: 0
+    - _StencilRefDepth: 0
+    - _StencilRefDistortionVec: 4
+    - _StencilRefGBuffer: 2
+    - _StencilRefMV: 32
+    - _StencilWriteMask: 6
+    - _StencilWriteMaskDepth: 8
+    - _StencilWriteMaskDistortionVec: 4
+    - _StencilWriteMaskGBuffer: 14
+    - _StencilWriteMaskMV: 40
+    - _Step: 1
+    - _Strenght: 0
+    - _StylizedColored: 0.1
+    - _StylizedColoredInShadow: 0.2
+    - _Substract: 2.56
+    - _Substranct: 0.77
+    - _SurfaceType: 0
+    - _TOON: 1
+    - _Tiling: 4
+    - _Toon: 1
+    - _ToonDetail: 0
+    - _ToonDetailHighlightInput: 255
+    - _ToonDetailHighlightOutput: 255
+    - _ToonDetailLighting: 0
+    - _ToonDetailLightingOffset: 0.5
+    - _ToonDetailMidtoneInput: 1
+    - _ToonDetailShadowInput: 0
+    - _ToonDetailShadowOutput: 0
+    - _ToonIntensity: 1
+    - _ToonOcclusionOffset: 0.5
+    - _ToonOcclusionSmoothness: 0
+    - _ToonOffset: 0.5
+    - _ToonRim: 0
+    - _ToonRimIntensity: 0.4
+    - _ToonRimPower: 10
+    - _ToonSmoothness: 0
+    - _TransitionBrightness: 0.65144414
+    - _TransitionScale: 0.182
+    - _TransparentBackfaceEnable: 0
+    - _TransparentCullMode: 2
+    - _TransparentSortPriority: 0
+    - _TransparentZWrite: 1
+    - _UVSec: 0
+    - _UniqueBricksScale: 0.97
+    - _UseCustomColor: 0
+    - _UseCustomColor1: 0
+    - _UsePaintNormals: 1
+    - _UseShadowThreshold: 0
+    - _Value: 4.35
+    - _WhiteBrick: 0.040237248
+    - _WhiteBrickRange: 0
+    - _WhiteBrickSmooth: 0.28118825
+    - _WhiteBricks: 0.040237248
+    - _WhiteBricksRange: 0
+    - _WhiteBricksSmooth: 0.28118825
+    - _ZTestDepthEqualForOpaque: 3
+    - _ZTestGBuffer: 4
+    - _ZTestTransparent: 4
+    - _ZWrite: 1
+    - __dirty: 0
+    m_Colors:
+    - _BaseColor: {r: 0, g: 0, b: 0, a: 1}
+    - _BricksColor: {r: 0.57547164, g: 0.35939938, b: 0.3230241, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Color0: {r: 1, g: 0.047002554, b: 0, a: 0}
+    - _Color1: {r: 0.21274376, g: 0.3761532, b: 0.524, a: 0}
+    - _Color2: {r: 0.30099973, g: 0.30099973, b: 0.30099973, a: 1}
+    - _ConcreteColor: {r: 0, g: 0, b: 0, a: 0}
+    - _CubemapLighting_Ambient: {r: 1, g: 1, b: 1, a: 1}
+    - _CubemapLighting_BBoxMax: {r: 0, g: 0, b: 0, a: 0}
+    - _CubemapLighting_BBoxMin: {r: 0, g: 0, b: 0, a: 0}
+    - _CubemapLighting_CenterPos: {r: 0, g: 0, b: 0, a: 0}
+    - _CubemapLighting_LightPos: {r: 0, g: 0, b: 0, a: 0}
+    - _CubemapLighting_Tint: {r: 1, g: 1, b: 1, a: 1}
+    - _Damage: {r: 0.47599998, g: 0.46779308, b: 0.4349655, a: 0}
+    - _Dirt: {r: 0.8117647, g: 0.8117647, b: 0.8117647, a: 0}
+    - _DirtColor: {r: 0.43399942, g: 0.4183598, b: 0.3909904, a: 0}
+    - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
+    - _EdgesColor: {r: 1, g: 1, b: 1, a: 0}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HatchScale: {r: 6, g: 6, b: 0, a: 0}
+    - _PaintColor: {r: 0.46004504, g: 0.30135295, b: 0.5529412, a: 0}
+    - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
+    - _ToonInShadowOcclusionTintOffset: {r: 0.34999996, g: 0.34999996, b: 0.34999996, a: 1}
+    - _ToonInShadowTint: {r: 0, g: 0, b: 0, a: 0.333}
+    - _ToonOutShadowTint: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 0.333}
+    - _ToonRimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ToonSSSTint: {r: 0, g: 0, b: 0, a: 0.333}
+    - _ToonTint: {r: 1, g: 1, b: 1, a: 1}
+    - _TransitionColor: {r: 0.755, g: 0.66752416, b: 0.5858799, a: 0}
+    - _VTInfoBlock: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector0: {r: 0.38, g: -0.34, b: -0.54, a: 0}
+  m_BuildTextureStacks: []
