@@ -13,6 +13,10 @@ namespace GameScriptEditor
     {
         private static Material mat = null;
 
+        private static Texture2D albedoTexture = null;
+
+        private static Texture2D normalTexture = null;
+
         [MenuItem("Assets/Auto Clone Material", false, 0)]
         [MenuItem("GameTools/Material/Auto Clone Material")]
         private static void AutoCloneMaterial()
@@ -141,6 +145,50 @@ namespace GameScriptEditor
             }
 
             return false;
+        }
+
+        [MenuItem("Assets/Copy AN Textures", false, 0)]
+        [MenuItem("GameTools/Material/Copy AN Textures")]
+        private static void CopyAlbedoNormalTextures()
+        {
+            Material selectedMaterial = Selection.activeObject as Material;
+            if (selectedMaterial != null)
+            {
+                albedoTexture = selectedMaterial.GetTexture("_MainTex") as Texture2D;
+                normalTexture = selectedMaterial.GetTexture("_BumpMap") as Texture2D;
+            }
+        }
+        [MenuItem("Assets/Copy AN Textures", true)]
+        [MenuItem("GameTools/Material/Copy AN Textures", true)]
+        private static bool CopyAlbedoNormalTexturesValidation()
+        {
+            return Selection.activeObject is Material;
+        }
+
+        [MenuItem("Assets/Paste AN Textures", false, 0)]
+        [MenuItem("GameTools/Material/Paste AN Textures")]
+        private static void PasteAlbedoNormalTextures()
+        {
+            Material selectedMaterial = Selection.activeObject as Material;
+            if (selectedMaterial != null)
+            {
+                if (albedoTexture != null)
+                {
+                    selectedMaterial.SetTexture("_BaseMap", albedoTexture);
+                    EditorUtility.SetDirty(selectedMaterial);
+                }
+                if (normalTexture != null)
+                {
+                    selectedMaterial.SetTexture("_BumpMap", normalTexture);
+                    EditorUtility.SetDirty(selectedMaterial);
+                }
+            }
+        }
+        [MenuItem("Assets/Paste AN Textures", true)]
+        [MenuItem("GameTools/Material/Paste AN Textures", true)]
+        private static bool PasteAlbedoNormalTexturesValidation()
+        {
+            return Selection.activeObject is Material && (albedoTexture != null || normalTexture != null);
         }
 
         private static void ExtractMaterials(string assetPath, string destinationPath)
