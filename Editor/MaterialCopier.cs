@@ -23,9 +23,9 @@ namespace GameScriptEditor
             var material = Selection.activeObject as Material;
             if (material != null)
             {
-                albedoTexture = material.GetTexture("_MainTex") as Texture2D;
+                CopyAlbedoNormalTextures();
                 DoApply();
-                material.SetTexture("_BaseMap", albedoTexture);
+                PasteAlbedoNormalTextures();
                 EditorUtility.SetDirty(material);
             }
         }
