@@ -6,6 +6,8 @@ namespace GameScript
 {
     public class AddSceneItemND : NotificationData
     {
-        public string itemGUID = null;
+        public ItemPD itemPD = null;
+
+        public Vector3 worldSpacePosition;
     }
 }

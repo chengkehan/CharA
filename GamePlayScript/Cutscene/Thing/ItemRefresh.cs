@@ -31,8 +31,8 @@ namespace GameScript.Cutscene
         public void RefreshItemNowTest()
         {
             var itemConfig = DataCenter.GetInstance().GetItemConfig(itemID);
-            Scene.GetInstance().AddSceneItem(
-                new ItemPD(System.Guid.NewGuid().ToString(), itemConfig), 
+            ModeratorUtils.AddSceneItem(
+                new ItemPD(System.Guid.NewGuid().ToString(), itemConfig),
                 DataCenter.query.AdjustSceneItemWorldPosition(transform.position)
             );
         }
@@ -47,7 +47,7 @@ namespace GameScript.Cutscene
                 if (DataCenter.query.ItemAlreadyExistedInWorld(guid) == false)
                 {
                     var itemConfig = DataCenter.GetInstance().GetItemConfig(itemID);
-                    Scene.GetInstance().AddSceneItem(
+                    ModeratorUtils.AddSceneItem(
                         new ItemPD(guid, itemConfig), 
                         DataCenter.query.AdjustSceneItemWorldPosition(transform.position)
                     );

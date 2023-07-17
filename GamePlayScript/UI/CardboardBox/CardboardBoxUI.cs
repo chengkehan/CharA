@@ -201,11 +201,9 @@ namespace GameScript.UI.CardboardBoxUI
 
             OutlineObject.OnClick(itemGo, () =>
             {
-                var notificationData = new TransferCardboardBoxItemToActorND();
-                notificationData.cardboardBoxGUID = cardboardBox.guid;
-                notificationData.itemGUID = itemPD.guid;
-                notificationData.actorGUID = ActorsManager.GetInstance().GetHeroActor().guid;
-                EventSystem.GetInstance().Notify(EventID.TransferCardboardBoxItemToActor, notificationData);
+                ModeratorUtils.TransferCardboardBoxItemToActor(
+                    cardboardBox.guid, itemPD.guid, ActorsManager.GetInstance().GetHeroActor().guid
+                );
             });
         }
 
@@ -219,11 +217,10 @@ namespace GameScript.UI.CardboardBoxUI
                     if (oneItem != null && oneItem.itemGO != null && oneItem.itemGO.GetComponentInChildren<Collider>() == collider)
                     {
                         var heroActor = ActorsManager.GetInstance().GetHeroActor();
-                        var notificationData = new TransferCardboardBoxItemToSceneND();
-                        notificationData.cardboardBoxGUID = cardboardBox.guid;
-                        notificationData.itemGUID = oneItem.itemGUID;
-                        notificationData.dropPosition = DataCenter.query.AdjustSceneItemWorldPosition(heroActor.roleAnimation.GetMotionAnimator().GetPosition());
-                        EventSystem.GetInstance().Notify(EventID.TransferCardboardBoxItemToScene, notificationData);
+                        ModeratorUtils.TransferCardboardBoxItemToScene(
+                            cardboardBox.guid, oneItem.itemGUID,
+                            DataCenter.query.AdjustSceneItemWorldPosition(heroActor.roleAnimation.GetMotionAnimator().GetPosition())
+                        );
                     }
                 }
             }

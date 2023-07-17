@@ -13,18 +13,6 @@ namespace GameScript.Cutscene
             return s_instance;
         }
 
-        public void RemoveSceneItem(string itemGUID)
-        {
-            AssetsManager.GetInstance().UnloadSceneItem(itemGUID);
-            pd.RemoveSceneItemPD(itemGUID);
-            SendRemoveSceneItemEvent(itemGUID);
-        }
-
-        public void AddSceneItem(ItemPD itemPD, Vector3 wPos)
-        {
-            AddSceneItem_Internal(itemPD, wPos, true);
-        }
-
         private void AddSceneItem_Internal(ItemPD itemPD, Vector3 wPos, bool addPD)
         {
             var sceneItemGo = AssetsManager.GetInstance().LoadSceneItem(itemPD.guid, itemPD.itemID);
@@ -36,21 +24,58 @@ namespace GameScript.Cutscene
             {
                 pd.AddSceneItem(itemPD, wPos);
             }
-
-            SendAddSceneItemEvent(itemPD.guid);
         }
 
         protected override void InitializeOnAwake()
         {
             base.InitializeOnAwake();
             s_instance = this;
+
+            AddListeners();
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
             s_instance = null;
+
+            RemoveListeners();
         }
+
+        #region Listeners
+
+        private void AddListeners()
+        {
+            EventSystem.GetInstance().AddListener(EventID.AddSceneItem, AddSceneItemHandler);
+            EventSystem.GetInstance().AddListener(EventID.RemoveSceneItem, RemoveSceneItemHandler);
+        }
+
+        private void RemoveListeners()
+        {
+            EventSystem.GetInstance().RemoveListener(EventID.AddSceneItem, AddSceneItemHandler);
+            EventSystem.GetInstance().RemoveListener(EventID.RemoveSceneItem, RemoveSceneItemHandler);
+        }
+
+        private void AddSceneItemHandler(NotificationData _data)
+        {
+            var data = _data as AddSceneItemND;
+            if (data != null)
+            {
+                AddSceneItem_Internal(data.itemPD, data.worldSpacePosition, true);
+            }
+        }
+
+        private void RemoveSceneItemHandler(NotificationData _data)
+        {
+            var data = _data as RemoveSceneItemND;
+            if (data != null)
+            {
+                AssetsManager.GetInstance().UnloadSceneItem(data.itemGUID);
+                pd.RemoveSceneItemPD(data.itemGUID);
+            }
+        }
+
+        #endregion
 
         #region Spawn items and roles on startup
 
@@ -102,19 +127,5 @@ namespace GameScript.Cutscene
         }
 
         #endregion
-
-        private void SendAddSceneItemEvent(string itemGUID)
-        {
-            var notificationData = new AddSceneItemND();
-            notificationData.itemGUID = itemGUID;
-            EventSystem.GetInstance().Notify(EventID.AddSceneItem, notificationData);
-        }
-
-        private void SendRemoveSceneItemEvent(string itemGUID)
-        {
-            var notificationData = new RemoveSceneItemND();
-            notificationData.itemGUID = itemGUID;
-            EventSystem.GetInstance().Notify(EventID.RemoveSceneItem, notificationData);
-        }
     }
 }

@@ -29,6 +29,8 @@ namespace GameScript
             EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToScene, TransferCardboardBoxItemToSceneHandler, EventSystem.ListenerPriority.High);
             EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler, EventSystem.ListenerPriority.High);
             EventSystem.GetInstance().AddListener(EventID.TransferPocketItemToCardboardBox, TransferPocketItemToCardboardBoxHandler, EventSystem.ListenerPriority.High);
+            EventSystem.GetInstance().AddListener(EventID.AddSceneItem, AddSceneItemHandler, EventSystem.ListenerPriority.High);
+            EventSystem.GetInstance().AddListener(EventID.RemoveSceneItem, RemoveSceneItemHandler, EventSystem.ListenerPriority.High);
         }
 
         private void RemoveListeners()
@@ -39,6 +41,8 @@ namespace GameScript
             EventSystem.GetInstance().RemoveListener(EventID.TransferCardboardBoxItemToScene, TransferCardboardBoxItemToSceneHandler);
             EventSystem.GetInstance().RemoveListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler);
             EventSystem.GetInstance().RemoveListener(EventID.TransferPocketItemToCardboardBox, TransferPocketItemToCardboardBoxHandler);
+            EventSystem.GetInstance().RemoveListener(EventID.AddSceneItem, AddSceneItemHandler);
+            EventSystem.GetInstance().RemoveListener(EventID.AddSceneItem, RemoveSceneItemHandler);
         }
 
         private void TransferPocketItemToCardboardBoxHandler(NotificationData _data)
@@ -115,7 +119,7 @@ namespace GameScript
             if (data != null)
             {
                 // waiting for item gameobject removed from ui, then add to scene
-                // we can't keep two item instances with same guid existed in the world at the same time.
+                // we can't keep two item instances(assets) with same guid existed in the world at the same time.
                 StartCoroutine(TransferCardboardBoxItemToSceneHandlerDelay(data));
             }
             else
@@ -132,7 +136,7 @@ namespace GameScript
             {
                 var itemPD = cardboardBoxPD.GetItemByGUID(data.itemGUID);
                 cardboardBoxPD.RemoveItem(data.itemGUID);
-                Scene.GetInstance().AddSceneItem(itemPD, data.dropPosition);
+                ModeratorUtils.AddSceneItem(itemPD, data.dropPosition);
             }
         }
 
@@ -179,7 +183,7 @@ namespace GameScript
                     var inHandItem = actorPD.inHandItem.Clone();
 
                     actor.DeleteInHandItem();
-                    Scene.GetInstance().AddSceneItem(
+                    ModeratorUtils.AddSceneItem(
                         inHandItem, 
                         DataCenter.query.AdjustSceneItemWorldPosition(actor.roleAnimation.GetMotionAnimator().GetPosition())
                     );
@@ -192,7 +196,7 @@ namespace GameScript
                         var itemInPocket = actorPD.GetPocketItem((int)pocketType).Clone();
 
                         actor.DeletePocketItem(itemInPocket.guid);
-                        Scene.GetInstance().AddSceneItem(
+                        ModeratorUtils.AddSceneItem(
                             itemInPocket,  
                             DataCenter.query.AdjustSceneItemWorldPosition(actor.roleAnimation.GetMotionAnimator().GetPosition())
                         );
@@ -222,7 +226,7 @@ namespace GameScript
                 if (DataCenter.query.ItemCanBeInHandOnly((Define.ItemSpace)itemConfig.space))
                 {
                     // delete from scene
-                    Scene.GetInstance().RemoveSceneItem(data.itemGUID);
+                    ModeratorUtils.RemoveSceneItem(data.itemGUID);
 
                     // put down item already in hand
                     if (actor.HasInHandItem())
@@ -231,7 +235,7 @@ namespace GameScript
 
                         actor.DeleteInHandItem();
 
-                        Scene.GetInstance().AddSceneItem(
+                        ModeratorUtils.AddSceneItem(
                             inHandItem,  
                             DataCenter.query.AdjustSceneItemWorldPosition(actor.roleAnimation.GetMotionAnimator().GetPosition())
                         );
@@ -253,7 +257,7 @@ namespace GameScript
                         else
                         {
                             // delete from scene
-                            Scene.GetInstance().RemoveSceneItem(data.itemGUID);
+                            ModeratorUtils.RemoveSceneItem(data.itemGUID);
 
                             var pocketType = DataCenter.query.GetActorEmptyPocket(actor.pd);
 
@@ -268,6 +272,41 @@ namespace GameScript
                         data.interrupted = true;
                         Utils.LogObservably("whf");
                     }
+                }
+            }
+            else
+            {
+                data.interrupted = true;
+            }
+        }
+
+        private void AddSceneItemHandler(NotificationData _data)
+        {
+            var data = _data as AddSceneItemND;
+            if (data != null)
+            {
+                // Validate and intercept if it's invalid
+                if (Scene.GetInstance().pd.ContainsSceneItemPD(data.itemPD.guid))
+                {
+                    Utils.LogError("Add Scene Item Failed. Duplicated guid.");
+                    data.interrupted = true;
+                }
+            }
+            else
+            {
+                data.interrupted = true;
+            }
+        }
+
+        private void RemoveSceneItemHandler(NotificationData _data)
+        {
+            var data = _data as RemoveSceneItemND;
+            if (data != null)
+            {
+                if (Scene.GetInstance().pd.ContainsSceneItemPD(data.itemGUID) == false)
+                {
+                    Utils.LogError("Remove Scene Item Failed. There is not a item that guid is " + data.itemGUID);
+                    data.interrupted = true;
                 }
             }
             else

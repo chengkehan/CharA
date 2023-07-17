@@ -298,10 +298,7 @@ namespace GameScript
                 var sceneItemPD = Scene.GetInstance().pd.GetSceneItemPD(_sceneItemHUDClicked_ItemGUID);
                 if (Vector3.Distance(sceneItemPD.worldPosition, data.endWaypoint.GetPosition()) < DataCenter.define.SceneItemPickupRange)
                 {
-                    var notification = new PickUpSceneItemND();
-                    notification.actorGUID = actor.o.guid;
-                    notification.itemGUID = _sceneItemHUDClicked_ItemGUID;
-                    EventSystem.GetInstance().Notify(EventID.PickUpSceneItem, notification);
+                    ModeratorUtils.PickUpSceneItem(actor.o.guid, _sceneItemHUDClicked_ItemGUID);
                 }
 
                 ResetSceneItemHUDClicked();
@@ -442,11 +439,7 @@ namespace GameScript
         private void BreakWallSkillItemBrokenCB(BreakWallSkill skill)
         {
             // Item is broken
-            var notification = new DestroyItemND();
-            notification.actorGUID = skill.actor.guid;
-            notification.itemGUID = skill.actor.pd.inHandItem.guid;
-            EventSystem.GetInstance().Notify(EventID.DestroyItem, notification);
-
+            ModeratorUtils.DestroyItem(skill.actor.guid, skill.actor.pd.inHandItem.guid);
             StopBreakWallSkill();
             GetMotionAnimator().SetState(MotionAnimator.State.Idle);
         }
@@ -479,10 +472,7 @@ namespace GameScript
                     var heroActorPD = DataCenter.GetInstance().playerData.GetSerializableMonoBehaviourPD<ActorPD>(heroActor.guid);
                     if (heroActorPD.inHandItem.IsEmpty() == false)
                     {
-                        var notificationData = new DropItemToSceneND();
-                        notificationData.actorGUID = heroActor.guid;
-                        notificationData.itemGUID = heroActorPD.inHandItem.guid;
-                        EventSystem.GetInstance().Notify(EventID.DropItemToScene, notificationData);
+                        ModeratorUtils.DropItemToScene(heroActor.guid, heroActorPD.inHandItem.guid);
                     }
                 }
             }

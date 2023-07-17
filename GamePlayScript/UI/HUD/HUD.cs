@@ -185,7 +185,7 @@ namespace GameScript.UI.HUD
                 var sceneItemHUDGo = Utils.InstantiateUIPrefab(sceneItemHUDPrefab.gameObject, sceneItemHUDContainer);
                 sceneItemHUDGo.SetActive(true);
                 var sceneItemHUD = sceneItemHUDGo.GetComponent<SceneItemHUD>();
-                sceneItemHUD.Set(data.itemGUID);
+                sceneItemHUD.Set(data.itemPD.guid);
                 sceneItemHUD.UpdatePositionAndVisible();
                 allSceneItemHUD.Add(sceneItemHUD);
             }

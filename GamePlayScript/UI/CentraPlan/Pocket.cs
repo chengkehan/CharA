@@ -41,11 +41,9 @@ namespace GameScript.UI.CentraPlan.Hero
                 if (UIManager.GetInstance().ContainsUI(UIManager.UIName.CardboardBox))
                 {
                     var cardboardBoxUI = UIManager.GetInstance().GetUI<CBUI.CardboardBoxUI>(UIManager.UIName.CardboardBox);
-                    var notificationData = new TransferPocketItemToCardboardBoxND();
-                    notificationData.actorGUID = heroActorPD.guid.o;
-                    notificationData.itemGUID = pocketItemPD.guid;
-                    notificationData.cardboardBoxGUID = cardboardBoxUI.cardboardBox.guid;
-                    EventSystem.GetInstance().Notify(EventID.TransferPocketItemToCardboardBox, notificationData);
+                    ModeratorUtils.TransferPocketItemToCardboardBox(
+                        heroActorPD.guid.o, pocketItemPD.guid, cardboardBoxUI.cardboardBox.guid
+                    );
                 }
             }
         }
@@ -61,10 +59,7 @@ namespace GameScript.UI.CentraPlan.Hero
             var pocketItemPD = heroActorPD.GetPocketItem((int)pocketType);
             if (pocketItemPD.IsEmpty() == false)
             {
-                var notification = new DropItemToSceneND();
-                notification.actorGUID = heroActorPD.guid.o;
-                notification.itemGUID = pocketItemPD.guid;
-                EventSystem.GetInstance().Notify(EventID.DropItemToScene, notification);
+                ModeratorUtils.DropItemToScene(heroActorPD.guid.o, pocketItemPD.guid);
             }
         }
 

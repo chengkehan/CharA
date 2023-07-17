@@ -140,10 +140,7 @@ namespace GameScript.UI.CentraPlan.Hero
             var heroActorPD = ActorsManager.GetInstance().GetHeroActor().pd;
             if (heroActorPD.inHandItem.IsEmpty() == false)
             {
-                var notification = new DropItemToSceneND();
-                notification.actorGUID = heroActorPD.guid.o;
-                notification.itemGUID = heroActorPD.inHandItem.guid;
-                EventSystem.GetInstance().Notify(EventID.DropItemToScene, notification);
+                ModeratorUtils.DropItemToScene(heroActorPD.guid.o, heroActorPD.inHandItem.guid);
             }
         }
 
