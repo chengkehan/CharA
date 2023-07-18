@@ -16,33 +16,16 @@ namespace GameScript
             AddListeners();
         }
 
-        private void OnDestroy()
-        {
-            RemoveListeners();
-        }
-
         private void AddListeners()
         {
-            EventSystem.GetInstance().AddListener(EventID.PickUpSceneItem, PickUpSceneItemHandler, EventSystem.ListenerPriority.High);
-            EventSystem.GetInstance().AddListener(EventID.DropItemToScene, DropItemToSceneHandler, EventSystem.ListenerPriority.High);
-            EventSystem.GetInstance().AddListener(EventID.DestroyItem, DestroyItemHandler, EventSystem.ListenerPriority.High);
-            EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToScene, TransferCardboardBoxItemToSceneHandler, EventSystem.ListenerPriority.High);
-            EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler, EventSystem.ListenerPriority.High);
-            EventSystem.GetInstance().AddListener(EventID.TransferPocketItemToCardboardBox, TransferPocketItemToCardboardBoxHandler, EventSystem.ListenerPriority.High);
-            EventSystem.GetInstance().AddListener(EventID.AddSceneItem, AddSceneItemHandler, EventSystem.ListenerPriority.High);
-            EventSystem.GetInstance().AddListener(EventID.RemoveSceneItem, RemoveSceneItemHandler, EventSystem.ListenerPriority.High);
-        }
-
-        private void RemoveListeners()
-        {
-            EventSystem.GetInstance().RemoveListener(EventID.PickUpSceneItem, PickUpSceneItemHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.DropItemToScene, DropItemToSceneHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.DestroyItem, DestroyItemHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.TransferCardboardBoxItemToScene, TransferCardboardBoxItemToSceneHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.TransferPocketItemToCardboardBox, TransferPocketItemToCardboardBoxHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.AddSceneItem, AddSceneItemHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.AddSceneItem, RemoveSceneItemHandler);
+            EventSystem.GetInstance().AddListener(EventID.PickUpSceneItem, PickUpSceneItemHandler, EventSystem.ListenerPriority.High, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.DropItemToScene, DropItemToSceneHandler, EventSystem.ListenerPriority.High, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.DestroyItem, DestroyItemHandler, EventSystem.ListenerPriority.High, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToScene, TransferCardboardBoxItemToSceneHandler, EventSystem.ListenerPriority.High, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler, EventSystem.ListenerPriority.High, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.TransferPocketItemToCardboardBox, TransferPocketItemToCardboardBoxHandler, EventSystem.ListenerPriority.High, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.AddSceneItem, AddSceneItemHandler, EventSystem.ListenerPriority.High, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.RemoveSceneItem, RemoveSceneItemHandler, EventSystem.ListenerPriority.High, gameObject);
         }
 
         private void TransferPocketItemToCardboardBoxHandler(NotificationData _data)

@@ -38,22 +38,14 @@ namespace GameScript.Cutscene
         {
             base.OnDestroy();
             s_instance = null;
-
-            RemoveListeners();
         }
 
         #region Listeners
 
         private void AddListeners()
         {
-            EventSystem.GetInstance().AddListener(EventID.AddSceneItem, AddSceneItemHandler);
-            EventSystem.GetInstance().AddListener(EventID.RemoveSceneItem, RemoveSceneItemHandler);
-        }
-
-        private void RemoveListeners()
-        {
-            EventSystem.GetInstance().RemoveListener(EventID.AddSceneItem, AddSceneItemHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.RemoveSceneItem, RemoveSceneItemHandler);
+            EventSystem.GetInstance().AddListener(EventID.AddSceneItem, AddSceneItemHandler, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.RemoveSceneItem, RemoveSceneItemHandler, gameObject);
         }
 
         private void AddSceneItemHandler(NotificationData _data)

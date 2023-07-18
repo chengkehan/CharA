@@ -95,11 +95,6 @@ namespace GameScript.UI.HUD
             InitializeAllBreakWallHUD();
         }
 
-        private void OnDestroy()
-        {
-            RemoveListeners();
-        }
-
         private void LateUpdate()
         {
             LateUpdate_SceneItemHUDBounceEachOther();
@@ -148,16 +143,9 @@ namespace GameScript.UI.HUD
 
         private void AddListeners()
         {
-            EventSystem.GetInstance().AddListener(EventID.TalkingBubble, TalkingBubbleHandler);
-            EventSystem.GetInstance().AddListener(EventID.AddSceneItem, AddSceneItemHandler);
-            EventSystem.GetInstance().AddListener(EventID.RemoveSceneItem, RemoveSceneItemHandler);
-        }
-
-        private void RemoveListeners()
-        {
-            EventSystem.GetInstance().RemoveListener(EventID.TalkingBubble, TalkingBubbleHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.AddSceneItem, AddSceneItemHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.RemoveSceneItem, RemoveSceneItemHandler);
+            EventSystem.GetInstance().AddListener(EventID.TalkingBubble, TalkingBubbleHandler, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.AddSceneItem, AddSceneItemHandler, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.RemoveSceneItem, RemoveSceneItemHandler, gameObject);
         }
 
         private void RemoveSceneItemHandler(NotificationData _data)

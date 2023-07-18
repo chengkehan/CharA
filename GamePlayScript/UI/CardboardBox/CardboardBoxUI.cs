@@ -164,7 +164,7 @@ namespace GameScript.UI.CardboardBoxUI
             }
         }
 
-        private List<OneItem> allItems = null;
+        private List<OneItem> allItems = new List<OneItem>();
 
         private List<Transform> closedCovers = new List<Transform>();
 
@@ -193,10 +193,6 @@ namespace GameScript.UI.CardboardBoxUI
             itemGo.transform.localPosition = Vector3.zero;
             Utils.SetLayerRecursively(itemGo, (int)Define.Layers.UI3D);
 
-            if (allItems == null)
-            {
-                allItems = new List<OneItem>();
-            }
             allItems.Add(new OneItem() { itemGO = itemGo, itemGUID = itemPD.guid });
 
             OutlineObject.OnClick(itemGo, () =>
@@ -317,10 +313,6 @@ namespace GameScript.UI.CardboardBoxUI
                 allItems = null;
             }
 
-            EventSystem.GetInstance().RemoveListener(EventID.TransferCardboardBoxItemToScene, TransferCardboardBoxItemToSceneHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.TransferPocketItemToCardboardBox, TransferPocketItemToCardboardBoxHandler);
-
             if (boxMesh != null)
             {
                 Destroy(boxMesh);
@@ -430,9 +422,9 @@ namespace GameScript.UI.CardboardBoxUI
 
             UpdateMaterials();
 
-            EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToScene, TransferCardboardBoxItemToSceneHandler);
-            EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler);
-            EventSystem.GetInstance().AddListener(EventID.TransferPocketItemToCardboardBox, TransferPocketItemToCardboardBoxHandler); 
+            EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToScene, TransferCardboardBoxItemToSceneHandler, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.TransferPocketItemToCardboardBox, TransferPocketItemToCardboardBoxHandler, gameObject); 
         }
 
         private void CloseHandler()

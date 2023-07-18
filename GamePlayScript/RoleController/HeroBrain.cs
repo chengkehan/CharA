@@ -57,39 +57,19 @@ namespace GameScript
             UpdateDropItemToSceneWhenSomeAnimations();
         }
 
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
-
-            RemoveListeners();
-        }
-
         #region Listeners
 
         private void AddListeners()
         {
-            EventSystem.GetInstance().AddListener(EventID.MeetNpc, MeetNpcHandler);
-            EventSystem.GetInstance().AddListener(EventID.BreakWallHUDClicked, BreakWallClickedHUDHandler);
-            EventSystem.GetInstance().AddListener(EventID.MoveToWaypointsEnd, MoveToWaypointsEndHanlder);
-            EventSystem.GetInstance().AddListener(EventID.WannaOpenLockedDoor, WannaOpenLockedDoorHandler);
-            EventSystem.GetInstance().AddListener(EventID.SceneItemHUDClicked, SceneItemHUDClickedHandler);
-            EventSystem.GetInstance().AddListener(EventID.NewOperation, NewOperationHandler);
-            EventSystem.GetInstance().AddListener(EventID.NoWayToPoint, NoWayToPointHandler);
-            EventSystem.GetInstance().AddListener(EventID.StopShakeHead, StopShakeHeadHandler);
-            EventSystem.GetInstance().AddListener(EventID.PickupableObjectClicked, PickupableObjectClickedHandler);
-        }
-
-        private void RemoveListeners()
-        {
-            EventSystem.GetInstance().RemoveListener(EventID.MeetNpc, MeetNpcHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.BreakWallHUDClicked, BreakWallClickedHUDHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.MoveToWaypointsEnd, MoveToWaypointsEndHanlder);
-            EventSystem.GetInstance().RemoveListener(EventID.WannaOpenLockedDoor, WannaOpenLockedDoorHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.SceneItemHUDClicked, SceneItemHUDClickedHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.NewOperation, NewOperationHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.NoWayToPoint, NoWayToPointHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.StopShakeHead, StopShakeHeadHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.PickupableObjectClicked, PickupableObjectClickedHandler);
+            EventSystem.GetInstance().AddListener(EventID.MeetNpc, MeetNpcHandler, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.BreakWallHUDClicked, BreakWallClickedHUDHandler, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.MoveToWaypointsEnd, MoveToWaypointsEndHanlder, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.WannaOpenLockedDoor, WannaOpenLockedDoorHandler, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.SceneItemHUDClicked, SceneItemHUDClickedHandler, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.NewOperation, NewOperationHandler, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.NoWayToPoint, NoWayToPointHandler, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.StopShakeHead, StopShakeHeadHandler, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.PickupableObjectClicked, PickupableObjectClickedHandler, gameObject);
         }
 
         private void NewOperationHandler(NotificationData _data)

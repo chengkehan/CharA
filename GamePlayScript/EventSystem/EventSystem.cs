@@ -83,20 +83,20 @@ namespace GameScript
         {
             if (registry.TryGetValue(id, out List<ListenerItem> listeners))
             {
+                for (int listenerI = 0; listenerI < listeners.Count; listenerI++)
+                {
+                    var listener = listeners[listenerI];
+                    if (listener.isBindingGoSet && listener.bindingGo == null)
+                    {
+                        listeners.RemoveAt(listenerI);
+                        --listenerI;
+                    }
+                }
+
                 var tempListeners = FetchTempListeners();
                 {
                     tempListeners.listeners.AddRange(listeners);
                     tempListeners.listeners.Sort(SortTempListeners);
-
-                    for (int listenerI = 0; listenerI < tempListeners.listeners.Count; listenerI++)
-                    {
-                        var listener = tempListeners.listeners[listenerI];
-                        if (listener.isBindingGoSet && listener.bindingGo == null)
-                        {
-                            tempListeners.listeners.RemoveAt(listenerI);
-                            --listenerI;
-                        }
-                    }
 
                     if (data != null)
                     {

@@ -67,18 +67,9 @@ namespace GameScript.UI.CentraPlan.Hero
 
             RefreshItem();
 
-            EventSystem.GetInstance().AddListener(EventID.PickUpSceneItem, PickUpSceneItemHandler);
-            EventSystem.GetInstance().AddListener(EventID.DropItemToScene, DropItemToSceneHandler);
-            EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler);
-        }
-
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
-
-            EventSystem.GetInstance().RemoveListener(EventID.PickUpSceneItem, PickUpSceneItemHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.DropItemToScene, DropItemToSceneHandler);
-            EventSystem.GetInstance().RemoveListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler);
+            EventSystem.GetInstance().AddListener(EventID.PickUpSceneItem, PickUpSceneItemHandler, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.DropItemToScene, DropItemToSceneHandler, gameObject);
+            EventSystem.GetInstance().AddListener(EventID.TransferCardboardBoxItemToActor, TransferCardboardBoxItemToActorHandler, gameObject);
         }
 
         private void TransferCardboardBoxItemToActorHandler(NotificationData _data)

@@ -22,12 +22,7 @@ namespace GameScript
 
         private void Awake()
         {
-            EventSystem.GetInstance().AddListener(EventID.SceneLoaded, SceneLoadedHandler);
-        }
-
-        private void OnDestroy()
-        {
-            EventSystem.GetInstance().RemoveListener(EventID.SceneLoaded, SceneLoadedHandler);
+            EventSystem.GetInstance().AddListener(EventID.SceneLoaded, SceneLoadedHandler, gameObject);
         }
 
         private void SceneLoadedHandler(NotificationData _data)

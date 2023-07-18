@@ -129,7 +129,6 @@ namespace GameScript.UI.Common
 
         protected virtual void OnDestroy()
         {
-            RemoveListeners_UGUI_EventSystem();
             DestroyTooltip();
         }
 
@@ -139,15 +138,7 @@ namespace GameScript.UI.Common
         {
             if (tooltipEnabled)
             {
-                EventSystem.GetInstance().AddListener(EventID.UGUI_EventSystemChanged, UGUI_EventSystemChangedHandler);
-            }
-        }
-
-        private void RemoveListeners_UGUI_EventSystem()
-        {
-            if (tooltipEnabled)
-            {
-                EventSystem.GetInstance().RemoveListener(EventID.UGUI_EventSystemChanged, UGUI_EventSystemChangedHandler);
+                EventSystem.GetInstance().AddListener(EventID.UGUI_EventSystemChanged, UGUI_EventSystemChangedHandler, gameObject);
             }
         }
 

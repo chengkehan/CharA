@@ -67,14 +67,7 @@ namespace GameScript.UI.CentraPlan.Hero
         {
             base.Start();
 
-            EventSystem.GetInstance().AddListener(EventID.TransferPocketItemToCardboardBox, TransferPocketItemToCardboardBoxHandler);
-        }
-
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
-
-            EventSystem.GetInstance().RemoveListener(EventID.TransferPocketItemToCardboardBox, TransferPocketItemToCardboardBoxHandler);
+            EventSystem.GetInstance().AddListener(EventID.TransferPocketItemToCardboardBox, TransferPocketItemToCardboardBoxHandler, gameObject);
         }
 
         private void TransferPocketItemToCardboardBoxHandler(NotificationData _data)
