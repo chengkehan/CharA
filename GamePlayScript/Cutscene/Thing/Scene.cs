@@ -81,10 +81,16 @@ namespace GameScript.Cutscene
                 _alreadySpawned = true;
 
                 {
+                    List<SceneItemPD> allSceneItemPD = new List<SceneItemPD>();
                     for (int sceneItemPDI = 0; sceneItemPDI < pd.NumberSceneItemPD(); sceneItemPDI++)
                     {
                         var sceneItemPD = pd.GetSceneItemPD(sceneItemPDI);
-                        AddSceneItem_Internal(sceneItemPD, sceneItemPD.worldPosition, false);
+                        allSceneItemPD.Add(sceneItemPD);
+                    }
+                    foreach (var sceneItemPD in allSceneItemPD)
+                    {
+                        ModeratorUtils.RemoveSceneItem(sceneItemPD.guid);
+                        ModeratorUtils.AddSceneItem(sceneItemPD, sceneItemPD.worldPosition);
                     }
                 }
 
