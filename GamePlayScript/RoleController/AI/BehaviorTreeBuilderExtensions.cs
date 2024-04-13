@@ -8,11 +8,23 @@ namespace GameScript
 {
     public static class BehaviorTreeBuilderExtensions
     {
+        //----------- Animation ------------------------------------------------
+
         public static BehaviorTreeBuilder ActionSittingGroundDown(this BehaviorTreeBuilder builder)
         {
             return builder.AddNode(new ActionSittingGroundDown
             {
                 Name = "ActionSittingGroundDown"
+            });
+        }
+
+        //----------- Brain ------------------------------------------------
+
+        public static BehaviorTreeBuilder ActionSetBrainBusy(this BehaviorTreeBuilder builder)
+        {
+            return builder.AddNode(new ActionSetBrainBusy
+            {
+                Name = "ActionSetBrainBusy"
             });
         }
     }

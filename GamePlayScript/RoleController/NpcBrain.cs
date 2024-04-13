@@ -11,6 +11,22 @@ namespace GameScript
         [SerializeField]
         private BehaviorTree behaviorTree = null;
 
+        // Brain can do only one thing at a time.
+        // When brain is executing a behavior, this flag should be set,
+        // and reset this flag once behavior is complete.
+        private bool _isBusy = false;
+        public bool isBusy
+        {
+            set
+            {
+                _isBusy = value;
+            }
+            get
+            {
+                return _isBusy;
+            }
+        }
+
         protected override void Awake()
         {
             base.Awake();

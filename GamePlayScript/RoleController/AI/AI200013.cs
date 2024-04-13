@@ -15,7 +15,10 @@ namespace GameScript
             if (behaviorTree == null)
             {
                 behaviorTree = new BehaviorTreeBuilder(gameObject)
-                    .ActionSittingGroundDown()
+                    .Sequence()
+                        .Condition("Not busy", () => !npcBrain.isBusy)
+                        .ActionSetBrainBusy()
+                        .ActionSittingGroundDown()
                 .Build();
             }
             return behaviorTree;
