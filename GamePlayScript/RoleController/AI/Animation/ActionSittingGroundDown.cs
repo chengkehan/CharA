@@ -17,7 +17,6 @@ namespace GameScript
         {
             if (npcBrain.GetMotionAnimator().IsSoloStateComplete(SoloSM.Transition.SittingGroundDown))
             {
-                Utils.LogError(1);
                 return TaskStatus.Success;
             }
             else
