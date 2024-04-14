@@ -14,7 +14,8 @@ namespace GameScript
             AmisterNo3,
             RuinsPlan,
             BludgerSide,
-            TwoFloors
+            TwoFloors,
+            SafeHouse
         }
 
         public static SceneManager s_instance = null;
