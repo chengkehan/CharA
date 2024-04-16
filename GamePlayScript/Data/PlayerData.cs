@@ -19,7 +19,7 @@ namespace GameScript
          BreakWall | Actor | Door | Scene | ItemRefresh | SequencePlayer
          DynamicLink | Paper | DayNight | CardboardBox | Soliloquy
          BoundsTrigger | RoleSpawn | StoryboardOneSelector | StoryboardLoopSelector
-         Dialogue
+         Dialogue | ItemTempStorage
 
          Auto Generate Config*/
 
@@ -40,6 +40,7 @@ namespace GameScript
 [SerializeField] private SerializableDictionary<string, StoryboardOneSelectorPD> allStoryboardOneSelectorPD = new SerializableDictionary<string, StoryboardOneSelectorPD>();
 [SerializeField] private SerializableDictionary<string, StoryboardLoopSelectorPD> allStoryboardLoopSelectorPD = new SerializableDictionary<string, StoryboardLoopSelectorPD>();
 [SerializeField] private SerializableDictionary<string, DialoguePD> allDialoguePD = new SerializableDictionary<string, DialoguePD>();
+[SerializeField] private SerializableDictionary<string, ItemTempStoragePD> allItemTempStoragePD = new SerializableDictionary<string, ItemTempStoragePD>();
         /*Auto Generate Fields*/
 
         private class PDObjects
@@ -73,6 +74,7 @@ allPDObjects.Add(new PDObjects() { pdType = typeof(RoleSpawnPD), monoType = type
 allPDObjects.Add(new PDObjects() { pdType = typeof(StoryboardOneSelectorPD), monoType = typeof(StoryboardOneSelector), collection = allStoryboardOneSelectorPD });
 allPDObjects.Add(new PDObjects() { pdType = typeof(StoryboardLoopSelectorPD), monoType = typeof(StoryboardLoopSelector), collection = allStoryboardLoopSelectorPD });
 allPDObjects.Add(new PDObjects() { pdType = typeof(DialoguePD), monoType = typeof(Dialogue), collection = allDialoguePD });
+allPDObjects.Add(new PDObjects() { pdType = typeof(ItemTempStoragePD), monoType = typeof(ItemTempStorage), collection = allItemTempStoragePD });
             /*Auto Generate Wrap*/
         }
 
@@ -95,6 +97,7 @@ SaveSerializableMonoBehaviours<RoleSpawnPD, RoleSpawn>(allRoleSpawnPD);
 SaveSerializableMonoBehaviours<StoryboardOneSelectorPD, StoryboardOneSelector>(allStoryboardOneSelectorPD);
 SaveSerializableMonoBehaviours<StoryboardLoopSelectorPD, StoryboardLoopSelector>(allStoryboardLoopSelectorPD);
 SaveSerializableMonoBehaviours<DialoguePD, Dialogue>(allDialoguePD);
+SaveSerializableMonoBehaviours<ItemTempStoragePD, ItemTempStorage>(allItemTempStoragePD);
             /*Auto Generate Saving*/
         }
 
