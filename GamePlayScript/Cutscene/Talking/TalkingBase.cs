@@ -5,7 +5,7 @@ using AYellowpaper;
 
 namespace GameScript.Cutscene
 {
-    public abstract class TalkingBase<TPD> : SerializableMonoBehaviour<TPD>, IBoundsTriggerTarget
+    public abstract class TalkingBase<TPD> : SerializableMonoBehaviour<TPD>, ITriggerTarget
         where TPD : SerializableMonoBehaviourPD, new()
     {
         [SerializeField]

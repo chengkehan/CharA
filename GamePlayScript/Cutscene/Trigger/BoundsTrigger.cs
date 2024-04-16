@@ -21,7 +21,7 @@ namespace GameScript.Cutscene
         public int triggeredMaxTimes = 0;
 
         [SerializeField]
-        private InterfaceReference<IBoundsTriggerTarget, MonoBehaviour> target = null;
+        private InterfaceReference<ITriggerTarget, MonoBehaviour> target = null;
 
         [Tooltip("Who will trigger it.")]
         [SerializeField]

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameScript.Cutscene
 {
-    public interface IBoundsTriggerTarget
+    public interface ITriggerTarget
     {
         void Triggger();
     }
