@@ -140,40 +140,22 @@ namespace GameScript
                                 operation.stopMovingBeforeExecute = true;
                                 return operation;
                             }
-                        }
-                    }
-                    {
-                        if (Interactive3DDetector.Select<Actor>(out var actor))
-                        {
-                            if (actor.isHero == false)
+                            else
                             {
-                                if (Interactive3DDetector.Select<WaypointInductor>(out var _))
+                                BaseOperation operation = GenerateMoveToOperation(actor);
+                                if (operation != null)
                                 {
-                                    Vector3 hitPoint = Interactive3DDetector.GetHitPointOfRay();
-                                    if (Interactive3DDetector.TryGetHitBoxColliderBounds(out Bounds localBounds, out Matrix4x4 worldToLocalBounds))
-                                    {
-                                        Waypoint endWaypoint = GetRoleAnimation().GetWaypointPath().GetNearestMovingWaypointInBounds(hitPoint, localBounds, worldToLocalBounds);
-                                        BaseOperation operation = new MeetNpcOperation(actor.GetId());
-                                        operation.SetEndWaypoint(endWaypoint);
-                                        operation.SetRoleAnimation(GetRoleAnimation());
-                                        return operation;
-                                    }
+                                    return operation;
                                 }
                             }
                         }
                     }
+
                     {
-                        if (Interactive3DDetector.Select<WaypointInductor>(out var _))
+                        BaseOperation operation = GenerateMoveToOperation(null);
+                        if (operation != null)
                         {
-                            Vector3 hitPoint = Interactive3DDetector.GetHitPointOfRay();
-                            if (Interactive3DDetector.TryGetHitBoxColliderBounds(out Bounds localBounds, out Matrix4x4 worldToLocalBounds))
-                            {
-                                Waypoint endWaypoint = GetRoleAnimation().GetWaypointPath().GetNearestMovingWaypointInBounds(hitPoint, localBounds, worldToLocalBounds);
-                                BaseOperation operation = new MovingOperation();
-                                operation.SetEndWaypoint(endWaypoint);
-                                operation.SetRoleAnimation(GetRoleAnimation());
-                                return operation;
-                            }
+                            return operation;
                         }
                     }
                 }
@@ -230,6 +212,31 @@ namespace GameScript
         private void ClearSecondOperation()
         {
             _secondOperation = null;
+        }
+
+        private BaseOperation GenerateMoveToOperation(Actor actor)
+        {
+            if (Interactive3DDetector.Select<WaypointInductor>(out var _))
+            {
+                Vector3 hitPoint = Interactive3DDetector.GetHitPointOfRay();
+                if (Interactive3DDetector.TryGetHitBoxColliderBounds(out Bounds localBounds, out Matrix4x4 worldToLocalBounds))
+                {
+                    Waypoint endWaypoint = GetRoleAnimation().GetWaypointPath().GetNearestMovingWaypointInBounds(hitPoint, localBounds, worldToLocalBounds);
+                    BaseOperation operation = null;
+                    if (actor == null)
+                    {
+                        operation = new MovingOperation();
+                    }
+                    else
+                    {
+                        operation = new MeetNpcOperation(actor.GetId());
+                    }
+                    operation.SetEndWaypoint(endWaypoint);
+                    operation.SetRoleAnimation(GetRoleAnimation());
+                    return operation;
+                }
+            }
+            return null;
         }
 
         private T FetchComponent<T>(Transform transform)
