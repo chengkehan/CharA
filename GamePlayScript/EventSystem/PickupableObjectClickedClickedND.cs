@@ -7,8 +7,10 @@ namespace GameScript
 {
     public class PickupableObjectClickedClickedND : NotificationData
     {
-        public Paper paper = null;
+        public PickableObject pickableObject = null;
 
-        public CardboardBox cardboardBox = null;
+        //public Paper paper = null;
+
+        //public CardboardBox cardboardBox = null;
     }
 }

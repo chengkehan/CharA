@@ -121,25 +121,16 @@ namespace GameScript
                 if (Interactive3DDetector.Detect(ray))
                 {
                     {
-                        if (Interactive3DDetector.Select<Paper>(out var paper))
+                        if (Interactive3DDetector.Select<PickableObject>(out var pickableObject))
                         {
                             operationIsReady = false;
                             var notificationData = new PickupableObjectClickedClickedND();
-                            notificationData.paper = paper;
+                            notificationData.pickableObject = pickableObject;
                             EventSystem.GetInstance().Notify(EventID.PickupableObjectClicked, notificationData);
                             return null;
                         }
                     }
-                    {
-                        if (Interactive3DDetector.Select<CardboardBox>(out var cardboardBox))
-                        {
-                            operationIsReady = false;
-                            var notificationData = new PickupableObjectClickedClickedND();
-                            notificationData.cardboardBox = cardboardBox;
-                            EventSystem.GetInstance().Notify(EventID.PickupableObjectClicked, notificationData);
-                            return null;
-                        }
-                    }
+
                     {
                         if (Interactive3DDetector.Select<Actor>(out var actor))
                         {

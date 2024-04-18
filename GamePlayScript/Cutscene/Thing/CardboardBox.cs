@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameScript.UI.CardboardBoxUI;
 
 namespace GameScript.Cutscene
 {
-    public class CardboardBox : PickableObject<CardboardBoxPD>
+    public class CardboardBox : SerializableMonoBehaviour<CardboardBoxPD>
     {
         [SerializeField]
         private StorageConfig storageConfig = null;

@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace GameScript.Cutscene
 {
-    public class Paper : PickableObject<PaperPD>
+    public class Paper : SerializableMonoBehaviour<PaperPD>
     {
-       
+
     }
 }

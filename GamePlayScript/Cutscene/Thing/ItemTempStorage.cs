@@ -4,16 +4,8 @@ using UnityEngine;
 
 namespace GameScript.Cutscene
 {
-    public class ItemTempStorage : PickableObject<ItemTempStoragePD>
+    public class ItemTempStorage : SerializableMonoBehaviour<ItemTempStoragePD>
     {
-        [SerializeField]
-        private StorageConfig storageConfig = null;
 
-        protected override void InitializeOnStart()
-        {
-            base.InitializeOnStart();
-
-            storageConfig.InitializeStorageItems(pd);
-        }
     }
 }

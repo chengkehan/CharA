@@ -106,24 +106,7 @@ namespace GameScript
             // Waiting for turning complete
             yield return new WaitForSeconds(delaySeconds);
 
-            if (data.paper != null)
-            {
-                UIManager.GetInstance().OpenUI(UIManager.UIName.Paper);
-            }
-            if (data.cardboardBox != null)
-            {
-                GetMotionAnimator().SetSoloState(SoloSM.Transition.StandingToCrouched);
-                UIManager.GetInstance().OpenUI(UIManager.UIName.CardboardBox,
-                ()=>
-                {
-                    var cardboardBoxUI = UIManager.GetInstance().GetUI<CardboardBoxUI>(UIManager.UIName.CardboardBox);
-                    cardboardBoxUI.Initialize(data.cardboardBox);
-                },
-                () =>
-                {
-                    GetMotionAnimator().SetSoloState(SoloSM.Transition.CrouchedToStanding);
-                });
-            }
+            data.pickableObject.Pick();
         }
 
         private void StopOpenPickupableObjectDelay()
@@ -191,18 +174,10 @@ namespace GameScript
             position = Vector3.zero;
             bounds = new Bounds(Vector3.zero, Vector3.one);
 
-            if (data != null)
+            if (data != null && data.pickableObject != null)
             {
-                if (data.paper != null)
-                {
-                    position = data.paper.GetPosition();
-                    bounds = data.paper.waypointsBounds.bounds;
-                }
-                if (data.cardboardBox != null)
-                {
-                    position = data.cardboardBox.GetPosition();
-                    bounds = data.cardboardBox.waypointsBounds.bounds;
-                }
+                position = data.pickableObject.GetPosition();
+                bounds = data.pickableObject.waypointsBounds.bounds;
             }
         }
 
